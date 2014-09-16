@@ -1,0 +1,195 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+#
+# Linux build file for user HAL layer.
+#
+
+################################################################################
+# Include common definitions.
+
+include $(AQROOT)/makefile.linux.def
+
+################################################################################
+# Define shared library output name.
+
+ifeq ($(gcdSTATIC_LINK), 1)
+    STATIC = 1
+else
+    DYNAMIC = 1
+endif
+
+ifeq ($(STATIC), 1)
+    TARGET_NAME = libGAL.a
+else
+    TARGET_NAME = libGAL.so
+endif
+
+################################################################################
+# Installation directory
+
+INSTALL_DIR = $(SDK_DIR)/drivers
+
+################################################################################
+# Supply additional include directories.
+
+INCLUDE += -I$(AQROOT)/hal/inc
+INCLUDE += -I$(AQROOT)/hal/user
+INCLUDE += -I$(AQROOT)/hal/optimizer
+
+ifneq ($(QNX), 1)
+INCLUDE += -I$(AQROOT)/hal/os/linux/user
+    ifeq ($(EGL_API_FB), 0)
+        INCLUDE += -I$(X11_ARM_DIR)/include
+    endif
+else
+INCLUDE += -I$(AQROOT)/hal/os/qnx/user
+endif
+
+CFLAGS += $(INCLUDE)
+
+################################################################################
+# Add extra flags for object files.
+
+ifneq ($(USE_ARMCC), 1)
+CFLAGS += -fPIC -Werror -ansi
+
+LFLAGS += -Wl,--version-script=libGAL.map
+endif
+
+################################################################################
+# Build 2D only driver
+ifeq ($(VIVANTE_NO_3D),1)
+CFLAGS += -DVIVANTE_NO_3D
+endif
+
+################################################################################
+# Supply necessary libraries.
+LIBS += -lm -lpthread -ldl
+# Specify Vivante library paths.
+LIBS += -L $(AQARCH)/hal/user/$(OBJ_DIR)
+LIBS += -L $(AQROOT)/hal/user/$(OBJ_DIR)
+ifeq ($(VIVANTE_ENABLE_VG), 1)
+LIBS += -L $(AQVGARCH)/hal/user/$(OBJ_DIR)
+endif
+ifneq ($(QNX), 1)
+LIBS += -L $(AQROOT)/hal/os/linux/user/$(OBJ_DIR)
+else
+LIBS += -L $(AQROOT)/hal/os/qnx/user/$(OBJ_DIR)
+endif
+
+# Specify Vivante libraries twice to resolve references between libraries.
+ifeq ($(VIVANTE_ENABLE_VG), 1)
+LIBS += -l halarchuser -l halarchuser_vg -l halosuser
+LIBS += -l halarchuser -l halarchuser_vg -l halosuser
+else
+LIBS += -l halarchuser -l halosuser
+LIBS += -l halarchuser -l halosuser
+endif
+################################################################################
+# Describe object files.
+
+OBJECTS = $(OBJ_DIR)/gc_hal_user_brush.o \
+          $(OBJ_DIR)/gc_hal_user_brush_cache.o \
+          $(OBJ_DIR)/gc_hal_user_dump.o \
+          $(OBJ_DIR)/gc_hal_user.o \
+          $(OBJ_DIR)/gc_hal_user_raster.o \
+          $(OBJ_DIR)/gc_hal_user_heap.o \
+          $(OBJ_DIR)/gc_hal_user_query.o \
+          $(OBJ_DIR)/gc_hal_user_rect.o \
+          $(OBJ_DIR)/gc_hal_user_buffer.o \
+          $(OBJ_DIR)/gc_hal_user_surface.o \
+          $(OBJ_DIR)/gc_hal_user_queue.o \
+          $(OBJ_DIR)/gc_hal_user_vg.o \
+          $(OBJ_DIR)/gc_hal_user_path.o \
+          $(OBJ_DIR)/gc_hal_user_paint.o \
+          $(OBJ_DIR)/gc_hal_user_buffer_vg.o \
+
+ifneq ($(VIVANTE_NO_3D),1)
+OBJECTS += $(OBJ_DIR)/gc_hal_user_engine.o \
+           $(OBJ_DIR)/gc_hal_user_index.o \
+           $(OBJ_DIR)/gc_hal_user_vertex_array.o \
+           $(OBJ_DIR)/gc_hal_user_vertex.o \
+           $(OBJ_DIR)/gc_hal_user_linker.o \
+           $(OBJ_DIR)/gc_hal_user_compiler.o \
+           $(OBJ_DIR)/gc_hal_user_texture.o \
+           $(OBJ_DIR)/gc_hal_user_md5.o \
+           $(OBJ_DIR)/gc_hal_user_mem.o \
+           $(OBJ_DIR)/gc_hal_optimizer.o \
+           $(OBJ_DIR)/gc_hal_optimizer_util.o \
+           $(OBJ_DIR)/gc_hal_optimizer_dump.o \
+           $(OBJ_DIR)/gc_hal_user_platform.o \
+           $(OBJ_DIR)/gc_hal_user_loadtime_optimizer.o
+
+endif
+
+ifeq ($(USE_PROFILER),1)
+OBJECTS += $(OBJ_DIR)/gc_hal_user_profiler.o
+endif
+
+include $(AQROOT)/common.target
+
+################################################################################
+# Extra source code.
+
+ifneq ($(VIVANTE_NO_3D),1)
+$(OBJ_DIR)/%.o: ../optimizer/%.c
+	$(CC) -c $(CFLAGS) -I../user -o $@ $<
+endif
+
+ifneq ($(QNX), 1)
+    OS_DIR=linux
+else
+    OS_DIR=qnx
+endif
+
+ifeq ($(VIVANTE_ENABLE_VG),1)
+$(TARGET_OUTPUT): $(AQARCH)/hal/user/$(OBJ_DIR)/libhalarchuser.a \
+                  $(AQROOT)/hal/os/$(OS_DIR)/user/$(OBJ_DIR)/libhalosuser.a\
+                  $(AQVGARCH)/hal/user/$(OBJ_DIR)/libhalarchuser_vg.a
+else
+$(TARGET_OUTPUT): $(AQARCH)/hal/user/$(OBJ_DIR)/libhalarchuser.a \
+                  $(AQROOT)/hal/os/$(OS_DIR)/user/$(OBJ_DIR)/libhalosuser.a
+endif
+
+################################################################################
+# Extra installation.
+
+install: extra_install
+
+.PHONY: extra_install
+extra_install:
+	@mkdir -p $(SDK_DIR)/drivers
+	@mkdir -p $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_enum.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_types.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_version.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_base.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_raster.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_options.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_profiler.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_dump.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_md5.h $(SDK_DIR)/include/HAL
+ifeq ($(VIVANTE_ENABLE_VG),1)
+	@cp $(AQROOT)/hal/inc/gc_hal_vg.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_engine_vg.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_driver_vg.h $(SDK_DIR)/include/HAL
+endif
+	@cp $(AQROOT)/hal/inc/gc_hal_driver.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_rename.h $(SDK_DIR)/include/HAL
+ifneq ($(VIVANTE_NO_3D),1)
+	@cp $(AQROOT)/hal/inc/gc_hal_engine.h $(SDK_DIR)/include/HAL
+	@cp $(AQROOT)/hal/inc/gc_hal_eglplatform.h $(SDK_DIR)/include/HAL
+endif
+	@cd $(SDK_DIR)/include/HAL; echo "#include \"HAL/gc_hal.h\"" >aqHal.h; cd -

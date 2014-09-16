@@ -1,0 +1,43 @@
+!IF "$(_WINCEOSVER)" >= "600"
+##########################################################
+# Install dir for drivers & samples
+
+!IF [mkdir "$(VIVANTE_SDK_DIR)\" ]
+!ENDIF
+
+!IF [mkdir "$(VIVANTE_SDK_INC)\" ]
+!ENDIF
+
+!IF [mkdir "$(VIVANTE_SDK_LIB)\" ]
+!ENDIF
+
+!IF [mkdir "$(VIVANTE_SDK_BIN)\" ]
+!ENDIF
+
+!IF "$(TARGETTYPE)" == "DYNLINK"
+TARGE_EXTENSION=dll
+!ELSEIF "$(TARGETTYPE)" == "LIBRARY"
+TARGE_EXTENSION=lib
+!ELSEIF "$(TARGETTYPE)" == "PROGRAM"
+TARGE_EXTENSION=exe
+!ENDIF
+
+!IFNDEF INSTALL_PATH
+# Default install rule for drivers & libs
+INSTALL_PATH=$(VIVANTE_SDK_BIN)
+!ENDIF
+
+WINCETARGETFILES=$(INSTALL_PATH)\$(TARGETNAME).$(TARGE_EXTENSION)
+
+$(WINCETARGETFILES):null
+    -mkdir $(INSTALL_PATH)
+!IF "$(TARGETTYPE)" != "LIBRARY"
+    -copy /y $(_FLATRELEASEDIR)\$(TARGETNAME).$(TARGE_EXTENSION) $@
+!ENDIF
+!IF "$(TARGETTYPE)" != "PROGRAM"
+    -copy /y $(GCLIB_PATH)\$(TARGETNAME).lib "$(VIVANTE_SDK_LIB)\"
+!ENDIF
+!IFDEF EXTRA_COMMAND
+    -$(EXTRA_COMMAND)
+!ENDIF
+!ENDIF

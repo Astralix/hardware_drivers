@@ -1,0 +1,169 @@
+;#############################################################################
+;#
+;#   Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+;#
+;#   The material in this file is confidential and contains trade secrets
+;#   of Vivante Corporation. This is proprietary information owned by
+;#   Vivante Corporation. No part of this work may be disclosed,
+;#   reproduced, copied, transmitted, or used in any way for any purpose,
+;#   without the express written permission of Vivante Corporation.
+;#
+;#############################################################################
+
+
+LIBRARY k_libGAL
+
+EXPORTS
+	;gcoOS
+	gcoOS_SetDebugLevel
+	gcoOS_SetDebugZone
+	gcoOS_SetDebugFile
+	gcoOS_SetDebugShaderFiles
+	gcoOS_DebugFatal
+	gcoOS_DebugTrace
+	gcoOS_DebugTraceZone
+	gcoOS_DebugBreak
+	gcoOS_Verify
+	gcoOS_Construct
+	gcoOS_Destroy
+	gcoOS_Allocate
+	gcoOS_Free
+	gcoOS_AllocateNonPagedMemory
+	gcoOS_FreeNonPagedMemory
+	gcoOS_AllocateContiguous
+	gcoOS_FreeContiguous
+	gcoOS_CreateMutex
+	gcoOS_DeleteMutex
+	gcoOS_AcquireMutex
+	gcoOS_ReleaseMutex
+	gcoOS_CreateSignal
+	gcoOS_DestroySignal
+	gcoOS_Signal
+	gcoOS_WaitSignal
+	gcoOS_DeviceControl
+	gcoOS_Open
+	gcoOS_Close
+	gcoOS_Read
+	gcoOS_Write
+	gcoOS_Seek
+	gcoOS_SetPos
+	gcoOS_GetPos
+	gcoOS_MemCopy
+	gcoOS_ZeroMemory
+	gcoOS_MemFill
+	gcoOS_StrLen
+	gcoOS_StrFindReverse
+	gcoOS_StrCopySafe
+	gcoOS_StrCatSafe
+	gcoOS_StrCmp
+	gcoOS_StrNCmp
+	gcoOS_StrToFloat
+	gcoOS_StrToInt
+	gcoOS_MemCmp
+	gcoOS_PrintStrSafe
+	gcoOS_PrintStrVSafe
+	gcoOS_MapUserMemory
+	gcoOS_UnmapUserMemory
+	gcoOS_StrDup
+	gcoOS_LoadLibrary
+	gcoOS_FreeLibrary
+	gcoOS_GetProcAddress
+	gcoOS_Delay
+	gcoOS_GetCurrentProcessID
+	gcoOS_AtomConstruct
+	gcoOS_AtomDestroy
+	gcoOS_AtomIncrement
+	gcoOS_AtomDecrement
+	gcoOS_GetTicks
+	gcoOS_GetBaseAddress
+	gcoOS_ReadRegister
+	gcoOS_WriteRegister
+	gcoOS_DebugStatus2Name
+	gcoOS_StackDump
+
+
+	; gcoHAL
+	gcoHAL_Construct
+	gcoHAL_Destroy
+	gcoHAL_IsFeatureAvailable
+	gcoHAL_QueryChipIdentity
+	gcoHAL_Call
+	gcoHAL_QueryVideoMemory
+	gcoHAL_MapMemory
+	gcoHAL_UnmapMemory
+	gcoHAL_ScheduleUnmapMemory
+	gcoHAL_ScheduleUnmapUserMemory
+	gcoHAL_Commit
+	gcoHAL_QueryTiled
+	gcoHAL_Get2DEngine
+	gcoHAL_ScheduleEvent
+
+	gcoHAL_ProfileStart
+	gcoHAL_ProfileEnd
+	gcoHAL_Compact
+	gcoHAL_SetPowerManagementState
+	gcoHAL_QueryPowerManagementState
+
+	; gcoSURF
+	gcoSURF_Construct
+	gcoSURF_Destroy
+	gcoSURF_MapUserSurface
+	gcoSURF_GetSize
+	gcoSURF_GetAlignedSize
+	gcoSURF_GetFormat
+	gcoSURF_Lock
+	gcoSURF_Unlock
+	gcoSURF_Fill
+	gcoSURF_Blend
+	gcoSURF_SetClipping
+	gcoSURF_Line
+	gcoSURF_Blit
+	gcoSURF_MonoBlit
+	gcoSURF_FilterBlit
+	gcoSURF_EnableAlphaBlend
+	gcoSURF_DisableAlphaBlend
+	gcoSURF_QueryFormat
+	gcoSURF_Flush
+	gcoSURF_SetColorType
+	gcoSURF_GetColorType
+	gcoSURF_SetRotation
+	gcoSURF_ConstructWrapper
+	gcoSURF_SetBuffer
+	gcoSURF_SetWindow
+
+
+	; gco2D
+	gco2D_Construct
+	gco2D_Destroy
+	gco2D_SetBrushLimit
+	gco2D_FlushBrush
+	gco2D_LoadSolidBrush
+	gco2D_LoadColorBrush
+	gco2D_SetMonochromeSource
+	gco2D_SetColorSource
+	gco2D_SetMaskedSource
+	gco2D_SetSource
+	gco2D_SetClipping
+	gco2D_SetTarget
+	gco2D_SetStretchFactors
+	gco2D_ConstructSingleColorBrush
+	gco2D_ConstructMonochromeBrush
+	gco2D_ConstructColorBrush
+	gco2D_Line
+	gco2D_Blit
+	gco2D_StretchBlit
+	gco2D_MonoBlit
+	gco2D_SetKernelSize
+	gco2D_FreeFilterBuffer
+	gco2D_FilterBlit
+	gco2D_EnableAlphaBlend
+	gco2D_DisableAlphaBlend
+	gco2D_GetPackSize
+	gco2D_Flush
+	gco2D_LoadPalette
+	gco2D_SetBitBlitMirror
+	gco2D_GetMaximumDataCount
+	gco2D_SetTargetEx
+	gco2D_SetColorSourceEx
+	gco2D_SetMaskedSourceEx
+	gco2D_SetPixelMultiplyModeAdvanced

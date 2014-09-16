@@ -1,0 +1,190 @@
+RES
+SYS.UP
+
+global &tempload
+global &filesize
+global &x
+global &offset
+global &size
+global &unixhome
+global &mapdrive
+
+; Example path, need to be modified appropriately
+&unixhome="/home/muralimt/gitrepo"
+&mapdrive="z:\"
+
+; Temporary address to process cfifo data,
+; CSS valid virtual addresses are only till 0x20000000 
+
+&tempload=0x80000000 
+
+print "-- select the directory where the ramdump was extracted --"
+local &ramdump_dir
+dialog.dir *
+entry &ramdump_dir
+
+if ("&ramdump_dir"!="")
+(
+	
+	d.load.elf &ramdump_dir/css.elf /strippart "&unixhome" /path "&mapdrive" /nocode
+	
+	
+	data.load.binary &ramdump_dir/itcm 0x00000000 /noclear
+	data.load.binary &ramdump_dir/dtcm 0x00100000 /noclear
+	data.load.binary &ramdump_dir/ahb-ram 0x08200000 /noclear
+
+	; set TTB and enable MMU
+	PER.S C15:0x2 %LONG 0x08200000
+	PER.S.F C15:0x1 %LONG 0x1 0x1
+	MMU.ON
+	MMU.SCAN
+
+	PER.S C15:0x1 %LONG v.value(css_regs.sys_regs.control)
+	PER.S C15:0x3 %LONG v.value(css_regs.sys_regs.dacr)
+	PER.S C15:0x5 %LONG v.value(css_regs.sys_regs.dfsr)
+	PER.S C15:0x105 %LONG v.value(css_regs.sys_regs.ifsr)
+	PER.S C15:0x6 %LONG v.value(css_regs.sys_regs.dfar)
+	PER.S C15:0x019 %LONG v.value(css_regs.sys_regs.dtcm_region)
+	PER.S C15:0x119 %LONG v.value(css_regs.sys_regs.itcm_region)
+	PER.S C15:0xf %LONG v.value(css_regs.sys_regs.debug_overwrite)
+	PER.S C15:0x0 %LONG v.value(css_regs.sys_regs.id)
+	PER.S C15:0x100 %LONG v.value(css_regs.sys_regs.cache_type)
+	PER.S C15:0x200 %LONG v.value(css_regs.sys_regs.tcm_status)
+
+	; get value of boot_config.dram_addr and dram_size
+	&dram_addr=v.value(boot_config.dram_addr)
+	&dram_size=v.value(boot_config.dram_size)
+
+	; load dram dump to this address
+	data.load.binary &ramdump_dir/dram A:&dram_addr /noclear
+
+	; get values of all dumped registers
+	&svc_spsr=v.value(css_regs.svc.spsr)
+	&svc_r13=v.value(css_regs.svc.r13)
+	&svc_r14=v.value(css_regs.svc.r14)
+
+	&abt_spsr=v.value(css_regs.abt.spsr)
+	&abt_r13=v.value(css_regs.abt.r13)
+	&abt_r14=v.value(css_regs.abt.r14)
+
+	&und_spsr=v.value(css_regs.und.spsr)
+	&und_r13=v.value(css_regs.und.r13)
+	&und_r14=v.value(css_regs.und.r14)
+
+	&irq_spsr=v.value(css_regs.irq.spsr)
+	&irq_r13=v.value(css_regs.irq.r13)
+	&irq_r14=v.value(css_regs.irq.r14)
+
+	&fiq_spsr=v.value(css_regs.fiq.spsr)
+	&fiq_r8=v.value(css_regs.fiq.r8)
+	&fiq_r9=v.value(css_regs.fiq.r9)
+	&fiq_r10=v.value(css_regs.fiq.r10)
+	&fiq_r11=v.value(css_regs.fiq.r11)
+	&fiq_r12=v.value(css_regs.fiq.r12)
+	&fiq_r13=v.value(css_regs.fiq.r13)
+	&fiq_r14=v.value(css_regs.fiq.r14)
+
+	&usr_r0=v.value(css_regs.usr_and_sys.r0)
+	&usr_r1=v.value(css_regs.usr_and_sys.r1)
+	&usr_r2=v.value(css_regs.usr_and_sys.r2)
+	&usr_r3=v.value(css_regs.usr_and_sys.r3)
+	&usr_r4=v.value(css_regs.usr_and_sys.r4)
+	&usr_r5=v.value(css_regs.usr_and_sys.r5)
+	&usr_r6=v.value(css_regs.usr_and_sys.r6)
+	&usr_r7=v.value(css_regs.usr_and_sys.r7)
+	&usr_r8=v.value(css_regs.usr_and_sys.r8)
+	&usr_r9=v.value(css_regs.usr_and_sys.r9)
+	&usr_r10=v.value(css_regs.usr_and_sys.r10)
+	&usr_r11=v.value(css_regs.usr_and_sys.r11)
+	&usr_r12=v.value(css_regs.usr_and_sys.r12)
+	&usr_r13=v.value(css_regs.usr_and_sys.r13)
+	&usr_r14=v.value(css_regs.usr_and_sys.r14)
+
+	; restore all saved registers in all states
+	r.set spsr_svc &svc_spsr
+	r.set r13_svc &svc_r13
+	r.set r14_svc &svc_r14
+
+	r.set spsr_abt &abt_spsr
+	r.set r13_abt &abt_r13
+	r.set r14_abt &abt_r14
+
+	r.set spsr_und &und_spsr
+	r.set r13_und &und_r13
+	r.set r14_und &und_r14
+
+	r.set spsr_irq &irq_spsr
+	r.set r13_irq &irq_r13
+	r.set r14_irq &irq_r14
+
+	r.set spsr_fiq &fiq_spsr
+	r.set r8_fiq &fiq_r8
+	r.set r9_fiq &fiq_r9
+	r.set r10_fiq &fiq_r10
+	r.set r11_fiq &fiq_r11
+	r.set r12_fiq &fiq_r12
+	r.set r13_fiq &fiq_r13
+	r.set r14_fiq &fiq_r14
+
+	r.set r0 &usr_r0
+	r.set r1 &usr_r1
+	r.set r2 &usr_r2
+	r.set r3 &usr_r3
+	r.set r4 &usr_r4
+	r.set r5 &usr_r5
+	r.set r6 &usr_r6
+	r.set r7 &usr_r7
+	r.set r8_usr &usr_r8
+	r.set r9_usr &usr_r9
+	r.set r10_usr &usr_r10
+	r.set r11_usr &usr_r11
+	r.set r12_usr &usr_r12
+	r.set r13_usr &usr_r13
+	r.set r14_usr &usr_r14
+
+	r.set cpsr &svc_spsr
+	r.set pc &svc_r14
+
+	; restore PLICU registers
+	data.copy v.address(css_regs.plicu)++v.sizeof(css_regs.plicu) a:0x08a00000
+
+	; restore BMP registers
+	data.copy v.address(css_regs.bmp)++v.sizeof(css_regs.bmp) a:0x08300000
+
+	; display version information
+	v.v %STRING css_version bsp_version build_version d46_version d48_version d53_version scripts_version dspapi_version build_info
+
+	; display the stack frame
+	winpos 84.857 14.846 49. 22. 0. 0.
+	var.frame
+
+	; include mapping for high vectors
+	mmu.c 0xffff0000--0xffffffff a:0x00000000--0x0000ffff
+	
+	;load the cfifo buffers into css memory
+
+	&filesize=os.file.size("&ramdump_dir/cfifo");
+	&x=&filesize
+	d.load.b "&ramdump_dir/cfifo" &tempload /noclear
+
+	; relocate the cfifo buffers to appropriate CSS location where they got allocated
+	; parse the cfifo header to get the addresses
+
+	&offset=&tempload
+	WHILE &x>0.
+	(
+		&dest=v.value(((struct cfifo)(&offset)).buffer)-v.sizeof((struct cfifo)0)
+		&size=v.value(((struct cfifo)(&offset)).size)+v.sizeof((struct cfifo)0)
+		data.copy &offset++&size &dest
+		&offset=&offset+&size
+		&x=&x-&size
+	)
+
+	print "CSS ramdump loaded from &ramdump_dir"
+)
+else
+(
+	print "no CSS ramdump loaded"
+)
+
+enddo

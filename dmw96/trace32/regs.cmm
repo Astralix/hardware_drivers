@@ -1,0 +1,500 @@
+
+; Denali controller registers
+
+GLOBAL &add_odt_clk_difftype_diffcs
+&add_odt_clk_difftype_diffcs="5.  53.  24."
+GLOBAL &add_odt_clk_r2w_samecs
+&add_odt_clk_r2w_samecs="4.  53.  8."
+GLOBAL &add_odt_clk_sametype_diffcs
+&add_odt_clk_sametype_diffcs="4.  54.  0."
+GLOBAL &add_odt_clk_w2r_samecs
+&add_odt_clk_w2r_samecs="4.  53.  16."
+GLOBAL &addr_cmp_en
+&addr_cmp_en="1.  42.  8."
+GLOBAL &addr_pins_0
+&addr_pins_0="3.  38.  0."
+GLOBAL &addr_pins_1
+&addr_pins_1="3.  38.  8."
+GLOBAL &age_count
+&age_count="7.  41.  24."
+GLOBAL &ahb0_rdlen
+&ahb0_rdlen="4.  57.  16."
+GLOBAL &ahb1_rdlen
+&ahb1_rdlen="4.  58.  0."
+GLOBAL &ahb2_rdlen
+&ahb2_rdlen="4.  58.  16."
+GLOBAL &ahb3_rdlen
+&ahb3_rdlen="4.  59.  0."
+GLOBAL &ahb0_wrlen
+&ahb0_wrlen="4.  57.  8."
+GLOBAL &ahb1_wrlen
+&ahb1_wrlen="4.  57.  24."
+GLOBAL &ahb2_wrlen
+&ahb2_wrlen="4.  58.  8."
+GLOBAL &ahb3_wrlen
+&ahb3_wrlen="4.  58.  24."
+GLOBAL &ap
+&ap="1.  10.  16."
+GLOBAL &aprebit_0
+&aprebit_0="4.  39.  0."
+GLOBAL &aprebit_1
+&aprebit_1="4.  39.  8."
+GLOBAL &arb_cmd_q_threshold
+&arb_cmd_q_threshold="4.  77.  24."
+GLOBAL &arefresh
+&arefresh="1.  14.  24."
+GLOBAL &auto_refresh_mode
+&auto_refresh_mode="1.  15.  0."
+GLOBAL &auto_tempchk_val
+&auto_tempchk_val="8.  26.  16."
+GLOBAL &axi0_bdw
+&axi0_bdw="7.  78.  0."
+GLOBAL &axi1_bdw
+&axi1_bdw="7.  78.  24."
+GLOBAL &axi2_bdw
+&axi2_bdw="7.  79.  16."
+GLOBAL &axi3_bdw
+&axi3_bdw="7.  80.  8."
+GLOBAL &axi4_bdw
+&axi4_bdw="7.  81.  0."
+GLOBAL &axi5_bdw
+&axi5_bdw="7.  81.  24."
+GLOBAL &axi6_bdw
+&axi6_bdw="7.  82.  16."
+GLOBAL &axi7_bdw
+&axi7_bdw="7.  83.  8."
+GLOBAL &axi0_bdw_ovflow
+&axi0_bdw_ovflow="1.  78.  8."
+GLOBAL &axi1_bdw_ovflow
+&axi1_bdw_ovflow="1.  79.  0."
+GLOBAL &axi2_bdw_ovflow
+&axi2_bdw_ovflow="1.  79.  24."
+GLOBAL &axi3_bdw_ovflow
+&axi3_bdw_ovflow="1.  80.  16."
+GLOBAL &axi4_bdw_ovflow
+&axi4_bdw_ovflow="1.  81.  8."
+GLOBAL &axi5_bdw_ovflow
+&axi5_bdw_ovflow="1.  82.  0."
+GLOBAL &axi6_bdw_ovflow
+&axi6_bdw_ovflow="1.  82.  24."
+GLOBAL &axi7_bdw_ovflow
+&axi7_bdw_ovflow="1.  83.  16."
+GLOBAL &axi0_current_bdw
+&axi0_current_bdw="7.  78.  16."
+GLOBAL &axi1_current_bdw
+&axi1_current_bdw="7.  79.  8."
+GLOBAL &axi2_current_bdw
+&axi2_current_bdw="7.  80.  0."
+GLOBAL &axi3_current_bdw
+&axi3_current_bdw="7.  80.  24."
+GLOBAL &axi4_current_bdw
+&axi4_current_bdw="7.  81.  16."
+GLOBAL &axi5_current_bdw
+&axi5_current_bdw="7.  82.  8."
+GLOBAL &axi6_current_bdw
+&axi6_current_bdw="7.  83.  0."
+GLOBAL &axi7_current_bdw
+&axi7_current_bdw="7.  83.  24."
+GLOBAL &axi0_en_size_lt_width_instr
+&axi0_en_size_lt_width_instr="16.  59.  8."
+GLOBAL &axi1_en_size_lt_width_instr
+&axi1_en_size_lt_width_instr="16.  60.  8."
+GLOBAL &axi2_en_size_lt_width_instr
+&axi2_en_size_lt_width_instr="16.  61.  8."
+GLOBAL &axi3_en_size_lt_width_instr
+&axi3_en_size_lt_width_instr="16.  62.  8."
+GLOBAL &axi4_en_size_lt_width_instr
+&axi4_en_size_lt_width_instr="16.  63.  8."
+GLOBAL &axi5_en_size_lt_width_instr
+&axi5_en_size_lt_width_instr="16.  64.  8."
+GLOBAL &axi6_en_size_lt_width_instr
+&axi6_en_size_lt_width_instr="16.  65.  8."
+GLOBAL &axi7_en_size_lt_width_instr
+&axi7_en_size_lt_width_instr="16.  66.  8."
+GLOBAL &axi0_r_priority
+&axi0_r_priority="3.  59.  24."
+GLOBAL &axi1_r_priority
+&axi1_r_priority="3.  60.  24."
+GLOBAL &axi2_r_priority
+&axi2_r_priority="3.  61.  24."
+GLOBAL &axi3_r_priority
+&axi3_r_priority="3.  62.  24."
+GLOBAL &axi4_r_priority
+&axi4_r_priority="3.  63.  24."
+GLOBAL &axi5_r_priority
+&axi5_r_priority="3.  64.  24."
+GLOBAL &axi6_r_priority
+&axi6_r_priority="3.  65.  24."
+GLOBAL &axi7_r_priority
+&axi7_r_priority="3.  66.  24."
+GLOBAL &axi0_w_priority
+&axi0_w_priority="3.  60.  0."
+GLOBAL &axi1_w_priority
+&axi1_w_priority="3.  61.  0."
+GLOBAL &axi2_w_priority
+&axi2_w_priority="3.  62.  0."
+GLOBAL &axi3_w_priority
+&axi3_w_priority="3.  63.  0."
+GLOBAL &axi4_w_priority
+&axi4_w_priority="3.  64.  0."
+GLOBAL &axi5_w_priority
+&axi5_w_priority="3.  65.  0."
+GLOBAL &axi6_w_priority
+&axi6_w_priority="3.  66.  0."
+GLOBAL &axi7_w_priority
+&axi7_w_priority="3.  67.  0."
+GLOBAL &bank_split_en
+&bank_split_en="1.  42.  16."
+GLOBAL &bstlen
+&bstlen="3.  13.  0."
+GLOBAL &caslat_lin
+&caslat_lin="5.  6.  8."
+GLOBAL &cke_delay
+&cke_delay="3.  20.  0."
+GLOBAL &cke_status
+&cke_status="1.  84.  8."
+GLOBAL &cksre
+&cksre="4.  23.  0."
+GLOBAL &cksrx
+&cksrx="4.  23.  8."
+GLOBAL &column_size_0
+&column_size_0="3.  38.  16."
+GLOBAL &column_size_1
+&column_size_1="3.  38.  24."
+GLOBAL &command_age_count
+&command_age_count="7.  42.  0."
+GLOBAL &concurrentap
+&concurrentap="1.  10.  24."
+GLOBAL &config_error
+&config_error="1.  41.  16."
+GLOBAL &cs_map
+&cs_map="2.  44.  8."
+GLOBAL &cs_msk_0
+&cs_msk_0="16.  40.  16."
+GLOBAL &cs_msk_1
+&cs_msk_1="16.  41.  0."
+GLOBAL &cs_val_0
+&cs_val_0="16.  39.  16."
+GLOBAL &cs_val_1
+&cs_val_1="16.  40.  0."
+GLOBAL &dll_rst_adj_dly
+&dll_rst_adj_dly="8.  85.  0."
+GLOBAL &dll_rst_delay
+&dll_rst_delay="16.  84.  16."
+GLOBAL &dram_class
+&dram_class="4.  0.  8."
+GLOBAL &dram_clk_disable
+&dram_clk_disable="2.  86.  16."
+GLOBAL &drive_dq_dqs
+&drive_dq_dqs="1.  84.  0."
+GLOBAL &eight_bank_mode_0
+&eight_bank_mode_0="1.  37.  16."
+GLOBAL &eight_bank_mode_1
+&eight_bank_mode_1="1.  37.  24."
+GLOBAL &enable_quick_srefresh
+&enable_quick_srefresh="1.  19.  24."
+GLOBAL &fast_write
+&fast_write="1.  45.  0."
+GLOBAL &inhibit_dram_cmd
+&inhibit_dram_cmd="2.  44.  0."
+GLOBAL &initaref
+&initaref="4.  6.  0."
+GLOBAL &int_ack
+&int_ack="14.  46.  16."
+GLOBAL &int_mask
+&int_mask="15.  47.  0."
+GLOBAL &int_status
+&int_status="15.  46.  0."
+GLOBAL &lowpower_auto_enable
+&lowpower_auto_enable="5.  22.  0."
+GLOBAL &lowpower_control
+&lowpower_control="5.  20.  8."
+GLOBAL &lowpower_external_cnt
+&lowpower_external_cnt="16.  21.  16."
+GLOBAL &lowpower_internal_cnt
+&lowpower_internal_cnt="16.  22.  8."
+GLOBAL &lowpower_power_down_cnt
+&lowpower_power_down_cnt="16.  20.  16."
+GLOBAL &lowpower_refresh_enable
+&lowpower_refresh_enable="2.  22.  24."
+GLOBAL &lowpower_self_refresh_cnt
+&lowpower_self_refresh_cnt="16.  21.  0."
+GLOBAL &lpddr2_s4
+&lpddr2_s4="1.  44.  24."
+GLOBAL &max_col_reg
+&max_col_reg="4.  1.  8."
+GLOBAL &max_cs_reg
+&max_cs_reg="2.  1.  16."
+GLOBAL &max_row_reg
+&max_row_reg="4.  1.  0."
+GLOBAL &mr0_data_0
+&mr0_data_0="15.  27.  0."
+GLOBAL &mr0_data_1
+&mr0_data_1="15.  30.  8."
+GLOBAL &mr1_data_0
+&mr1_data_0="15.  27.  16."
+GLOBAL &mr1_data_1
+&mr1_data_1="15.  31.  0."
+GLOBAL &mr2_data_0
+&mr2_data_0="15.  28.  0."
+GLOBAL &mr2_data_1
+&mr2_data_1="15.  31.  16."
+GLOBAL &mr3_data_0
+&mr3_data_0="15.  29.  0."
+GLOBAL &mr3_data_1
+&mr3_data_1="15.  32.  16."
+GLOBAL &mr8_data_0
+&mr8_data_0="8.  29.  16."
+GLOBAL &mr8_data_1
+&mr8_data_1="8.  33.  0."
+GLOBAL &mr16_data_0
+&mr16_data_0="8.  29.  24."
+GLOBAL &mr16_data_1
+&mr16_data_1="8.  33.  8."
+GLOBAL &mr17_data_0
+&mr17_data_0="8.  30.  0."
+GLOBAL &mr17_data_1
+&mr17_data_1="8.  33.  16."
+GLOBAL &mrsingle_data_0
+&mrsingle_data_0="15.  28.  16."
+GLOBAL &mrsingle_data_1
+&mrsingle_data_1="15.  32.  0."
+GLOBAL &mrw_status
+&mrw_status="8.  25.  0."
+GLOBAL &no_auto_mrr_init
+&no_auto_mrr_init="1.  5.  24."
+GLOBAL &no_cmd_init
+&no_cmd_init="1.  12.  16."
+GLOBAL &no_zq_init
+&no_zq_init="1.  37.  0."
+GLOBAL &ocd_adjust_pdn_cs_0
+&ocd_adjust_pdn_cs_0="5.  56.  24."
+GLOBAL &ocd_adjust_pup_cs_0
+&ocd_adjust_pup_cs_0="5.  57.  0."
+GLOBAL &odt_alt_en
+&odt_alt_en="1.  91.  8."
+GLOBAL &odt_rd_map_cs0
+&odt_rd_map_cs0="2.  52.  8."
+GLOBAL &odt_rd_map_cs1
+&odt_rd_map_cs1="2.  52.  24."
+GLOBAL &odt_wr_map_cs0
+&odt_wr_map_cs0="2.  52.  16."
+GLOBAL &odt_wr_map_cs1
+&odt_wr_map_cs1="2.  53.  0."
+GLOBAL &out_of_range_addr
+&out_of_range_addr="33.  48.  0."
+GLOBAL &out_of_range_length
+&out_of_range_length="7.  49.  8."
+GLOBAL &out_of_range_source_id
+&out_of_range_source_id="8.  49.  24."
+GLOBAL &out_of_range_type
+&out_of_range_type="6.  49.  16."
+GLOBAL &peripheral_mrr_data
+&peripheral_mrr_data="16.  26.  0."
+GLOBAL &placement_en
+&placement_en="1.  42.  24."
+GLOBAL &port_cmd_error_addr
+&port_cmd_error_addr="33.  50.  0."
+GLOBAL &port_cmd_error_id
+&port_cmd_error_id="8.  51.  8."
+GLOBAL &port_cmd_error_type
+&port_cmd_error_type="4.  51.  16."
+GLOBAL &port_data_error_id
+&port_data_error_id="8.  51.  24."
+GLOBAL &port_data_error_type
+&port_data_error_type="3.  52.  0."
+GLOBAL &power_down
+&power_down="1.  17.  0."
+GLOBAL &priority_en
+&priority_en="1.  43.  0."
+GLOBAL &pwrup_srefresh_exit
+&pwrup_srefresh_exit="1.  19.  8."
+GLOBAL &q_fullness
+&q_fullness="4.  45.  8."
+GLOBAL &r2r_diffcs_dly
+&r2r_diffcs_dly="3.  54.  8."
+GLOBAL &r2r_samecs_dly
+&r2r_samecs_dly="3.  55.  8."
+GLOBAL &r2w_diffcs_dly
+&r2w_diffcs_dly="3.  54.  16."
+GLOBAL &r2w_samecs_dly
+&r2w_samecs_dly="3.  55.  16."
+GLOBAL &rdlat_adj
+&rdlat_adj="5.  90.  5 bits."
+GLOBAL &read_modereg
+&read_modereg="17.  25.  8."
+GLOBAL &reduc
+&reduc="1.  44.  16."
+GLOBAL &refresh_per_auto_tempchk
+&refresh_per_auto_tempchk="8.  26.  24."
+GLOBAL &refresh_per_zq
+&refresh_per_zq="8.  35.  24."
+GLOBAL &reg_dimm_enable
+&reg_dimm_enable="1.  14.  16."
+GLOBAL &resync_dll
+&resync_dll="1.  45.  16."
+GLOBAL &resync_dll_per_aref_en
+&resync_dll_per_aref_en="1.  45.  24."
+GLOBAL &rw_same_en
+&rw_same_en="1.  43.  8."
+GLOBAL &srefresh
+&srefresh="1.  19.  0."
+GLOBAL &srefresh_exit_no_refresh
+&srefresh_exit_no_refresh="1.  19.  16."
+GLOBAL &start
+&start="1.  0.  0."
+GLOBAL &swap_en
+&swap_en="1.  43.  16."
+GLOBAL &swap_port_rw_same_en
+&swap_port_rw_same_en="1.  43.  24."
+GLOBAL &tbst_int_interval
+&tbst_int_interval="3.  6.  24."
+GLOBAL &tccd
+&tccd="5.  7.  0."
+GLOBAL &tcke
+&tcke="3.  9.  24."
+GLOBAL &tckesr
+&tckesr="5.  10.  0."
+GLOBAL &tcpd
+&tcpd="16.  13.  16."
+GLOBAL &tdal
+&tdal="5.  11.  24."
+GLOBAL &tdfi_ctrl_delay
+&tdfi_ctrl_delay="4.  90.  16."
+GLOBAL &tdfi_ctrlupd_max
+&tdfi_ctrlupd_max="16.  87.  0."
+GLOBAL &tdfi_ctrlupd_min
+&tdfi_ctrlupd_min="4.  86.  24."
+GLOBAL &tdfi_dram_clk_disable
+&tdfi_dram_clk_disable="3.  90.  24."
+GLOBAL &tdfi_dram_clk_enable
+&tdfi_dram_clk_enable="4.  91.  0."
+GLOBAL &tdfi_phy_rdlat
+&tdfi_phy_rdlat="5.  85.  24."
+GLOBAL &tdfi_phy_wrlat
+&tdfi_phy_wrlat="4.  85.  8."
+GLOBAL &tdfi_phy_wrlat_base
+&tdfi_phy_wrlat_base="4.  85.  16."
+GLOBAL &tdfi_phyupd_resp
+&tdfi_phyupd_resp="16.  89.  16."
+GLOBAL &tdfi_phyupd_type0
+&tdfi_phyupd_type0="16.  87.  16."
+GLOBAL &tdfi_phyupd_type1
+&tdfi_phyupd_type1="16.  88.  0."
+GLOBAL &tdfi_phyupd_type2
+&tdfi_phyupd_type2="16.  88.  16."
+GLOBAL &tdfi_phyupd_type3
+&tdfi_phyupd_type3="16.  89.  0."
+GLOBAL &tdfi_rddata_en
+&tdfi_rddata_en="5.  86.  0."
+GLOBAL &tdfi_rddata_en_base
+&tdfi_rddata_en_base="5.  86.  8."
+GLOBAL &tdll
+&tdll="16.  12.  0."
+GLOBAL &tdqsck_max
+&tdqsck_max="2.  56.  8."
+GLOBAL &tdqsck_min
+&tdqsck_min="2.  56.  16."
+GLOBAL &tfaw
+&tfaw="6.  13.  8."
+GLOBAL &tinit
+&tinit="24.  2.  0."
+GLOBAL &tinit3
+&tinit3="24.  3.  0."
+GLOBAL &tinit4
+&tinit4="24.  4.  0."
+GLOBAL &tinit5
+&tinit5="24.  5.  0."
+GLOBAL &tmod
+&tmod="8.  9.  0."
+GLOBAL &tmrd
+&tmrd="5.  8.  24."
+GLOBAL &tmrr
+&tmrr="4.  12.  24."
+GLOBAL &tpdex
+&tpdex="16.  17.  8."
+GLOBAL &tras_lockout
+&tras_lockout="1.  11.  0."
+GLOBAL &tras_max
+&tras_max="16.  9.  8."
+GLOBAL &tras_min
+&tras_min="8.  7.  24."
+GLOBAL &trc
+&trc="8.  7.  16."
+GLOBAL &trcd_int
+&trcd_int="8.  11.  8."
+GLOBAL &tref
+&tref="16.  16.  0."
+GLOBAL &tref_enable
+&tref_enable="1.  15.  8."
+GLOBAL &tref_interval
+&tref_interval="14.  16.  16."
+GLOBAL &trfc
+&trfc="10.  15.  16."
+GLOBAL &trp
+&trp="5.  8.  8."
+GLOBAL &trp_ab_0
+&trp_ab_0="5.  14.  0."
+GLOBAL &trp_ab_1
+&trp_ab_1="5.  14.  8."
+GLOBAL &trrd
+&trrd="8.  7.  8."
+GLOBAL &trtp
+&trtp="3.  8.  16."
+GLOBAL &twr_int
+&twr_int="5.  11.  16."
+GLOBAL &twtr
+&twtr="4.  8.  0."
+GLOBAL &txsnr
+&txsnr="16.  18.  16."
+GLOBAL &txsr
+&txsr="16.  18.  0."
+GLOBAL &version
+&version="16.  0.  16."
+GLOBAL &w2r_diffcs_dly
+&w2r_diffcs_dly="3.  54.  24."
+GLOBAL &w2r_samecs_dly
+&w2r_samecs_dly="3.  55.  24."
+GLOBAL &w2w_diffcs_dly
+&w2w_diffcs_dly="3.  55.  0."
+GLOBAL &w2w_samecs_dly
+&w2w_samecs_dly="3.  56.  0."
+GLOBAL &write_modereg
+&write_modereg="26.  24.  0."
+GLOBAL &writeinterp
+&writeinterp="1.  10.  8."
+GLOBAL &wrlat
+&wrlat="4.  6.  16."
+GLOBAL &wrlat_adj
+&wrlat_adj="4.  90.  4 bits."
+GLOBAL &wrtprct_enable
+&wrtprct_enable="2.  77.  16."
+GLOBAL &wrtprct_error_address
+&wrtprct_error_address="32.  76.  0."
+GLOBAL &wrtprct_error_length
+&wrtprct_error_length="7.  77.  8."
+GLOBAL &wrtprct_lower_address_0
+&wrtprct_lower_address_0="32.  70.  0."
+GLOBAL &wrtprct_lower_address_1
+&wrtprct_lower_address_1="32.  74.  0."
+GLOBAL &wrtprct_upper_address_0
+&wrtprct_upper_address_0="32.  68.  0."
+GLOBAL &wrtprct_upper_address_1
+&wrtprct_upper_address_1="32.  72.  0."
+GLOBAL &zq_in_progress
+&zq_in_progress="1.  36.  8."
+GLOBAL &zq_on_sref_exit
+&zq_on_sref_exit="4.  36.  0."
+GLOBAL &zq_req
+&zq_req="4.  35.  16."
+GLOBAL &zqcl
+&zqcl="12.  34.  16."
+GLOBAL &zqcs
+&zqcs="12.  35.  0."
+GLOBAL &zqcs_rotate
+&zqcs_rotate="1.  37.  8."
+GLOBAL &zqinit
+&zqinit="12.  34.  0."
+GLOBAL &zqreset
+&zqreset="12.  36.  16."
+

@@ -1,0 +1,13 @@
+sys.up
+do bootastic.cmm
+;data.load.elf lpddr2_init.axf
+;go
+;wait 2s
+;b
+
+data.load.elf ../u-boot/u-boot /strippart 6
+data.load.binary ../linux-android/arch/arm/boot/uImage 0x42000000 /noclear
+data.load.elf ../linux-android/vmlinux /strippart 6 /nocode /gnu /noclear
+
+ENDDO
+

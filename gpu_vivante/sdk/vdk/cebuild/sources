@@ -1,0 +1,46 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+DOSYSGEN=1
+SYNCHRONIZE_DRAIN=1
+
+TARGETNAME=libVDK
+TARGETTYPE=DYNLINK
+DLLENTRY=DllMain
+
+CDEFINES= \
+  $(CDEFINES) \
+  -DUSE_VDK=1 \
+  -D__VDK_EXPORT \
+
+SOURCES= \
+    ../gc_vdk_gl.c \
+    ../gc_vdk_egl.c \
+    ../gc_vdk_gal.c \
+	../gc_vdk_ce.c \
+
+INCLUDES= \
+  $(INCLUDES); \
+  $(_SYSGENSDKROOT)\inc; \
+  $(AQROOT)\sdk\inc; \
+
+TARGETLIBS= \
+  $(_SYSGENSDKROOT)\lib\$(_CPUINDPATH)\coredll.lib \
+  $(GCLIB_PATH)\libGAL.lib \
+
+##########################################################
+# Install results
+
+EXTRA_COMMAND = xcopy /I /R /Y $(AQROOT)\sdk\inc\gc_vdk*.h $(VIVANTE_SDK_INC)\
+
+!INCLUDE $(BUILDROOT)\wince_install.inc

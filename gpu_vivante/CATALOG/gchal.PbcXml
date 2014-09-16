@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CatalogFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" RequiredVersion="6.00" xsi:schemaLocation="urn:Microsoft.PlatformBuilder/Catalog PbcXml600.xsd" xmlns="urn:Microsoft.PlatformBuilder/Catalog">
+  <FileInformation Id="Display:VivanteCorp">
+    <Title>GCHAL Catalog</Title>
+    <Description>GCHAL Device Drivers</Description>
+    <Vendor>Vivante Corporation</Vendor>
+    <OSVersion>6.00</OSVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </FileInformation>
+  <Item Id="GCHAL:VivanteCorp:GCHAL">
+    <Title>GCHAL</Title>
+    <Description>GCHAL Device Drivers</Description>
+    <SysgenVariable>SYSGEN_GCHAL</SysgenVariable>
+    <Module>libgalcore.dll</Module>
+    <Project>$(_WINCEROOT)\PUBLIC\GCHAL\GCHAL.PBPXML</Project>
+    <Location>Device Drivers\Displays</Location>
+    <SourceCode>
+      <Title>$(_WINCEROOT)\PUBLIC\GCHAL</Title>
+      <Description>Source code for GCHAL</Description>
+      <Path>$(_WINCEROOT)\PUBLIC\GCHAL</Path>
+    </SourceCode>
+  </Item>
+</CatalogFile>

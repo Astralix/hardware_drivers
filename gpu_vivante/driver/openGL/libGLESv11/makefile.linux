@@ -1,0 +1,200 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+#
+# Linux build file for OpenGL ES 1.1 library.
+#
+
+################################################################################
+# Include common definitions.
+
+include $(AQROOT)/makefile.linux.def
+
+OBJ_DIR_ORIG := $(OBJ_DIR)
+
+################################################################################
+# Define shared library output name.
+
+ifeq ($(gcdSTATIC_LINK), 1)
+STATIC = 1
+else
+DYNAMIC = 1
+endif
+
+ifeq ($(COMMON_LITE), 1)
+  ifeq ($(gcdES11_CORE_WITH_EGL), 1)
+    OBJ_DIR := $(OBJ_DIR)_cl
+    ifeq ($(STATIC), 1)
+      TARGET_NAME = libGLES_CL.a
+    else
+      TARGET_NAME = libGLES_CL.so
+    endif
+  else
+    OBJ_DIR := $(OBJ_DIR)_v1_cl
+    ifeq ($(STATIC), 1)
+      TARGET_NAME = libGLESv1_CL.a
+    else
+      ifeq ($(QNX), 1)
+        TARGET_NAME = libGLES_CL_viv.so
+      else
+        TARGET_NAME = libGLESv1_CL.so
+      endif
+    endif
+   endif
+else
+  ifeq ($(gcdES11_CORE_WITH_EGL), 1)
+    OBJ_DIR := $(OBJ_DIR)_cm
+    ifeq ($(STATIC), 1)
+      TARGET_NAME = libGLES_CM.a
+    else
+      TARGET_NAME = libGLES_CM.so
+    endif
+  else
+    ifeq ($(STATIC), 1)
+      TARGET_NAME = libGLESv1_CM.a
+    else
+      ifeq ($(QNX), 1)
+        TARGET_NAME = libGLES_CM_viv.so
+      else
+        TARGET_NAME = libGLESv1_CM.so
+      endif
+    endif
+  endif
+endif
+
+TARGET_OUTPUT = $(OBJ_DIR)/$(TARGET_NAME)
+
+################################################################################
+# Installation directory.
+
+INSTALL_DIR = $(SDK_DIR)/drivers
+
+################################################################################
+# Supply additional include directories.
+
+INCLUDE += -I$(AQROOT)/hal/inc
+INCLUDE += -I$(AQROOT)/hal/os/linux/user
+INCLUDE += -I$(AQROOT)/hal/user
+INCLUDE += -I$(AQARCH)/cmodel/inc
+INCLUDE += -I$(AQROOT)/sdk/inc
+INCLUDE += -I$(AQROOT)/driver/openGL/egl/inc
+
+ifeq ($(QNX), 1)
+else
+ifeq ($(EGL_API_FB), 0)
+  INCLUDE += -I$(X11_ARM_DIR)/include
+endif
+endif
+
+CFLAGS += $(INCLUDE)
+
+################################################################################
+# Add extra flags for object files.
+
+ifneq ($(USE_ARMCC), 1)
+  CFLAGS += -fPIC -Werror -ansi
+
+  ifeq (,$(GL_11_APPENDIX))
+    LFLAGS += -Wl,--version-script=libGLESv11.map
+  endif
+endif
+
+CFLAGS += -D__GL_EXPORTS
+
+################################################################################
+# Build for common lite.
+
+ifeq ($(COMMON_LITE), 1)
+  CFLAGS += -DCOMMON_LITE
+endif
+
+################################################################################
+# Build for OES11 with EGL.
+
+ifeq ($(gcdES11_CORE_WITH_EGL), 1)
+   CFLAGS += -DgcdES11_CORE_WITH_EGL
+endif
+
+################################################################################
+# Define flags for the linker.
+
+ifneq ($(USE_ARMCC), 1)
+  LFLAGS += -Wall -shared -Wl,-soname,$(TARGET)
+endif
+
+################################################################################
+# Supply dependent libraries.
+
+LIBS += -L$(SDK_DIR)/drivers -l GAL
+ifneq ($(QNX), 1)
+  LIBS += -l EGL
+else
+  LIBS += -l EGL_viv
+endif
+
+################################################################################
+# Add extra library path.
+
+################################################################################
+# Describe object files.
+
+OBJECTS = $(OBJ_DIR)/gc_glff.o \
+          $(OBJ_DIR)/gc_glff_alpha.o \
+          $(OBJ_DIR)/gc_glff_basic_types.o \
+          $(OBJ_DIR)/gc_glff_buffer.o \
+          $(OBJ_DIR)/gc_glff_clear.o \
+          $(OBJ_DIR)/gc_glff_clip_plane.o \
+          $(OBJ_DIR)/gc_glff_context.o \
+          $(OBJ_DIR)/gc_glff_cull.o \
+          $(OBJ_DIR)/gc_glff_depth.o \
+          $(OBJ_DIR)/gc_glff_draw.o \
+          $(OBJ_DIR)/gc_glff_egl.o \
+          $(OBJ_DIR)/gc_glff_enable.o \
+          $(OBJ_DIR)/gc_glff_fixed_func.o \
+          $(OBJ_DIR)/gc_glff_fragment_shader.o \
+          $(OBJ_DIR)/gc_glff_frag_proc.o \
+          $(OBJ_DIR)/gc_glff_framebuffer.o \
+          $(OBJ_DIR)/gc_glff_fog.o\
+          $(OBJ_DIR)/gc_glff_hash.o \
+          $(OBJ_DIR)/gc_glff_lighting.o \
+          $(OBJ_DIR)/gc_glff_line.o \
+          $(OBJ_DIR)/gc_glff_matrix.o \
+          $(OBJ_DIR)/gc_glff_multisample.o \
+          $(OBJ_DIR)/gc_glff_named_object.o \
+          $(OBJ_DIR)/gc_glff_pixel.o \
+          $(OBJ_DIR)/gc_glff_point.o \
+          $(OBJ_DIR)/gc_glff_query.o \
+          $(OBJ_DIR)/gc_glff_renderbuffer.o \
+          $(OBJ_DIR)/gc_glff_render_thread.o \
+          $(OBJ_DIR)/gc_glff_states.o \
+          $(OBJ_DIR)/gc_glff_stream.o \
+          $(OBJ_DIR)/gc_glff_texture.o \
+          $(OBJ_DIR)/gc_glff_vertex_shader.o \
+          $(OBJ_DIR)/gc_glff_viewport.o
+
+ifeq ($(USE_PROFILER),1)
+  OBJECTS += $(OBJ_DIR)/gc_glff_profiler.o
+endif
+
+include $(AQROOT)/common.target
+
+################################################################################
+# Extra installation.
+
+install: extra_install
+
+.PHONY: extra_install
+extra_install:
+	@mkdir -p $(SDK_DIR)/drivers
+	@mkdir -p $(SDK_DIR)/include/GLES
+	@cp -f $(AQROOT)/sdk/inc/GLES/*.h $(SDK_DIR)/include/GLES

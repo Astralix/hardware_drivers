@@ -1,0 +1,131 @@
+#ifndef __BOARD_DSPG_IRQ_H
+#define __BOARD_DSPG_IRQ_H
+
+/*
+ * Interrupt controller
+ */
+
+#define DMW_PLICU_NR_IRQS		64
+
+/* leave some room for the DP52 interrupts */
+#define NR_IRQS				DMW_PLICU_NR_IRQS + 16
+
+#define	DMW_PLICU_BASE			0x05100000
+#define DMW_PLICU_CH_CLR_INT1		0x00
+#define DMW_PLICU_CH_CLR_INT2		0x04
+#define DMW_PLICU_CH_EDGE_LEVEL1	0x08
+#define DMW_PLICU_CH_EDGE_LEVEL2	0x0C
+#define DMW_PLICU_CH_SW_TRIG_SET1	0x10
+#define DMW_PLICU_CH_SW_TRIG_SET2	0x14
+#define DMW_PLICU_SW_CH_REQ		0x18
+#define DMW_PLICU_STATUS1		0x1C
+#define DMW_PLICU_STATUS2		0x20
+#define DMW_PLICU_PENDING_REQ1		0x24
+#define DMW_PLICU_PENDING_REQ2		0x28
+#define DMW_PLICU_CAUSE1		0x2C
+#define DMW_PLICU_CAUSE2		0x30
+#define DMW_PLICU_CH_MASK1		0x34
+#define DMW_PLICU_CH_MASK2		0x38
+#define DMW_PLICU_SET_CH_MASK1		0x3C
+#define DMW_PLICU_SET_CH_MASK2		0x40
+#define DMW_PLICU_CLR_CH_MASK1		0x44
+#define DMW_PLICU_CLR_CH_MASK2		0x48
+#define DMW_PLICU_CH_PRIORITY1		0x4C
+#define DMW_PLICU_CH_PRIORITY2		0x50
+#define DMW_PLICU_CH_PRIORITY3		0x54
+#define DMW_PLICU_CH_PRIORITY4		0x58
+#define DMW_PLICU_CH_PRIORITY5		0x5C
+#define DMW_PLICU_CH_PRIORITY6		0x60
+#define DMW_PLICU_CH_PRIORITY7		0x64
+#define DMW_PLICU_CH_PRIORITY8		0x68
+#define DMW_PLICU_FIQ_SEL1		0x6C
+#define DMW_PLICU_FIQ_SEL2		0x70
+#define DMW_PLICU_FIQ_PENDING_REQ1	0x74
+#define DMW_PLICU_FIQ_PENDING_REQ2	0x78
+#define DMW_PLICU_FIQ_CAUSE1		0x7C
+#define DMW_PLICU_FIQ_CAUSE2		0x80
+#define DMW_PLICU_PRI_MASK		0x84
+#define DMW_PLICU_PRI_MASK_FIQ		0x88
+
+
+
+#define DMW_IID_CORTEX			0
+#define DMW_IID_DBM			1
+#define DMW_IID_USB1OTG_SOF_PULSE	2
+#define DMW_IID_USB1OTG_MC_NINT		3
+#define DMW_IID_KEYPAD			4
+#define DMW_IID_RESERVED2		5
+#define DMW_IID_CSS_NORMAL_INTERRUPT	6
+#define DMW_IID_SECURITY_ACCELERATOR	7
+#define DMW_IID_DRAM_CONTROLLER		8
+#define DMW_IID_GPU			9
+#define DMW_IID_VIDEO_ENCODER		10
+#define DMW_IID_VIDEO_DECODER		11
+#define DMW_IID_CIU			12
+#define DMW_IID_SLAVE_MII		13
+#define DMW_IID_LCD_CONTROLLER		14
+#define DMW_IID_SW1			15
+#define DMW_IID_MEMORY_STICK_CONTROLLER	16
+#define DMW_IID_SDMMC_CONTROLLER	17
+#define DMW_IID_OSDM			18
+#define DMW_IID_SEC			19
+#define DMW_IID_GDMAC_ERROR		20
+#define DMW_IID_GDMAC_DMA_DONE		21
+#define DMW_IID_FLASH_CONTROLLER	22
+#define DMW_IID_8023MAC			23
+#define DMW_IID_EXTERNAL_REQUEST_0	24
+#define DMW_IID_EXTERNAL_REQUEST_1	25
+#define DMW_IID_EXTERNAL_REQUEST_2	26
+#define DMW_IID_EXTERNAL_REQUEST_3	27
+#define DMW_IID_EXTERNAL_REQUEST_4	28
+#define DMW_IID_EXTERNAL_REQUEST_5	29
+#define DMW_IID_EXTERNAL_REQUEST_6	30
+#define DMW_IID_SW2			31
+#define DMW_IID_EXTERNAL_REQUEST_7	32
+#define DMW_IID_EXTERNAL_REQUEST_8	33
+#define DMW_IID_EXTERNAL_REQUEST_9	34
+#define DMW_IID_EXTERNAL_REQUEST_10	35
+#define DMW_IID_EXTERNAL_REQUEST_11	36
+#define DMW_IID_EXTERNAL_REQUEST_12	37
+#define DMW_IID_EXTERNAL_REQUEST_13	38
+#define DMW_IID_EXTERNAL_REQUEST_14	39
+#define DMW_IID_EXTERNAL_REQUEST_15	40
+#define DMW_IID_RTC			41
+#define DMW_IID_I2C2			42
+#define DMW_IID_I2C1			43
+#define DMW_IID_SPI2			44
+#define DMW_IID_SPI1			45
+#define DMW_IID_TIMER4			46
+#define DMW_IID_SW3			47
+#define DMW_IID_TIMER3			48
+#define DMW_IID_TIMER2			49
+#define DMW_IID_TIMER1			50
+#define DMW_IID_WIFI_MAC		51
+#define DMW_IID_MAC			52
+#define DMW_IID_UART3			53
+#define DMW_IID_UART2			54
+#define DMW_IID_UART1			55
+#define DMW_IID_USB2OTG_SOF_PULSE	56
+#define DMW_IID_USB2OTG_MC_NINT		57
+#define DMW_IID_TDM3			58
+#define DMW_IID_TDM2			59
+#define DMW_IID_TDM1			60
+#define DMW_IID_PACP			61
+#define DMW_IID_WD			62
+#define DMW_IID_SW4			63
+
+#define DMW_EXTINT_CFG		0x2A0		
+#define DMW_EXTINT_STAT		0x2A8
+
+int irq_init(void);
+
+void dmw_irq_ack(unsigned int irq);
+void dmw_irq_mask(unsigned int irq);
+void dmw_irq_unmask(unsigned int irq);
+unsigned int dmw_is_irq_pending(unsigned int irq);
+
+unsigned extint_to_gpio(int extint);
+
+unsigned extint_to_idd(int extint);
+
+#endif

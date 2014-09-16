@@ -1,0 +1,160 @@
+################################################################################
+# Macros.
+
+################################################################################
+DEVELOP=0
+
+
+AQROOT          ?= $(PWD)
+AQARCH          ?= $(AQROOT)/arch/XAQ2
+AQVGARCH          ?= $(AQROOT)/arch/GC350
+
+export AQROOT AQARCH
+
+################################################################################
+# Include common definitions.
+
+include $(AQROOT)/makefile.linux.def
+
+################################################################################
+# Components of the project.
+
+# libraries
+LIB_GAL     := $(GAL_DIR)
+LIB_GFX     := $(GFX_DIR)
+LIB_VDK     := $(VDK_DIR)
+LIB_EGL     := $(EGL_DIR)
+ifneq ($(VIVANTE_NO_VG), 1)
+LIB_VG11    := $(VG11_DIR)
+endif
+LIB_GLES11  := $(GLES11_DIR)
+LIB_GLES2X  := $(GLES2X_DIR)
+LIB_CL11   := $(CL11_DIR)
+
+LIB_OES11_LIST  := $(LIB_GLES11)
+LIB_OES2X_LIST  := $(LIB_GLES2X)
+LIB_OCL11_LIST  := $(LIB_GAL) $(LIB_CL11)
+LIB_VIVANTE	:= $(VIVANTE_LIB_DIR)
+
+LIB_LIST        := $(LIB_GAL)
+
+ifneq ($(STATIC_LINK), 1)
+LIB_LIST        += $(LIB_GFX)
+endif
+
+ifeq ($(USE_VDK), 1)
+LIB_LIST        += $(LIB_VDK)
+endif
+
+LIB_LIST        += $(LIB_EGL)
+LIB_LIST        += $(LIB_OES11_LIST)
+LIB_LIST        += $(LIB_OES2X_LIST)
+ifeq ($(USE_OPENCL), 1)
+LIB_LIST       += $(LIB_CL11)
+endif
+ifneq ($(VIVANTE_NO_VG), 1)
+LIB_OVG11_LIST  := $(LIB_VG11)
+LIB_LIST        += $(LIB_OVG11_LIST)
+endif
+LIB_LIST		  += $(LIB_VIVANTE)
+
+# gal core
+GAL_CORE  := .
+# register header
+ifeq ($(VIVANTE_ENABLE_VG), 1)
+REG_HEAD        := $(AQARCH)/reg $(AQVGARCH)/reg
+else
+REG_HEAD                := $(AQARCH)/reg
+endif
+
+################################################################################
+# Define the macros used in the common makefile.
+
+MODULES     :=  $(REG_HEAD) $(LIB_LIST)
+MAIN_MODULE :=  $(REG_HEAD) $(GAL_CORE) $(LIB_LIST)
+
+OBJ_DIR     := $(SDK_DIR)
+
+################################################################################
+# Include the common makefile.
+
+include $(AQROOT)/common.node
+
+################################################################################
+# Extra operations.
+
+install: extra_install
+
+clean: extra_clean
+
+.PHONY: extra_install extra_clean
+extra_install:
+	@mkdir -p $(SDK_DIR)
+	@-cp $(AQROOT)/release/SW/ReadMe_Linux_SDK.txt $(SDK_DIR)/ReadMe.txt
+
+extra_clean:
+	@rm -rf $(SDK_DIR)
+
+################################################################################
+# Define the dependencies.
+$(LIB_GFX)	: $(LIB_GAL)
+ifeq ($(USE_VDK), 1)
+$(LIB_EGL)	: $(LIB_GAL) $(LIB_VDK)
+else
+$(LIB_EGL)	: $(LIB_GAL)
+endif
+$(LIB_GLES11)	: $(LIB_GAL)
+$(LIB_GLES2X)	: $(LIB_GAL)
+$(LIB_GAL)       : $(REG_HEAD)
+$(LIB_VIVANTE)	: $(REG_HEAD)
+
+$(GAL_CORE) : $(REG_HEAD)
+$(LIB_LIST) : $(GAL_CORE)
+################################################################################
+# Special targets.
+
+# gal core
+
+.PHONY: $(GAL_CORE) $(LIB_GFX)
+$(GAL_CORE):
+	@test ! -d $@ || $(DRV_MAKE) --directory=$@ $(V_TARGET)
+
+$(LIB_GFX):
+ifeq (,$(DFB_DIR))
+	@echo "DFB_DIR variable was not exported; skipped DirectFB accelerator building"
+endif
+
+$(LIB_GLES11): gles11v1_cl gles11_cl gles11_cm
+gles11v1_cl: $(LIB_GAL)
+	@test ! -d $(GLES11_DIR) || $(MAKE) --directory $(GLES11_DIR) COMMON_LITE=1 gcdES11_CORE_WITH_EGL=0 $(V_TARGET) gcdSTATIC_LINK=$(gcdSTATIC_LINK)
+
+gles11_cl: $(LIB_GAL)
+	@test ! -d $(GLES11_DIR) || $(MAKE) --directory $(GLES11_DIR) COMMON_LITE=1 gcdES11_CORE_WITH_EGL=1 $(V_TARGET) gcdSTATIC_LINK=$(gcdSTATIC_LINK)
+
+gles11_cm: $(LIB_GAL)
+	@test ! -d $(GLES11_DIR) || $(MAKE) --directory $(GLES11_DIR) COMMON_LITE=0 gcdES11_CORE_WITH_EGL=1 $(V_TARGET) gcdSTATIC_LINK=$(gcdSTATIC_LINK)
+################################################################################
+# Supported targets.
+
+gal_core:   $(GAL_CORE)
+hal_user:   $(LIB_GAL)
+
+gfx:        $(LIB_GFX)
+oes11_drv:  $(LIB_OES11_LIST) $(GAL_CORE)
+oes2x_drv:  $(LIB_OES2X_LIST) $(GAL_CORE)
+gles11:     $(LIB_GLES11)
+gles2x:     $(LIB_GLES2X)
+ifeq ($(USE_OPENCL), 1)
+ocl11_drv:  $(LIB_OCL11_LIST)
+endif
+libvivante: $(LIB_VIVANTE)
+ifeq ($(USE_VDK), 1)
+vdk:        $(LIB_VDK)
+endif
+
+egl:        $(LIB_EGL)
+
+ifneq ($(VIVANTE_NO_VG), 1)
+vg11:       $(LIB_VG11)
+ovg11_drv:  $(LIB_OVG11_LIST) $(GAL_CORE)
+endif

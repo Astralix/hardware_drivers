@@ -1,0 +1,42 @@
+SYSTEM.RESET
+SYSTEM.CPU ARM926EJ
+
+; Add DMW96 CSS menues
+menu.rp
+(
+	add
+	menu
+	(
+		popup "DMW96"
+		(
+			menuitem "CSS registers"
+			(
+				per.rp css.per
+				per.view
+			)
+		)
+	)
+	add
+	toolbar
+	(
+		toolitem "Load Ramdump" "do ld_css_ramdump.cmm"
+		[
+B   BBB BBB BB
+B   B B B B B B
+B   B B B B B B
+B   B B BBB B B
+BBB BBB B B BB
+
+ggg  ggg g   g
+g g  g g gg gg
+gg   ggg g g g
+g g  g g g   g
+
+gg      g  g ggg
+g g g g gggg g g
+g g g g g  g ggg
+g g g g g  g g
+gg  ggg g  g g
+		]
+	)
+)

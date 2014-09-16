@@ -1,0 +1,40 @@
+Vivante VDK backend for Android Apps
+
+Overview
+========
+ This is the Vivante VDK module for Android.
+
+Build
+=====
+ Goto the projects/sdk/vdk and run 'mm' to build libVDK.so.
+
+Usage
+=====
+ Make sure that you have put libVDK.so into /system/lib on your target device.
+
+Samples
+=====
+ 1. projects/sdk/samples/es11/tutorial1:
+    HOST: cd projects/sdk/samples/es11/tutorial1
+    HOST: mm
+    HOST: adb push $(output)/tutorial1_es11 /system/bin
+    TARGET: cd /system/bin
+    TARGET: ./tutorial1_es11
+
+ 2. projects/test/es20/3DMarkMobileES2_RC_src:
+    HOST: cd projects/test/es20/3DMarkMobileES2_RC_src/configuration/vdk
+    HOST: mm
+    HOST: adb push $(output)/gcmm07 $(target_dir)/
+    TARGET: cd $(target_dir)
+    TARGET: ./gcmm07
+
+Added VDK backend support Samples
+=====
+ 1. projects/sdk/samples/es11/tutorial1
+ 2. projects/sdk/samples/es11/tutorial2
+ 3. projects/test/es20/3DMarkMobileES2_RC_src
+ 4. projects/test/es11/common/3DMarkMobile06
+
+Known issues
+============
+ 1. Android-Froyo EGL: eglGetProcAddress doesn't get gl* functions, such as glGetTexture.

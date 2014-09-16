@@ -1,0 +1,17 @@
+#! /system/xbin/sh
+
+#MPMCAHBTimeout0 - LCDC (25)
+#MPMCAHBTimeout1 - Wifi (150)
+#MPMCAHBTimeout2 - Scaler, OSDM, JPEG, Ethernet (100)
+#MPMCAHBTimeout3 - NAND, SD/MMC, Sony MS, USB2.0 (100)
+#MPMCAHBTimeout4 - CPU data (200)
+#MPMCAHBTimeout5 - CPU instructions (200)
+
+dwt mem_write 0x89100408 200
+dwt mem_write 0x89100428 200
+dwt mem_write 0x89100448 10
+dwt mem_write 0x89100468 200
+dwt mem_write 0x89100488 200
+dwt mem_write 0x891004a8 200
+
+dwt mem_dump 0x89100408

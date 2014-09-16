@@ -1,0 +1,21 @@
+;Environment Variables
+OS=
+ID=CSS
+
+;T32 API Access
+RCL=NETASSIST
+PORT=20001
+PACKLEN=1024
+
+;Connection to Host
+PBI=
+USB
+CORE=2
+
+;Screen Settings:
+SCREEN=
+FONT=SMALL
+HEADER=TRACE32 CSS
+
+;Printer Settings:
+PRINTER=WINDOWS

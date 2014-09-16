@@ -1,0 +1,15 @@
+;Environment Variables
+OS=
+ID=CSA
+
+;Connection to Host
+PBI=
+USB
+
+;Screen Settings:
+SCREEN=
+FONT=SMALL
+HEADER=TRACE32 CSS Standalone
+
+;Printer Settings:
+PRINTER=WINDOWS

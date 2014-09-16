@@ -1,0 +1,183 @@
+#
+# linux/drivers/mtd/dspg_nand/Kconfig
+#
+
+menu "DSPG DW Nand Flash Device Driver"
+	depends on MTD != n
+
+config MTD_NAND_DW
+	tristate "DSPG DW Nand Flash chips"
+	depends on MTD_NAND
+	depends on ARCH_DW || MACH_VERSATILE_BROADTILE
+	help
+	  This enables the driver for the DW Nand Flash chips.
+	  ECC is inherent in the driver.
+
+config MTD_NAND_DW_DMA_THROUGH_SSRAM
+	bool "DMA transfers through internal memory"
+	depends on MTD_NAND_DW
+	default "y"
+	help
+	  This sets that the driver should use internal memory for DMA transfers.
+	  Should be enabled for DW52.
+	
+	  If unsure, choose "y"
+
+config MTD_NAND_DW_SKIP_BBT
+	bool "BBT skipped"
+	depends on MTD_NAND_DW
+	default "n"
+	help
+	  Skip the initial creation of bad block table. Should not be used untill you are sure of what are you doing.
+	
+	  If unsure, choose "n"
+
+config MTD_NAND_DW_DEBUG
+	bool "Display debug information"
+	depends on MTD_NAND_DW
+	default "n"
+	help
+	  Display debug information.
+	
+	  If unsure, choose "n"
+
+config MTD_NAND_DW_DEBUG_VERBOSE
+	bool "Display even more debug information"
+	depends on MTD_NAND_DW_DEBUG
+	default "n"
+	help
+	  Display even more debug information.
+	
+	  If unsure, choose "n"
+
+config MTD_NAND_DW_DEBUG_VERBOSE_FUNCTIONS
+	bool "Display functions logging"
+	depends on MTD_NAND_DW_DEBUG_VERBOSE
+	default "n"
+	help
+	  Display entries to important functions.
+	
+	  If unsure, choose "n"
+
+config MTD_NAND_DW_CONFIGURE_TIMING
+	bool "Configure NAND FLASH timing"
+	depends on MTD_NAND_DW
+	default "n"
+	help
+	  Configure NAND FLASH timing. This is an advanced option, don't use it until you know exactly what are you doing.
+	
+	  If unsure, choose "n"
+
+config MTD_NAND_DW_C_FlsRdyTimeout
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 255
+	default 32
+	int "C_FlsRdyTimeout"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsPulseCleStup
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsPulseCleStup"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsPulseWrHigh
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsPulseWrHigh"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsPulseWrLow
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsPulseWrLow"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsPulseRdHigh
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsPulseRdHigh"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsPulseRdLow
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsPulseRdLow"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsWaitRdy1Fall
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsWaitRdy1Fall"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsWaitRdy1Rise
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsWaitRdy1Rise"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsWaitRdy2Fall
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsWaitRdy2Fall"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsWaitRdy2Rise
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsWaitRdy2Rise"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsWaitRdy3Fall
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsWaitRdy3Fall"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsWaitRdy3Rise
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsWaitRdy3Rise"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsWaitRdy4Fall
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsWaitRdy4Fall"
+	help
+	  See DW manual for details.
+
+config MTD_NAND_DW_C_FlsWaitRdy4Rise
+	depends on MTD_NAND_DW_CONFIGURE_TIMING
+	range 0 15
+	default 4
+	int "C_FlsWaitRdy4Rise"
+	help
+	  See DW manual for details.
+
+endmenu

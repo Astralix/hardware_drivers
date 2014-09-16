@@ -1,0 +1,225 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+# ARM configuration.
+AQROOT      ?=  `pwd`/../..
+AQARCH      ?=  $(AQROOT)/arch/GCCORE
+
+export AQROOT
+export AQARCH
+
+ARM_DIR     ?=  /home/software/ARM
+
+CC          :=  $(ARM_DIR)/RVCT/Programs/4.1/462/linux-pentium/armcc
+LD          :=  $(ARM_DIR)/RVCT/Programs/4.1/462/linux-pentium/armlink
+SYS_INC     :=  $(ARM_DIR)/RVCT/Data/4.1/462/include/unix
+
+
+VIVANTE_NO_3D ?= 0
+
+VERBOSE     ?=  0
+ifeq ($(VERBOSE),0)
+Q           ?=  @
+else
+Q           ?=
+endif
+
+DEBUG       ?=  0
+ifeq ($(DEBUG),0)
+O_DIR       ?=  o/release
+else
+O_DIR       ?=  o/debug
+endif
+
+STRICT      ?=  1
+ifeq ($(STRICT),1)
+    CFLAGS  +=  --strict
+endif
+
+REMARKS     ?=  1
+ifeq ($(REMARKS),1)
+    CFLAGS  +=  --remarks
+    CFLAGS  +=  --diag_suppress=1301
+    CFLAGS  +=  --diag_suppress=2530
+    CFLAGS  +=  --diag_suppress=1297
+    CFLAGS  +=  --diag_suppress=826
+endif
+
+C99         ?=  1
+ifeq ($(C99),1)
+    CFLAGS  +=  --c99
+endif
+
+CFLAGS      +=  --apcs=/fpic --no_unaligned_access
+LFLAGS      +=  --fpic --shared
+
+ifeq ($(VIVANTE_NO_3D), 0)
+# Default appendix for GL name collision.
+CFLAGS  +=  -D_GL_11_APPENDIX=_es11
+CFLAGS  +=  -D_GL_2_APPENDIX=_es2
+CFLAGS  +=  -DEGL_API_FB=1 -DUSE_VDK=1
+endif
+
+ifeq ($(DEBUG),1)
+CFLAGS  +=  -DDEBUG --debug
+endif
+
+ifneq ($(VIVANTE_NO_VG), 1)
+CFLAGS  += -DVIVANTE_NO_VG
+endif
+
+# Set source directories.
+vpath %.c $(AQROOT)/hal/kernel
+vpath %.c $(AQROOT)/hal/user
+vpath %.c $(AQROOT)/hal/optimizer
+vpath %.c $(AQARCH)/hal/kernel
+vpath %.c $(AQARCH)/hal/user
+vpath %.c $(AQROOT)/hal/os/linux/user
+ifeq ($(VIVANTE_NO_3D), 0)
+vpath %.c $(AQROOT)/driver/openGL/egl/source
+vpath %.c $(AQROOT)/driver/openGL/egl/api
+vpath %.c $(AQROOT)/driver/openGL/egl/os
+vpath %.c $(AQROOT)/driver/openGL/libGLESv11
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/driver
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/common
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/compiler
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/preprocessor
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/entry
+ifneq ($(VIVANTE_NO_VG), 1)
+vpath %.c $(AQROOT)/driver/openVG/vg11/driver
+endif
+endif # VIVANTE_NO_3D
+
+# Set include directories.
+INC_DIR = \
+    $(AQROOT)/hal/inc \
+    $(AQROOT)/hal/user \
+    $(AQROOT)/hal/os/linux/user \
+    $(AQROOT)/hal/kernel \
+    $(AQARCH)/hal/kernel \
+    $(AQARCH)/cmodel/inc \
+    $(AQROOT)/sdk/inc \
+
+ifeq ($(VIVANTE_NO_3D), 0)
+INC_DIR += \
+    $(AQROOT)/driver/openGL/egl/os \
+    $(AQROOT)/driver/openGL/egl/source \
+    $(AQROOT)/driver/openGL/egl/inc \
+    $(AQROOT)/driver/openGL/egl/api \
+    $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/inc
+endif
+
+CFLAGS += $(addprefix -I,$(INC_DIR) $(SYS_INC))
+
+# libGAL
+libGAL_SOURCE = $(wildcard \
+                    $(AQROOT)/hal/kernel/*.c \
+                    $(AQARCH)/hal/kernel/*.c \
+                    $(AQROOT)/hal/user/*.c \
+                    $(AQARCH)/hal/user/*.c \
+                    $(AQROOT)/hal/optimizer/*.c \
+                    )
+OBJ_FILES += \
+    $(addprefix $(O_DIR)/,$(notdir $(patsubst %.c,%.o,$(libGAL_SOURCE))))
+
+
+ifeq ($(VIVANTE_NO_3D), 0)
+# libEGL
+libEGL_SOURCE = $(wildcard \
+                    $(AQROOT)/driver/openGL/egl/source/*.c \
+                    $(AQROOT)/driver/openGL/egl/api/*_platform.c \
+                    )
+OBJ_FILES += \
+    $(addprefix $(O_DIR)/,$(notdir $(patsubst %.c,%.o,$(libEGL_SOURCE))))
+
+# libGLES_CM
+LIBGLES_CM_DIR = $(AQROOT)/driver/openGL/libGLESv11
+libGLES_CM_SOURCE = $(LIBGLES_CM_DIR)/gc_glff_alpha.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_basic_types.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_buffer.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_clear.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_clip_plane.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_context.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_cull.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_depth.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_draw.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_enable.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_fixed_func.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_fragment_shader.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_vertex_shader.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_frag_proc.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_framebuffer.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_fog.c\
+                    $(LIBGLES_CM_DIR)/gc_glff_hash.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_lighting.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_line.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_matrix.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_states.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_multisample.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_named_object.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_pixel.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_point.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_query.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_renderbuffer.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_stream.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_texture.c \
+                    $(LIBGLES_CM_DIR)/gc_glff_viewport.c \
+                    $(LIBGLES_CM_DIR)/gc_glff.c
+
+OBJ_FILES += \
+    $(addprefix $(O_DIR)/,$(notdir $(patsubst %.c,%.o,$(libGLES_CM_SOURCE))))
+
+# libGLESv2
+libGLESv2_SOURCE = $(wildcard $(AQROOT)/driver/openGL/libGLESv2x/driver/*.c)
+OBJ_FILES += \
+    $(addprefix $(O_DIR)/,$(notdir $(patsubst %.c,%.o,$(libGLESv2_SOURCE))))
+
+# libGLESv2SC
+libGLESv2SC_SOURCE = \
+    $(wildcard $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/*/*.c)
+OBJ_FILES += \
+    $(addprefix $(O_DIR)/,$(notdir $(patsubst %.c,%.o,$(libGLESv2SC_SOURCE))))
+
+ifneq ($(VIVANTE_NO_VG), 1)
+# libOpenVG
+libOpenVG_SOURCE = $(wildcard $(AQROOT)/driver/openVG/vg11/driver/*.c)
+OBJ_FILES += \
+    $(addprefix $(O_DIR)/,$(notdir $(patsubst %.c,%.o,$(libOpenVG_SOURCE))))
+endif
+
+endif #VIVANTE_NO_3D
+
+.PHONY : all
+all : registers $(O_DIR)/libVIVANTE.so
+
+.PHONY : clean
+clean :
+	@-rm -fr $(O_DIR)/* $(O_DIR)
+
+.PHONY : registers
+registers :
+	@test -d $(AQARCH)/reg && $(MAKE) -C $(AQARCH)/reg
+
+ifneq ($(wildcard $(O_DIR)/*.d),)
+include $(wildcard $(O_DIR)/*.d)
+endif
+
+$(O_DIR)/libVIVANTE.so: $(OBJ_FILES)
+	@echo [ LD ] $@
+	$(Q)$(LD) $(LFLAGS) --soname=,$(O_DIR)/libVIVANTE.so $(OBJ_FILES)
+
+$(O_DIR)/%.o : %.c
+	@mkdir -p $(O_DIR)
+	@echo [ CC ] $@
+	$(Q)$(CC) -c $(CFLAGS) --depend=$(patsubst %.o,%.d,$@) -o $@ $<
+

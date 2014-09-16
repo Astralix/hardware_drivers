@@ -1,0 +1,131 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+WINCEOEM=1
+RELEASETYPE=PLATFORM
+WARNISERROR=1
+
+##########################################################
+# Set global variables for OS
+
+_COMMONPUBROOT=$(_PUBLICROOT)\common
+__PROJROOT=$(_PUBLICROOT)\GCHAL
+
+##########################################################
+# Set OEM and ISV include path
+
+_OEMINCPATH=$(_WINCEROOT)\public\common\sdk\inc
+_OEMINCPATH=$(_OEMINCPATH);$(_WINCEROOT)\public\common\oak\inc
+_OEMINCPATH=$(_OEMINCPATH);$(_WINCEROOT)\public\common\ddk\inc
+
+_ISVINCPATH=$(_WINCEROOT)\public\common\sdk\inc
+
+##########################################################
+# Set project global variables
+!IF "$(AQROOT)" == ""
+AQROOT=$(_WINCEROOT)\public\gchal
+!ENDIF
+!IF "$(AQARCH)" == ""
+AQARCH=$(AQROOT)\arch\XAQ2
+!ENDIF
+
+!IF "$(AQVGARCH)" == ""
+AQVGARCH=$(AQROOT)\arch\GC350
+!ENDIF
+
+!IF "$(VIVANTE_SDK_DIR)" == ""
+VIVANTE_SDK_DIR=$(_FLATRELEASEDIR)\vivante_sdk
+!ENDIF
+
+VIVANTE_SDK_INC=$(VIVANTE_SDK_DIR)\inc
+VIVANTE_SDK_LIB=$(VIVANTE_SDK_DIR)\lib
+VIVANTE_SDK_BIN=$(VIVANTE_SDK_DIR)\bin
+
+INCLUDES=$(AQROOT)\hal\inc
+
+!IF "$(_WINCEOSVER)" >= "700"
+GCLIB_PATH=$(_COMMONPUBROOT)\platform\$(_TGTPLAT)\lib\$(_CPUINDPATH)
+!ELSE
+GCLIB_PATH=$(_TARGETPLATROOT)\lib\$(_CPUINDPATH)
+!ENDIF
+
+!IF "$(_TGTPLAT)" == "Emulator" || "$(_TGTPLAT)" == "DeviceEmulator"
+CDEFINES=$(CDEFINES) -DEMULATOR
+!ENDIF
+
+##########################################################
+# LOCAL COMPILING COMMAND
+
+GCHAL_C_COMPILING_COMMAND= \
+	@echo BUILD_MARKER:C_COMPILE_START Compiling $< \
+	&& @$(CCOMPILER) $(CONLY_FLAGS) -Fo$@ $(C_COMMAND_LINE_OPTIONS) $< \
+	&& @echo BUILD_MARKER:C_COMPILE_END
+
+GCHAL_CPP_COMPILING_COMMAND= \
+	@echo BUILD_MARKER:CPP_COMPILE_START Compiling $< \
+	&& @$(CXXCOMPILER) $(CONLY_FLAGS) -Fo$@ $(C_COMMAND_LINE_OPTIONS) $< \
+	&& @echo BUILD_MARKER:CPP_COMPILE_END
+
+##########################################################
+# VDK support
+
+!IFNDEF VDK
+USE_VDK=1
+!ENDIF
+CDEFINES=$(CDEFINES) -DUSE_VDK=$(USE_VDK)
+
+!IFNDEF VIVANTE_NO_3D
+VIVANTE_NO_3D=0
+!ENDIF
+
+!IF "$(VIVANTE_NO_3D)" == "1"
+CDEFINES=$(CDEFINES) -DVIVANTE_NO_3D
+!ELSE
+!UNDEF VIVANTE_NO_3D
+!ENDIF
+
+!IFNDEF VIVANTE_ENABLE_VG
+VIVANTE_ENABLE_VG=1
+!ENDIF
+
+!IFNDEF USE_BANK_ALIGNMENT
+USE_BANK_ALIGNMENT=0
+!ENDIF
+
+!IFNDEF BANK_BIT_START
+BANK_BIT_START=13
+!ENDIF
+
+!IFNDEF BANK_BIT_END
+BANK_BIT_END=15
+!ENDIF
+
+!IFNDEF BANK_CHANNEL_BIT
+BANK_CHANNEL_BIT=12
+!ENDIF
+
+!IF "$(USE_BANK_ALIGNMENT)" == "1"
+CDEFINES=$(CDEFINES) -DgcdENABLE_BANK_ALIGNMENT=1
+!IF "$(BANK_BIT_START)" != "0"
+!IF "$(BANK_BIT_END)" != "0"
+CDEFINES=$(CDEFINES) -DgcdBANK_BIT_START=$(BANK_BIT_START)
+CDEFINES=$(CDEFINES) -DgcdBANK_BIT_END=$(BANK_BIT_END)
+!ENDIF
+!ENDIF
+!IF "$(BANK_CHANNEL_BIT)" != "0"
+CDEFINES=$(CDEFINES) -DgcdBANK_CHANNEL_BIT=$(BANK_CHANNEL_BIT)
+!ENDIF
+!ENDIF
+
+CDEFINES=$(CDEFINES) -DgcdENABLE_VG=$(VIVANTE_ENABLE_VG)
+CDEFINES=$(CDEFINES) -DgcdDYNAMIC_MAP_RESERVED_MEMORY=0

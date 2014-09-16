@@ -1,0 +1,63 @@
+;;
+;; Configure the CPU and connect to target
+;;
+reset
+sys.d
+sys.cpu ARM926EJ
+sys.option.enreset off
+
+TRONCHIP.set DABORT OFF
+TRONCHIP.set PABORT OFF
+TRONCHIP.set UNDEF OFF
+TRONCHIP.set FIQ OFF
+TRONCHIP.set IRQ OFF
+TRONCHIP.set SWI OFF
+TRONCHIP.set FIQ OFF
+TRONCHIP.set RESET OFF
+
+task.reset
+break.delete
+map.reset
+mmu.reset
+symbol.reset
+symbol.delete
+system.option MMUSPACES off
+symbol.sourcepath m:/
+
+sys.u
+
+setup.imaskasm on
+setup.imaskhll off
+
+register.reset
+
+;;
+;; Initialize the SRAM in CS2 to 32 bit
+;;
+d.s a:0x10100054 %LONG 0x00303021
+
+;;
+;; disable mmu
+;;
+per.s c15:0x1 %LONG 0x0005107C
+
+;;
+;; Initialize the SDRAM
+;;
+d.load.elf VersatileBoardInit.axf /map
+go forever
+wait !run()
+
+;;
+;; Load the image
+;;
+d.load.binary ../u-boot/u-boot.bin 0x01000000
+d.load.binary ../u-boot/u-boot.bin 0x02000000
+d.load.elf    ../u-boot/u-boot /nocode /gnu /strippart 7
+symbol.cleanup
+
+register.set.pc 0x01000000
+print "Press GO!"
+
+enddo
+

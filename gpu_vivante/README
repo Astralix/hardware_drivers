@@ -1,0 +1,49 @@
+
+Files layout
+============
+<AQROOT>/
+    |
+    +---arch/XAQ2                    : Hardware specific driver code
+    |
+    +---driver
+    |    |
+    |    +---gfx                     : DirectFB accelerator
+    |    |
+    |    +---openGL
+    |    |    |
+    |    |    +---egl                : EGL driver
+    |    |    |
+    |    |    +---libGLESv11         : OpenGL ES1.1 driver
+    |    |    |
+    |    |    \---libGLESv2x         : OpenGL ES2.0 driver
+    |    |
+    |    \---openVG
+    |            |
+    |            \---vg11             : OpenVG 1.1 driver
+    |
+    +---hal
+    |    |
+    |    +---inc                     : HAL header files
+    |    |
+    |    +---os                      : OS layer HAL driver
+    |    |
+    |    +---user                    : User mode HAL driver
+    |    |
+    |    |---kernel                  : Kernel mode HAL driver
+    |    |
+    |    \---optimizer               : OES2.0 compiler optimizer
+    |
+    +---release/SW                   : SDK release ReadMe files
+    |
+    \---sdk
+        |
+        +---inc                      : SDK/Driver header files
+        |
+        +---vivante                  : Pack all drivers except kernel driver in one library
+        |
+        \---vdk                      : VDK source code
+
+How to build
+============
+1. Build steps for Linux: $(AQROOT)/release/SW/ReadMe_Linux.txt
+2. Build steps for WinCE: $(AQROOT)/release/SW/ReadMe_WinCE.txt

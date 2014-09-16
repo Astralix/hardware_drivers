@@ -1,0 +1,39 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+DOSYSGEN=1
+SYNCHRONIZE_DRAIN=1
+TARGETNAME=egl.api
+TARGETTYPE=LIBRARY
+
+CDEFINES = \
+  $(CDEFINES) \
+  -D__EGL_EXPORTS \
+  -DUSE_CE_DIRECTDRAW
+
+SOURCES= \
+    gc_egl_gdi_ce.cpp \
+    gc_egl_platform.c \
+
+INCLUDES= \
+  $(INCLUDES); \
+  $(AQROOT)\sdk\inc; \
+  $(AQROOT)\hal\inc; \
+  $(AQROOT)\hal\os\ce\user; \
+  $(AQROOT)\driver\openGL\egl\source; \
+  $(AQROOT)\driver\openGL\egl\os; \
+  $(AQROOT)\driver\openGL\egl\api; \
+  $(AQROOT)\driver\openGL\egl\inc; \
+
+SOURCELIBS = \
+    $(_SYSGENSDKROOT)\lib\$(_CPUINDPATH)\ddraw.lib

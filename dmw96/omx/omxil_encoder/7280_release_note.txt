@@ -1,0 +1,91 @@
+RELEASE NOTES
+Hantro-OpenMAX
+Date: 10/20/2011
+COPYRIGHT Hantro 2011. All Rights Reserved.
+
+
+Date: 20 October 2011
+
+1. Introduction
+
+Released modules:
+ - OpenMAX IL encoder component for Hantro 7280 HW encoder
+ - OpenMAX Test client
+
+Required modules not included in this release:
+ - Bellagio core implementation for OpenMAX (libomxil-bellagio-0.9.3)
+  -> Configuration modified to install in BUILD directory
+ - Hantro 7280 encoder product software
+
+
+2. This release supports:
+ - H264, MPEG4, H263 and JPEG formats for 7280 encoder
+ - Conformant to OpenMAX IL v1.1.2 base profile
+
+
+3. Building Instructions 
+Release contains one component and test software for it:
+- 7280 HW encoder (omxil/source/7280_encoder)
+- testclient (omxil/source/testclient)
+
+
+ 1.) Preconditions:
+  - libomxil-bellagio-0.9.3 is installed to libomxil-bellagio-0.9.3/build directory
+  - 7280 API headers and libraries are available
+
+ 2.) Configure and build 7280 HW encoder component
+  - set working directory to omxil/source/7280_encoder
+  - edit Makefile
+    * Set correct path to ENCODER_RELEASE and MEMALLOC_RELEASE variables
+     * ENCODER_RELEASE should point to root directory of 7280 HW encoder release
+     * MEMALLOC_RELEASE should point to directory where 7280 HW encoder memalloc headers are found
+  - Execute gmake
+    * "gmake install"
+
+  3.) Configure and build testclient for 7280 HW encoder
+   - set working directory to omxil/source/testclient
+   - edit Makefile
+     * Set correct compiler (CC) 
+     * Set correct path to MEMALLOC_RELEASE variable
+     * MEMALLOC_RELEASE should point to directory where tested components memalloc headers are found
+   - Execute gmake
+     * "gmake install"
+
+  4.) Run tests
+   - Set correct paths to SYSTEM_MODEL_HOME, TEST_DATA_HOME and YUV_SEQUENCE_HOME as described in omxil/source/testclient/README
+   - Run 
+        >./test_h264.sh [ 1 | 1000 1100 | all ]
+        >./test_mpeg4.sh [ 1 | 1000 1100 | all ]	
+        >./test_jpeg.sh [ 1 | 2000 2100 | all ]
+
+4. Compatible Products and Environments
+This product has been tested on the following product:
+- 7280 HW encoder
+
+
+5. Implemented Features
+The following features appear in this release:
+- H264 encoder
+- MPEG4 encoder
+- H263 encoder
+- JPEG encoder
+- OMX Tunneling
+
+6. Debugging and Tracing
+
+Encoder:
+ For logging use DENCODER_TRACE for CFLAGS in Makefile
+ CFLAGS +=-DENCODER_TRACE
+
+
+7. Known Bugs and Limitations
+
+7280 HW encoder:
+   OpenMAX Interop profile implementation doesn't support suspension.
+   OpenMAX Interop profile implementation doesn't support resource management.
+
+
+
+
+
+

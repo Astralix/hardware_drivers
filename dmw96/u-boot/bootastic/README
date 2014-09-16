@@ -1,0 +1,9 @@
+In order to create the bootastic tools and images, a precompiled u-boot binary
+is needed. Please create a link to it like so:
+
+	$ ln -s /path/to/u-boot.bin
+
+That done, simply run make:
+
+	$ make
+

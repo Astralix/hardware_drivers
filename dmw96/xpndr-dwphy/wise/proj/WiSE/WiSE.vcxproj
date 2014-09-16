@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{ECB697B9-B09D-4F35-AB0E-E27E21A8B3EF}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>WiSE</RootNamespace>
+    <ProjectName>WiSE</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>c:\temp\WiSE\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\..\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>c:\temp\WiSE\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\..\</OutDir>
+    <TargetName>$(ProjectName)64</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>c:\temp\WiSE\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\..\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>c:\temp\WiSE\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\..\</OutDir>
+    <TargetName>$(ProjectName)64</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;WISE_BUILD_STANDARD;WISE_BUILD_MULTITHREADED;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ExceptionHandling>Sync</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;WISE_BUILD_STANDARD;WISE_BUILD_MULTITHREADED;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ExceptionHandling>Sync</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;WISE_BUILD_STANDARD;NDEBUG;_CONSOLE;WISE_BUILD_MULTITHREADED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ProfileGuidedDatabase>$(IntDir)$(TargetName).pgd</ProfileGuidedDatabase>
+      <LinkErrorReporting>NoErrorReport</LinkErrorReporting>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;WISE_BUILD_STANDARD;NDEBUG;_CONSOLE;WISE_BUILD_MULTITHREADED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ProfileGuidedDatabase>$(IntDir)$(TargetName).pgd</ProfileGuidedDatabase>
+      <LinkErrorReporting>NoErrorReport</LinkErrorReporting>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\CalcEVM.c" />
+    <ClCompile Include="..\..\source\CalcEVM_OFDM.c" />
+    <ClCompile Include="..\..\source\Coltrane.c" />
+    <ClCompile Include="..\..\source\main.c" />
+    <ClCompile Include="..\..\source\Nevada.c" />
+    <ClCompile Include="..\..\source\NevadaPHY.c" />
+    <ClCompile Include="..\..\source\Nevada_b.c" />
+    <ClCompile Include="..\..\source\Nevada_DFS.c" />
+    <ClCompile Include="..\..\source\Nevada_DigitalFrontEnd.c" />
+    <ClCompile Include="..\..\source\Nevada_dpdBlocks.c" />
+    <ClCompile Include="..\..\source\Nevada_FFT.c" />
+    <ClCompile Include="..\..\source\Nevada_RX.c" />
+    <ClCompile Include="..\..\source\Nevada_RX1.c" />
+    <ClCompile Include="..\..\source\Nevada_RX2.c" />
+    <ClCompile Include="..\..\source\Nevada_TX.c" />
+    <ClCompile Include="..\..\source\Nevada_TX_DPD.c" />
+    <ClCompile Include="..\..\source\Phy11n.c" />
+    <ClCompile Include="..\..\source\Phy11n_BFDemapper.cpp" />
+    <ClCompile Include="..\..\source\Phy11n_Demapper.c" />
+    <ClCompile Include="..\..\source\Phy11n_RX.c" />
+    <ClCompile Include="..\..\source\Phy11n_SphereDecoder.c" />
+    <ClCompile Include="..\..\source\Phy11n_SphereDecoderFxP.c" />
+    <ClCompile Include="..\..\source\Phy11n_TX.c" />
+    <ClCompile Include="..\..\source\Tamale.c" />
+    <ClCompile Include="..\..\source\TamalePHY.c" />
+    <ClCompile Include="..\..\source\Tamale_b.c" />
+    <ClCompile Include="..\..\source\Tamale_DigitalFrontEnd.c" />
+    <ClCompile Include="..\..\source\Tamale_dpdBlocks.c" />
+    <ClCompile Include="..\..\source\Tamale_FFT.c" />
+    <ClCompile Include="..\..\source\Tamale_RX.c" />
+    <ClCompile Include="..\..\source\Tamale_RX1.c" />
+    <ClCompile Include="..\..\source\Tamale_RX2.c" />
+    <ClCompile Include="..\..\source\Tamale_TX.c" />
+    <ClCompile Include="..\..\source\Tamale_TX_DPD.c" />
+    <ClCompile Include="..\..\source\wiArray.c" />
+    <ClCompile Include="..\..\source\wiBFfixpt.cpp" />
+    <ClCompile Include="..\..\source\wiBFformat.cpp" />
+    <ClCompile Include="..\..\source\wiBFkbsd.cpp" />
+    <ClCompile Include="..\..\source\wiBFkvsd.cpp" />
+    <ClCompile Include="..\..\source\wiBFlfsd.cpp" />
+    <ClCompile Include="..\..\source\wiBFmatrix.cpp" />
+    <ClCompile Include="..\..\source\wiBFsesd.cpp" />
+    <ClCompile Include="..\..\source\wiBFutil.cpp" />
+    <ClCompile Include="..\..\source\wiChanl.c" />
+    <ClCompile Include="..\..\source\wiFilter.c" />
+    <ClCompile Include="..\..\source\wiMAC.c" />
+    <ClCompile Include="..\..\source\wiMain.c" />
+    <ClCompile Include="..\..\source\wiMath.c" />
+    <ClCompile Include="..\..\source\wiMatrix.c" />
+    <ClCompile Include="..\..\source\wiMemory.c" />
+    <ClCompile Include="..\..\source\wiParse.c" />
+    <ClCompile Include="..\..\source\wiPHY.c" />
+    <ClCompile Include="..\..\source\wiProcess.c" />
+    <ClCompile Include="..\..\source\wiRnd.c" />
+    <ClCompile Include="..\..\source\wiTest.c" />
+    <ClCompile Include="..\..\source\wiTGnChanl.c" />
+    <ClCompile Include="..\..\source\wiUtil.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\CalcEVM.h" />
+    <ClInclude Include="..\..\source\CalcEVM_OFDM.h" />
+    <ClInclude Include="..\..\source\Coltrane.h" />
+    <ClInclude Include="..\..\source\Nevada.h" />
+    <ClInclude Include="..\..\source\NevadaPHY.h" />
+    <ClInclude Include="..\..\source\Nevada_dpdBlocks.h" />
+    <ClInclude Include="..\..\source\Phy11n.h" />
+    <ClInclude Include="..\..\source\Tamale.h" />
+    <ClInclude Include="..\..\source\TamalePHY.h" />
+    <ClInclude Include="..\..\source\Tamale_dpdBlocks.h" />
+    <ClInclude Include="..\..\source\wiArray.h" />
+    <ClInclude Include="..\..\source\wiChanl.h" />
+    <ClInclude Include="..\..\source\wiError.h" />
+    <ClInclude Include="..\..\source\wiFilter.h" />
+    <ClInclude Include="..\..\source\wiMAC.h" />
+    <ClInclude Include="..\..\source\wiMain.h" />
+    <ClInclude Include="..\..\source\wiMath.h" />
+    <ClInclude Include="..\..\source\wiMatrix.h" />
+    <ClInclude Include="..\..\source\wiMemory.h" />
+    <ClInclude Include="..\..\source\wiParse.h" />
+    <ClInclude Include="..\..\source\wiPHY.h" />
+    <ClInclude Include="..\..\source\wiProcess.h" />
+    <ClInclude Include="..\..\source\wiRnd.h" />
+    <ClInclude Include="..\..\source\wise.h" />
+    <ClInclude Include="..\..\source\wiTest.h" />
+    <ClInclude Include="..\..\source\wiTGnChanl.h" />
+    <ClInclude Include="..\..\source\wiType.h" />
+    <ClInclude Include="..\..\source\wiUtil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Psapi.Lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Script1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon1.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

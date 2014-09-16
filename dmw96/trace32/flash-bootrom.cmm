@@ -1,0 +1,41 @@
+&DMW96_CMU_WRPR=0x0530004c
+&DMW96_CMU_SWCHWRST1=0x05300050
+&DMW96_CMU_SWCLKENR1=0x05300058
+&DMW96_GPIO_BGPEN_CLR=0x05000080
+&DMW96_SYSCFG_SPCR1=0x05200054
+
+
+map.denyaccess 0x40000000++0xbfffffff
+sys.up
+
+;per.set.field a:&DMW96_SYSCFG_SPCR1 %long 0x40000000 0x0 ; memboot_pad_en=0
+
+; serial reset release
+&val=DATA.LONG(A:&DMW96_CMU_SWCHWRST1)
+&val=&val&~0x80
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x6
+D.S A:&DMW96_CMU_SWCHWRST1 %LE %LONG &val
+
+; serial clock enable
+&val=DATA.LONG(A:&DMW96_CMU_SWCLKENR1)
+&val=&val|0x80
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x90
+D.S A:&DMW96_CMU_SWCLKENR1 %LE %LONG &val
+
+per.set.field a:&DMW96_SYSCFG_SPCR1 %long 0x02000000 0x1 ; uart2_pad_en=1
+d.s a:&DMW96_GPIO_BGPEN_CLR %long 0x000000f0             ; uart2 gpio disable
+
+do bootastic.cmm
+map.reset
+;data.load.elf lpddr2_init.axf
+;go
+;wait 2s
+;b
+
+data.load.elf ../u-boot/u-boot /strippart 6
+data.load.binary ../bootrom/bootrom.bin 0x42000000 /noclear
+;data.load.binary ../linux-android/arch/arm/boot/uImage 0x42000000 /noclear
+;data.load.elf ../linux-android/vmlinux /strippart 6 /nocode /gnu /noclear
+
+ENDDO
+

@@ -1,0 +1,27 @@
+
+
+#include <Windows.h>
+#include <NtVerP.h>
+
+#undef VER_PRODUCTMAJORVERSION
+#undef VER_PRODUCTMINORVERSION
+#undef VER_PRODUCTBUILD
+#undef VER_PRODUCTBUILD_QFE
+#undef VER_PRODUCTNAME_STR
+#undef VER_COMPANYNAME_STR
+
+#define VER_PRODUCTMAJORVERSION  0
+#define VER_PRODUCTMINORVERSION  1
+#define VER_PRODUCTBUILD         0
+#define VER_PRODUCTBUILD_QFE     0
+#define VER_PRODUCTNAME_STR      "Vivante GC Graphics Core"
+#define VER_COMPANYNAME_STR      "Vivante Corporation"
+#define VER_LEGALCOPYRIGHT_YEARS "2004-2009"
+#define VER_LEGALCOPYRIGHT_STR   "\251 2004-2009, Vivante Corporation"
+#define VER_FILETYPE             VFT_DRV
+#define VER_FILESUBTYPE          VFT2_DRV_DISPLAY
+
+#define VER_FILEDESCRIPTION_STR "Vivante Corporation OpenVG 1.1 Driver"
+#define VER_INTERNALNAME_STR    "libOpenVG.dll"
+
+#include <Common.ver>

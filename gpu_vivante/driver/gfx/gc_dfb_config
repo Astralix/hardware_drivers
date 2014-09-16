@@ -1,0 +1,50 @@
+#
+# This is the configuration file for Vivante GFX plug-in driver.
+# You can use this file to control which primitive is accelerated
+# with specific features.
+#
+# e.g. If you want to accelerate blit with alpha blending and rotate180
+#      features, please add the following line in the file.
+#      blit=alphachannel,coloralpha,rotate180
+#
+#      Then blit with other features (including xor and src_colorkey etc.)
+#      are not accelerated by HW. Even blit without any features is not
+#      accelerated also.
+#      "none" in the feature list means the rendering primitive without
+#      any features.
+#
+# Following is the full matrix of the primitives and features.
+#
+#      drawline=none,xor,blend
+#      drawrectangle=none,xor,blend
+#      fillrectangle=none,xor,blend
+#      filltriangle=none,xor,blend
+#      blit=none,xor,alphachannel,coloralpha,src_colorkey,rotate180
+#      stretchblit=none,xor,alphachannel,coloralpha,src_colorkey,rotate180
+#
+# To use this configuration file, please set envionment variable GAL_CONFIG_FILE
+# pointing to this file.
+#
+# e.g. For bash user.
+#      export GAL_CONFIG_FILE=/home/gfx/gc_dfb_config
+#
+# If you don't set the envionment variable, a default configuration matrix
+# will be used.
+#
+# The default configuration matrix is listed below.
+#
+#     fillrectangle=none,xor,blend
+#     filltriangle=none,xor,blend
+#     filltriangle=none,xor,blend
+#     blit=none,xor,alphachannel,coloralpha,src_colorkey,rotate180
+#     stretchblit=none,xor,alphachannel,coloralpha,src_colorkey,rotate180
+#
+# Configuration file has higher priority.
+#
+
+drawline=none,xor,blend
+drawrectangle=none,xor,blend
+fillrectangle=none,xor,blend
+filltriangle=none,xor,blend
+blit=none,xor,alphachannel,coloralpha,src_colorkey,rotate180
+stretchblit=none,xor,alphachannel,coloralpha,src_colorkey,rotate180

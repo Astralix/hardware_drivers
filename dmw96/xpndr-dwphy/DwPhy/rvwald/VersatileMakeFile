@@ -1,0 +1,34 @@
+#
+# Remote Virtual Wi-Fi API Layer
+# Make of RVWAL Server (daemon)
+#
+
+SHELL = /bin/sh
+
+CC = /opt/arm/gcc-4.1.0/arm-none-linux-gnu/bin/gcc
+CC_OPTIONS = -g3
+CC_DEFINES = -DBER_LINUX -DBER_LINUX_DRIVER
+
+VPATH = ../source
+INCLUDE = -I ../include 
+LIB = -lvwal -L/opt/arm/target/lib
+
+DAEMON_NAME  = /opt/arm/target/opt/rvwald
+
+DAEMON_FILES = RvServer.c \
+	       RvSocket.c \
+	       RvUtil.c
+
+OBJ_FILES = $(subst ,,$(DAEMON_FILES:.c=.o))
+
+# -----------
+# Build Rules
+# -----------
+%.o: %.c
+	$(CC) -c $(CC_OPTIONS) $(CC_DEFINES) $(INCLUDE) $+
+
+all: $(OBJ_FILES)
+	$(CC) $(OBJ_FILES) $(LIB) -o $(DAEMON_NAME)
+
+clean:
+	rm -f *.o 

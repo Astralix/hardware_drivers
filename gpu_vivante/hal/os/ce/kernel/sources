@@ -1,0 +1,62 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+SYNCHRONIZE_DRAIN=1
+TARGETNAME=libGALCore
+TARGETTYPE=DYNLINK
+
+CDEFINES=$(CDEFINES) /EHsc
+
+SOURCES= \
+    gc_hal_kernel_ce.cpp \
+    gc_hal_kernel_os.cpp \
+    gc_hal_kernel_kernel.cpp \
+    gc_hal_kernel_debug.cpp \
+    gc_hal_kernel_math.c \
+
+INCLUDES= \
+    $(INCLUDES); \
+    $(AQROOT)\hal\kernel\inc; \
+    $(AQROOT)\hal\kernel; \
+    $(AQARCH)\hal\kernel; \
+    $(AQVGARCH)\hal\kernel; \
+
+TARGETLIBS= \
+    $(GCLIB_PATH)\arch.kernel.lib \
+    $(GCLIB_PATH)\hal.kernel.lib \
+    $(_COMMONOAKROOT)\lib\$(_CPUINDPATH)\ceddk.lib \
+    $(_COMMONSDKROOT)\lib\$(_CPUINDPATH)\coredll.lib \
+
+!IF "$(VIVANTE_ENABLE_VG)" == "1"
+TARGETLIBS= \
+    $(TARGETLIBS) \
+    $(GCLIB_PATH)\arch.kernel.vg.lib \
+
+!ENDIF
+
+!IF "$(_TGTPLAT)" == "Emulator" || "$(_TGTPLAT)" == "DeviceEmulator"
+INCLUDES= \
+    $(INCLUDES); \
+
+TARGETLIBS= \
+  $(TARGETLIBS) \
+
+!ENDIF
+
+DEFFILE=libGALCore.def
+
+##########################################################
+# Install results
+
+!INCLUDE $(BUILDROOT)\wince_install.inc
+

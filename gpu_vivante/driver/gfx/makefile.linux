@@ -1,0 +1,80 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+#
+# Linux build file for GFX driver.
+#
+
+################################################################################
+# Include common definitions.
+
+include ./makefile.linux.def
+
+################################################################################
+# Supply additional CFLAGS.
+
+ifneq ($(USE_ARMCC), 1)
+CFLAGS  += -pipe -fPIC
+endif
+CFLAGS  += -DHAVE_CONFIG_H -D_GNU_SOURCE -DPIC
+
+CFLAGS  += -DGAL_SURFACE_POOL=1
+
+INCLUDE := -I$(AQROOT)/hal/inc
+INCLUDE += -I$(DFB_DIR)/usr/include
+INCLUDE += -I$(DFB_DIR)/include
+INCLUDE += -I$(DFB_DIR)/include/directfb-internal
+INCLUDE += -I$(DFB_DIR)/include/directfb
+
+CFLAGS  += $(INCLUDE)
+
+################################################################################
+# Describe extra libraries.
+
+LIBS    += -L$(DFB_DIR)/lib -ldirectfb -ldirect -lz
+LIBS    += -L$(AQROOT)/hal/user/$(OBJ_DIR) -lGAL
+LIBS    += -lm -lpthread
+
+################################################################################
+# Describe object files.
+
+OBJECTS :=  gc_dfb_raster.o \
+            gc_dfb_state.o \
+            gc_dfb_utils.o \
+            gc_dfb_pool.o \
+            gc_dfb_conf.o \
+            gc_dfb.o \
+            $(NULL)
+
+OBJS    := $(addprefix $(OBJ_DIR)/, $(OBJECTS))
+OBJECTS := $(OBJS)
+
+################################################################################
+# Define a shortcut for the main target.
+
+DYNAMIC     := 1
+TARGET_NAME := libdirectfb_gal.so
+
+################################################################################
+# Define the macros used in common makefile.
+
+# installation directory
+INSTALL_DIR := $(SDK_DIR)/drivers
+
+################################################################################
+# Include the common makefile.
+
+include $(AQROOT)/common.target
+
+################################################################################
+# Extra source code.

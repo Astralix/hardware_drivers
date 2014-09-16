@@ -1,0 +1,19 @@
+currently liboverlay is based upon two hardware modules: OSDM and On2 Post-Processor
+
+OSDM is handling composition and rotation.
+Post-Processor is handling scaling and flipping.
+
+The following list describe current limitations of the above hardware modules:
+
+1. Post-Processor input frame must be aligned to 16 pixels on both axis.
+2. Post-Processor output frame must be aligned to 2 pixels on both axis.
+3. Post-Processor scale limitations:
+	a. Maximum out_width = 3 * in_width		(out_width <= 3*in_width)
+	b. Maximum out_height = 3 * in_height - 2	(out_height <= 3*in_height-2)
+	c. Minimum out_width = in_width / 70		(out_width >= in_width/70)
+	d. Minimum out_height = in_height / 70		(out_height >= in_height/70)
+4. Post-Processor cannot scale width and height in different directions (example: up-scale width and down-scale height).
+5. OSDM plane size must be aligned to 8 pixels on both axis (without using rotation).
+6. OSDM plane size must be aligned to 64 pixels on both axis when using rotation!!!
+
+	

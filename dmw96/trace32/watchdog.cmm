@@ -1,0 +1,31 @@
+if (run())
+(
+	b
+)
+
+b.dis /all
+
+; disable IRQ/FIQ
+R.S I 1
+R.S F 1
+
+;set ARM mode
+R.S T 0
+
+;disable MMU + ICache
+;PER.S C15:0x1 %LONG 52078
+
+break 0x0 /ONCHIP
+
+; force watchdog reset
+data.set A:0x05700000 %WORD 0x0000
+data.set A:0x05700004 %WORD 0xABCD
+data.set A:0x05700004 %WORD 0xABCD
+print "forced watchdog reset"
+go
+
+WAIT !run()
+
+b.en /all
+
+enddo

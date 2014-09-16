@@ -1,0 +1,47 @@
+; Default startup program for TRACE32 for DMW96
+
+RES
+SYSTEM.OPTION SPLIT ON
+SYSTEM.MODE DOWN
+
+; choose hex mode for input
+RADIX HEX
+
+; choose hex/dec for variables
+SETUP.VAR %HEX %DECIMAL
+
+; t32.cmm is started automatically and
+; runs the command argument as a PRACTICE file
+LOCAL &fname
+ENTRY &fname
+DO &fname
+
+; setup default window layout
+DO windows.cmm
+
+;Add some extra buttons to the toolbar
+
+ menu.rp
+ (
+  add
+  toolbar
+  (
+   separator
+   toolitem "Source/List" "list" "Data.List"
+   toolitem "Memory Dump" "dump" "Data.dump"
+   toolitem "Register" "reg" "Register /SpotLight"
+   separator
+   toolitem "Watch" ":var" "Var.Watch"
+   toolitem "Stack" ":varframe" "Var.Frame /l /c"
+   toolitem "Automatic Watch" ":varref" "Var.Ref"
+   separator
+   toolitem "List Breakpoints" "break" "Break.List"
+   toolitem "List Symbols" "symbols" "sYmbol.Browse"
+   separator
+  )
+ )
+
+;Recall and Define History File
+ autostore , history
+
+enddo

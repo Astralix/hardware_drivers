@@ -1,0 +1,54 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+
+#
+# Linux build file for OS dependent functions for libEGL library.
+#
+#
+
+
+################################################################################
+# Include common definitions.
+
+include ../makefile.linux.def
+
+################################################################################
+# Define the CFLAGS.
+
+ifneq ($(USE_ARMCC), 1)
+CFLAGS += -fPIC
+endif
+
+################################################################################
+# Describe object files.
+
+ifneq ($(QNX), 1)
+OBJECTS = $(OBJ_DIR)/gc_egl_linux.o
+else
+OBJECTS = $(OBJ_DIR)/gc_egl_qnx.o
+endif
+
+################################################################################
+# Define a shortcut for the main target.
+
+STATIC = 1
+TARGET_NAME = libeglos.a
+ifeq ($(gcdSTATIC_LINK), 1)
+INSTALL_DIR = $(SDK_DIR)/drivers
+endif
+
+################################################################################
+# Include common makefile.
+
+include $(AQROOT)/common.target

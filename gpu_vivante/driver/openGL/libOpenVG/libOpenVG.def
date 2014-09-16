@@ -1,0 +1,104 @@
+;#############################################################################
+;#
+;#   Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+;#
+;#   The material in this file is confidential and contains trade secrets
+;#   of Vivante Corporation. This is proprietary information owned by
+;#   Vivante Corporation. No part of this work may be disclosed,
+;#   reproduced, copied, transmitted, or used in any way for any purpose,
+;#   without the express written permission of Vivante Corporation.
+;#
+;#############################################################################
+
+
+
+LIBRARY libOpenVG.dll
+
+EXPORTS
+    vgGetError                              @1
+    vgFlush                                 @2
+    vgFinish                                @3
+    vgSetf                                  @4
+    vgSeti                                  @5
+    vgSetfv                                 @6
+    vgSetiv                                 @7
+    vgGetf                                  @8
+    vgGeti                                  @9
+    vgGetVectorSize                         @10
+    vgGetfv                                 @11
+    vgGetiv                                 @12
+    vgSetParameterf                         @13
+    vgSetParameteri                         @14
+    vgSetParameterfv                        @15
+    vgSetParameteriv                        @16
+    vgGetParameterf                         @17
+    vgGetParameteri                         @18
+    vgGetParameterVectorSize                @19
+    vgGetParameterfv                        @20
+    vgGetParameteriv                        @21
+    vgLoadIdentity                          @22
+    vgLoadMatrix                            @23
+    vgGetMatrix                             @24
+    vgMultMatrix                            @25
+    vgTranslate                             @26
+    vgScale                                 @27
+    vgShear                                 @28
+    vgRotate                                @29
+    vgMask                                  @30
+    vgRenderToMask                          @31
+    vgCreateMaskLayer                       @32
+    vgDestroyMaskLayer                      @33
+    vgFillMaskLayer                         @34
+    vgCopyMask                              @35
+    vgClear                                 @36
+    vgCreatePath                            @37
+    vgClearPath                             @38
+    vgDestroyPath                           @39
+    vgRemovePathCapabilities                @40
+    vgGetPathCapabilities                   @41
+    vgAppendPath                            @42
+    vgAppendPathData                        @43
+    vgModifyPathCoords                      @44
+    vgTransformPath                         @45
+    vgInterpolatePath                       @46
+    vgPathLength                            @47
+    vgPointAlongPath                        @48
+    vgPathBounds                            @49
+    vgPathTransformedBounds                 @50
+    vgDrawPath                              @51
+    vgCreatePaint                           @52
+    vgDestroyPaint                          @53
+    vgSetPaint                              @54
+    vgGetPaint                              @55
+    vgSetColor                              @56
+    vgGetColor                              @57
+    vgPaintPattern                          @58
+    vgCreateImage                           @59
+    vgDestroyImage                          @60
+    vgClearImage                            @61
+    vgImageSubData                          @62
+    vgGetImageSubData                       @63
+    vgChildImage                            @64
+    vgGetParent                             @65
+    vgCopyImage                             @66
+    vgDrawImage                             @67
+    vgSetPixels                             @68
+    vgWritePixels                           @69
+    vgGetPixels                             @70
+    vgReadPixels                            @71
+    vgCopyPixels                            @72
+    vgCreateFont                            @73
+    vgDestroyFont                           @74
+    vgSetGlyphToPath                        @75
+    vgSetGlyphToImage                       @76
+    vgClearGlyph                            @77
+    vgDrawGlyph                             @78
+    vgDrawGlyphs                            @79
+    vgColorMatrix                           @80
+    vgConvolve                              @81
+    vgSeparableConvolve                     @82
+    vgGaussianBlur                          @83
+    vgLookup                                @84
+    vgLookupSingle                          @85
+    vgHardwareQuery                         @86
+    vgGetString                             @87

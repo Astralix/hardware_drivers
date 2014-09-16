@@ -1,0 +1,51 @@
+Setup for 7280 OpenMAX IL component testing
+============================================================
+
+
+1. Build the encoder
+>cvs co 7280_encoder
+>cd 7280_encoder/software/linux_reference
+>make system
+
+
+2. Get Bellagio OMX core.
+-Copy libomxil-B-0.3.2.tar.gz and unzip it
+-Copy the dir libomxil-B-0.3.2 to omxil/
+ 
+
+3. Install Bellagio to libomxil-B-0.3.2/build folder.
+>./configure --prefix=<where-your-code-is>/omxil/libomxil-B-0.3.2/build CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32
+>make
+>make install
+>make check (NOTE: it is normal that some of this fails)
+
+
+4. Install OMX component
+-In omxil/source/6280_encoder/Makefile put "ENCODER_RELEASE = ../../../$(ENCODER_API_VERSION)_encoder" to point to your 7280_decoder
+make install
+
+
+5. Compile system model for 7280 encoder.
+-Read instructions from 7280_encoder/system/README
+
+
+6. Set environment variables
+>setenv SYSTEM_MODEL_HOME 7280_encoder/system          - set to point 7280 system model
+>setenv TEST_DATA_HOME /tmp/data                       - set to point where reference data is created
+>setenv YUV_SEQUENCE_HOME /afs/hantro.com/sequence/yuv - set to point input data
+
+Note: H264 testbench uses h264dec as decoder for syntax check. 
+Create link or modify the $dec_bin variable to point to your h264 decoder in test_h264.sh.
+For example:
+>sudo ln /path/to/your/h264_decoder /usr/bin/h264dec
+
+
+7. Compile testclient
+>make clean
+>make install
+
+
+8. Run
+>./test_mpeg4.sh [ 1 | 1 100 | all ]
+>./test_h264.sh [ 1 | 1000 1100 | all ]
+>./test_jpeg.sh [ 1 | 2000 2100 | all ]

@@ -1,0 +1,73 @@
+ 
+ WiSE 4 Revisions List
+ =====================
+
+ 110307a (4.0.1)
+ ---------------
+ 1. Corrected "close" sequence in wiChanl/wiTGnChanl to avoid errors at shutdown
+ 2. Fixed demapper label in output file
+ 3. Corrected resource leak when using pthreads
+ 4. Replaced wiPrintf messages with wiUtil_WriteLogFile in wiProcess.c
+ 5. Restored the hard demapper output option for the Viterbi decoder
+ 6. Added .out as the default extension if wiTest.FilenameExtension is not specified
+
+ 110316a (4.01)
+ --------------
+ 1. wiTest
+    - Added option to increment wiRnd seed with packet number (for debug)
+    - Added option UpdateMisPacketCount to disable update of MinPacketCount
+    - Added option UseSingelTxRxThread to serial "thread" calls in a single thread (for debug)
+ 2. wiRnd 
+    - Added per-thread initialization function
+    - Fixed per-thread random initialization to increment by 1 per thread
+    - Renamed internal type float_t to wiRndReal_t
+ 3. wiMatrix
+    - Made source type in wiCMatCopy pointer to constant matrix
+ 4. Phy11n 
+    - Added option FixedScramblerState to hold the scrambler state fixed (for debug)
+    - Added DemapperType = {10,11,12} for Leonardo's K-Best, ML, and LFS
+    - Bugfix: reset pilot tone PRBS at the start of each packet
+ 5. New modules
+    - Phy11n_BFDemapper -- new demappers for Phy11n
+    - wiBFformat, wiBFkbsd, wiBFlfsd, wiBFmatrix, wiBFsesd, wiBFutil (Phy11n_BFDemapper)
+ 6. wiseMex
+    - Fixed memory handling in wiMexUtil_MsgFunc
+    - Added option wiTest_GetConfig to return wiTest_WriteConfig output as a string
+ 7. Removed source\Archive -- this will be stored on usweb independent of WiSE
+
+ 110317a (4.01.1)
+ ----------------
+ 1. Fixed changes missed during the previous code merge
+
+ 110412a (4.02)
+ --------------
+ 1. Tamale: replaced FFT module with the 20 MHz version of the DMW98 working version
+ 2. Phy11n
+    - Added demapper Kbvt-SD (demapper type 13)
+    - Added modules wiBFfixpt and wiBFkvsd
+ 3  wiBF*: various changes
+
+ 110603a (4.03)
+ --------------
+ 1. Phy11n: added STS fixed-point implementation and STS hybrid forms
+
+ 110615a (4.03.1)
+ ----------------
+ 1. Fixed default wiTest output file extension (now wiTest.out, not witest..out)
+ 2. Added PHY top-level cases WIPHY_START_TEST and WIPHY_END_TEST
+
+ 110711b (4.04)
+ --------------
+ 1. Windows Build
+    - Renamed project proj\WiSE32 to proj\WiSE
+    - Added x64 targets for WiSE and wiseMex
+ 2. Nevada: Added DMW96 ECN 001139 for NEVADA_VERSION_1B (change to PA50 and PartID) and selected as default
+
+
+110922a (4.04.1)
+----------------
+1. Nevada - Added check on HtHeaderValid when computing number of symbols for HT-GF in Nevada_RX2
+            to avoid a floating exception when N_DBPS = 0.
+2. wiParse - modified path to work on both windows and linux per Elisar
+
+ 

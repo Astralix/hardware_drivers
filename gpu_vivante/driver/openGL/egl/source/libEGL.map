@@ -1,0 +1,78 @@
+{
+	global:
+		eglGetError;
+		eglGetDisplay;
+		eglInitialize;
+		eglTerminate;
+		eglQueryString;
+		eglGetConfigs;
+		eglChooseConfig;
+		eglGetConfigAttrib;
+		eglCreateWindowSurface;
+		eglCreatePbufferSurface;
+		eglCreatePixmapSurface;
+		eglDestroySurface;
+		eglQuerySurface;
+		eglBindAPI;
+		eglQueryAPI;
+		eglWaitClient;
+		eglReleaseThread;
+		eglCreatePbufferFromClientBuffer;
+		eglSurfaceAttrib;
+		eglBindTexImage;
+		eglReleaseTexImage;
+		eglSwapInterval;
+		eglCreateContext;
+		eglDestroyContext;
+		eglMakeCurrent;
+		eglGetCurrentContext;
+		eglGetCurrentSurface;
+		eglGetCurrentDisplay;
+		eglQueryContext;
+		eglWaitGL;
+		eglWaitNative;
+		eglSwapBuffers;
+		eglCopyBuffers;
+		eglGetProcAddress;
+
+		eglLockSurfaceKHR;
+		eglUnlockSurfaceKHR;
+
+		eglCreateImageKHR;
+		eglDestroyImageKHR;
+
+		eglCreateSyncKHR;
+		eglDestroySyncKHR;
+		eglClientWaitSyncKHR;
+		eglSignalSyncKHR;
+		eglGetSyncAttribKHR;
+
+		eglSwapBuffersRegionEXT;
+
+		eglSwapRectangleANDROID;
+		eglSetSwapRectangleANDROID;
+		eglGetRenderBufferANDROID;
+		eglSetBlobCacheFuncsANDROID;
+
+		eglCompositionBeginVIV;
+		eglComposeLayerVIV;
+		eglCompositionEndVIV;
+
+		veglGetCurrentAPIContext;
+		veglGetBlobCache;
+		veglSetBlobCache;
+
+		fbGetDisplay;
+		fbGetDisplayByIndex;
+		fbGetDisplayGeometry;
+		fbDestroyDisplay;
+		fbCreateWindow;
+		fbGetWindowGeometry;
+		fbDestroyWindow;
+		fbCreatePixmap;
+		fbGetPixmapGeometry;
+		fbDestroyPixmap;
+
+	local:
+		*;
+};

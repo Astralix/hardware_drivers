@@ -1,0 +1,91 @@
+;#############################################################################
+;#
+;#   Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+;#
+;#   The material in this file is confidential and contains trade secrets
+;#   of Vivante Corporation. This is proprietary information owned by
+;#   Vivante Corporation. No part of this work may be disclosed,
+;#   reproduced, copied, transmitted, or used in any way for any purpose,
+;#   without the express written permission of Vivante Corporation.
+;#
+;#############################################################################
+
+
+
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\GCHAL\]
+    "Dll"="libGALCore.dll"
+    "Prefix"="GPU"
+
+IF _TGTPLAT = Mustang
+    ; Marvell Mustang
+    "MemBase"=dword:80000000
+    "SysIntr"=dword:1C
+    "Irq"=dword:17
+    "Contiguous"=dword:1A00000
+ENDIF
+
+IF _TGTPLAT = ARMEB
+    ; ARM EB
+    "MemBase"=dword:80000000
+    "SysIntr"=dword:13
+    "Irq"=dword:48
+    "Contiguous"=dword:400000
+ENDIF
+
+IF _TGTPLAT = Aspenite
+    ; Marvell Aspenite
+    "MemBase"=dword:C0400000
+    "Irq"=dword:8
+    "Contiguous"=dword:1000000
+	"order"=dword:6
+ENDIF
+
+IF _TGTPLAT = Dove
+	"MemBase"=dword:d0840000
+    "Irq"=dword:30
+    "Contiguous"=dword:4000000
+ENDIF
+
+IF _TGTPLAT = sy7800
+    "MemBase"=dword:20f00000
+    "SysIntr"=dword:32
+    "Irq"=dword:36
+    "Contiguous"=dword:4000000
+ENDIF
+
+IF _TGTPLAT = iMX6Q_SABREAuto
+    ; GC2000
+    "MemBase"=dword:00130000
+    "Irq"=dword:29
+
+    ; GC320
+    "MemBase2D"=dword:00134000
+    "Irq2D"=dword:2A
+
+	;GC350
+	"MemBaseVG"=dword:02204000
+    "IrqVG"=dword:2B
+
+    "Contiguous"=dword:7000000
+
+ENDIF
+
+    ; ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ; These regsitry settings are needed for Vivante GDI/DD accelerator:
+    ;    GC2DAcceleratorEnable: enable different feature
+    ;         Bit0: BLTPREPARE
+    ;         Bit1: ALPHABLEND
+    ;         Bit2: TRANSPARENT
+    ;         Bit3: STRETCH
+    ;         Bit4: MASK
+    ;
+    ;    GC2DAcceleratorSyncMode: set different sync mode
+    ;            0: force mode
+    ;            1: async mode
+    ;            2: full async mode
+    ;
+    ;    GC2DAcceleratorMinSize: set the min pixel number for hardware to render
+    ; ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		"GC2DAcceleratorEnable"=dword:1F
+		"GC2DAcceleratorSyncMode"=dword:1
+		"GC2DAcceleratorMinSize"=dword:100

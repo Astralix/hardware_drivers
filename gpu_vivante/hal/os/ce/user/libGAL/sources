@@ -1,0 +1,71 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+
+DOSYSGEN=1
+SYNCHRONIZE_DRAIN=1
+
+!IF "$(VIVANTE_NO_3D)" == "1"
+TARGETNAME = libGAL2D
+!ELSE
+TARGETNAME = libGAL
+!ENDIF
+TARGETTYPE = DYNLINK
+
+SOURCES = \
+    ../gc_hal_user_os.c \
+    ../gc_hal_user_debug.c \
+    ../gc_hal_user_math.c \
+	../gc_hal_user_ce.c \
+
+INCLUDES = \
+    $(INCLUDES); \
+	$(_SYSGENSDKROOT)\inc; \
+    $(AQROOT)\hal\user; \
+    $(AQROOT)\hal\os\ce\user; \
+    $(AQROOT)\hal\optimizer; \
+    $(AQARCH)\hal\user; \
+
+SOURCELIBS= \
+    $(GCLIB_PATH)\arch.user.lib \
+    $(GCLIB_PATH)\hal.user.lib \
+    $(GCLIB_PATH)\hal.optimizer.lib \
+
+!IF "$(VIVANTE_ENABLE_VG)" == "1"
+SOURCELIBS= \
+    $(SOURCELIBS) \
+    $(GCLIB_PATH)\arch.user.vg.lib \
+
+!ENDIF
+
+TARGETLIBS = \
+    $(_SYSGENSDKROOT)\lib\$(_CPUINDPATH)\coredll.lib \
+	$(_SYSGENSDKROOT)\lib\$(_CPUINDPATH)\ws2.lib \
+	$(_SYSGENSDKROOT)\lib\$(_CPUINDPATH)\aygshell.lib \
+
+DEFFILE = \
+    libGAL.def
+
+!IF "$(_WINCEOSVER)" >= "600"
+!INCLUDE $(AQROOT)\hal\os\libGAL.def.mak
+
+WINCETARGETFILE0 = libGAL.def
+
+##########################################################
+# Install results
+
+EXTRA_COMMAND = xcopy /I /R /Y $(AQROOT)\hal\inc\*.h $(VIVANTE_SDK_INC)\HAL
+!ENDIF
+
+!INCLUDE $(BUILDROOT)\wince_install.inc
+

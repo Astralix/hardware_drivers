@@ -1,0 +1,132 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+#*******************************************************************************
+#* Copyright (c) 2009 by Vivante Corporarion.  All Rights Reserved.            *
+#*                                                                             *
+#* The material in this file is confidential and contains trade secrets of     *
+#* of Vivante Corporation.  This is proprietary information owned by Vivante   *
+#* Corporation.  No part of this work may be disclosed, reproduced, copied,    *
+#* transmitted, or used in any way for any purpose, without the express        *
+#* written permission of Vivante Corporation.                                  *
+#*                                                                             *
+#* Project:                                                                    *
+#*   OpenVG 1.1 driver.                                                        *
+#*                                                                             *
+#* Description:                                                                *
+#*   Linux makefile.                                                           *
+#*                                                                             *
+#*******************************************************************************
+
+################################################################################
+# Include common definitions.
+
+include $(AQROOT)/makefile.linux.def
+
+OBJ_DIR_ORIG := $(OBJ_DIR)
+
+################################################################################
+# Define shared library output name.
+
+ifeq ($(STATIC_LINK), 1)
+STATIC=1
+TARGET_NAME = libOpenVG.a
+else
+DYNAMIC=1
+ifeq ($(QNX), 1)
+TARGET_NAME = libOpenVG_viv.so
+else
+TARGET_NAME = libOpenVG.so
+endif
+endif
+
+TARGET_OUTPUT = $(OBJ_DIR)/$(TARGET_NAME)
+
+################################################################################
+# Installation directory.
+
+INSTALL_DIR = $(SDK_DIR)/drivers
+
+################################################################################
+# Supply additional include directories.
+
+INCLUDE += -I$(AQROOT)/hal/inc
+INCLUDE += -I$(AQARCH)/cmodel/inc
+INCLUDE += -I$(AQROOT)/sdk/inc
+INCLUDE += -I$(AQROOT)/driver/openGL/egl/inc
+ifeq ($(EGL_API_FB), 0)
+INCLUDE += -I$(X11_ARM_DIR)/include
+endif
+
+CFLAGS += $(INCLUDE)
+
+################################################################################
+# Add extra flags for object files.
+
+CFLAGS += -fPIC -D__GL_EXPORTS -Werror
+
+ifeq ($(ADROID),0)
+CFLAGS += -ansi
+endif
+
+LFLAGS += -Wl,--version-script=libOpenVG.map
+
+################################################################################
+# Supply dependent libraries.
+
+LIBS += -L$(GAL_DIR)/user/$(OBJ_DIR_ORIG)
+LIBS += -lGAL
+
+################################################################################
+# Describe object files.
+
+OBJECTS = $(OBJ_DIR)/gc_vg_arc.o \
+          $(OBJ_DIR)/gc_vg_context.o \
+          $(OBJ_DIR)/gc_vg_debug.o \
+          $(OBJ_DIR)/gc_vg_filter.o \
+          $(OBJ_DIR)/gc_vg_format.o \
+          $(OBJ_DIR)/gc_vg_image.o \
+          $(OBJ_DIR)/gc_vg_main.o \
+          $(OBJ_DIR)/gc_vg_mask.o \
+          $(OBJ_DIR)/gc_vg_matrix.o \
+          $(OBJ_DIR)/gc_vg_memory_manager.o \
+          $(OBJ_DIR)/gc_vg_object.o \
+          $(OBJ_DIR)/gc_vg_paint.o \
+          $(OBJ_DIR)/gc_vg_path.o \
+          $(OBJ_DIR)/gc_vg_path_append.o \
+          $(OBJ_DIR)/gc_vg_path_coordinate.o \
+          $(OBJ_DIR)/gc_vg_path_import.o \
+          $(OBJ_DIR)/gc_vg_path_interpolate.o \
+          $(OBJ_DIR)/gc_vg_path_modify.o \
+          $(OBJ_DIR)/gc_vg_path_normalize.o \
+          $(OBJ_DIR)/gc_vg_path_point_along.o \
+          $(OBJ_DIR)/gc_vg_path_storage.o \
+          $(OBJ_DIR)/gc_vg_path_transform.o \
+          $(OBJ_DIR)/gc_vg_path_walker.o \
+          $(OBJ_DIR)/gc_vg_state.o \
+          $(OBJ_DIR)/gc_vg_stroke.o \
+          $(OBJ_DIR)/gc_vg_text.o \
+          $(OBJ_DIR)/gc_vgu_library.o
+
+include $(AQROOT)/common.target
+
+################################################################################
+# Extra installation.
+
+install: extra_install
+
+.PHONY: extra_install
+extra_install:
+	@mkdir -p $(SDK_DIR)/drivers
+	@mkdir -p $(SDK_DIR)/include
+	@cp -rf $(AQROOT)/sdk/inc/VG $(SDK_DIR)/include

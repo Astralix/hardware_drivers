@@ -1,0 +1,262 @@
+; PRELOADER ("bootastic")
+
+;Ask the user what type of external memory is assembled on the board
+GOSUB get_ddr_type
+ENTRY &ddr_type
+PRINT "Memory type is " "&ddr_type"
+
+do regs.cmm
+
+&DMW96_SYSCFG_GCR1=0x05200004
+&DMW96_SYSCFG_DRAMCTL1=0x05200134
+&DMW96_SYSCFG_DRAMCTL2=0x05200138
+&DMW96_CMU_PLL1=0x05300000
+&DMW96_CMU_PLL2=0x05300004
+&DMW96_CMU_PLL3=0x05300008
+&DMW96_CMU_CPUCLK=0x05300014
+&DMW96_CMU_CLKSWCTL=0x0530001c
+&DMW96_CMU_WRPR=0x0530004c
+&DMW96_CMU_SWCHWRST2=0x05300054
+&DMW96_CMU_SWCLKENR2=0x0530005c
+
+&DMW96_UART1_BASE=0x05a00000
+&DMW96_UART2_BASE=0x05b00000
+&DMW96_UART3_BASE=0x05c00000
+
+&UART_BASE=&DMW96_UART1_BASE
+&UART_CTL=&UART_BASE+0x00
+&UART_INT_DIV=&UART_BASE+0x08
+&UART_FRAC_DIV=&UART_BASE+0x0c
+
+; serial_disable
+D.S A:&UART_CTL %LE %LONG 0x00000000
+
+; before we switch to fast clocks, we have to assure that the bootrom
+; is not accessed faster than 80 mhz. we do this by inserting wait
+; states.
+per.set.field a:&DMW96_SYSCFG_GCR1 %long 0x00000003 0x1
+
+; system clock setup (input: 12 MHz)
+; pre-div: 1; multiplicator: 40; output-div: 1; band: 300 - 600 Mhz;
+GOSUB set_pll &DMW96_CMU_PLL1 0. 39. 0. 0.
+
+; pll1 power-down: 0
+per.set.field a:&DMW96_CMU_CPUCLK  %long 0x00000800 0x0
+
+; wait for PLL to lock
+GOSUB wait_pll &DMW96_CMU_PLL1 "PLL1"
+
+; cpu clock setup
+; pre-dev: 1; multiplicator: 63; output-div: 1; band: 500-1000MHz;
+GOSUB set_pll &DMW96_CMU_PLL2 0. 62. 0. 1.
+GOSUB activate_pll &DMW96_CMU_PLL2
+GOSUB wait_pll &DMW96_CMU_PLL2 "PLL2"
+
+; switch clocks and dividers
+;   13..12: sys feeder: 0=CPUICLK, 1=ALTSYSSRC, 2=PLL1
+;       11: pll1 power-down
+;     9..8: cpu feeder: 0=CPUICLK, 1=PLL2, 2=ALTSYSCLK
+;     7..4: sysbusdiv
+;     3..0: RESERVED
+D.S A:&DMW96_CMU_CPUCLK %LE %LONG 0x82110
+
+; DRAM clock setup
+; pre-dev: 1; multiplicator: 33; output-div: 4; band: 300-600MHz;
+if ("&ddr_type"=="DMW96_DDR_TYPE_DDR2")
+	GOSUB set_pll &DMW96_CMU_PLL3 0. 32. 1. 0	; 198 MHz
+else if ("&ddr_type"=="DMW96_DDR_TYPE_LPDDR2")
+	GOSUB set_pll &DMW96_CMU_PLL3 0. 32. 2. 0	;  99 MHz
+else
+(
+	DIALOG.MESSAGE "External memory was not specified!"
+	ENDDO
+)
+
+GOSUB activate_pll &DMW96_CMU_PLL3
+GOSUB wait_pll &DMW96_CMU_PLL3 "PLL3"
+
+; swdramsrc: pll3
+per.set.field a:&DMW96_CMU_CLKSWCTL %long 0x00000001 0x1
+
+; Denali/DDR2 initialization
+
+; dram signal configuration
+per.set.field a:&DMW96_SYSCFG_DRAMCTL1 %long 0x00000800 0x1 ; pin_group4_sus
+per.set.field a:&DMW96_SYSCFG_DRAMCTL1 %long 0x00100000 0x1 ; pin_group5_sus
+per.set.field a:&DMW96_SYSCFG_DRAMCTL2 %long 0x00000004 0x1 ; pin_group6_sus
+per.set.field a:&DMW96_SYSCFG_DRAMCTL2 %long 0x00000800 0x1 ; pin_group7_sus
+
+; reset release
+&val=DATA.LONG(A:&DMW96_CMU_SWCHWRST2)
+&val=&val&~0x1000
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x6
+D.S A:&DMW96_CMU_SWCHWRST2 %LE %LONG &val
+
+; clk enable
+&val=DATA.LONG(A:&DMW96_CMU_SWCLKENR2)
+&val=&val|0x1000
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x90
+D.S A:&DMW96_CMU_SWCLKENR2 %LE %LONG &val
+
+
+; Configure the DDR controller
+if ("&ddr_type"=="DMW96_DDR_TYPE_DDR2")
+	do ddr2_cfg.cmm
+else if ("&ddr_type"=="DMW96_DDR_TYPE_LPDDR2")
+	do lpddr2_cfg.cmm
+else
+(
+	DIALOG.MESSAGE "External memory was not specified!"
+	ENDDO
+)
+
+
+; Port arbitration settings
+
+GOSUB denali_set_field &axi0_r_priority 6.
+GOSUB denali_set_field &axi0_w_priority 6.
+GOSUB denali_set_field &axi0_bdw 100.
+GOSUB denali_set_field &axi0_bdw_ovflow 1.
+
+GOSUB denali_set_field &axi1_r_priority 6.
+GOSUB denali_set_field &axi1_w_priority 6.
+GOSUB denali_set_field &axi1_bdw 100.
+GOSUB denali_set_field &axi1_bdw_ovflow 1.
+
+GOSUB denali_set_field &axi2_r_priority 6.
+GOSUB denali_set_field &axi2_w_priority 6.
+GOSUB denali_set_field &axi2_bdw 100.
+GOSUB denali_set_field &axi2_bdw_ovflow 1.
+
+GOSUB denali_set_field &axi3_r_priority 6.
+GOSUB denali_set_field &axi3_w_priority 6.
+GOSUB denali_set_field &axi3_bdw 100.
+GOSUB denali_set_field &axi3_bdw_ovflow 1.
+
+GOSUB denali_set_field &axi4_r_priority 6.
+GOSUB denali_set_field &axi4_w_priority 6.
+GOSUB denali_set_field &axi4_bdw 100.
+GOSUB denali_set_field &axi4_bdw_ovflow 1.
+
+GOSUB denali_set_field &axi5_r_priority 7.
+GOSUB denali_set_field &axi5_w_priority 7.
+GOSUB denali_set_field &axi5_bdw 100.
+GOSUB denali_set_field &axi5_bdw_ovflow 1.
+
+GOSUB denali_set_field &axi6_r_priority 1.
+GOSUB denali_set_field &axi6_w_priority 1.
+GOSUB denali_set_field &axi6_bdw 100.
+GOSUB denali_set_field &axi6_bdw_ovflow 1.
+
+GOSUB denali_set_field &axi7_r_priority 2.
+GOSUB denali_set_field &axi7_w_priority 2.
+GOSUB denali_set_field &axi7_bdw 20.
+GOSUB denali_set_field &axi7_bdw_ovflow 0.
+
+GOSUB denali_set_field &lowpower_control 0.
+wait 10ms
+GOSUB denali_set_field &start 1.
+
+; wait for Denali init complete
+wait 500ms
+
+&val=data.long(A:0x001000b8)&0x4010
+if &val!=0x4010
+(
+	DIALOG.MESSAGE "Denali init not complete after 500ms!"
+	ENDDO
+)
+
+D.S A:0x001000b8 %LE %LONG 0x00100000 ; clear Denali init complete
+
+; serial: baud rate 115200
+D.S A:&UART_INT_DIV %LE %LONG 0x0041
+D.S A:&UART_FRAC_DIV %LE %LONG 0x0002
+
+; serial: enable
+D.S A:&UART_CTL %LE %LONG 0x00000001
+
+; done
+ENDDO
+
+set_pll:
+	LOCAL &addr &r &f &od &bs &val
+	ENTRY &addr &r &f &od &bs
+	&val=DATA.LONG(A:&addr)
+	&val=&val&~0x1ffff
+	&val=&val|((&r)<<0.)
+	&val=&val|((&f)<<5.)
+	&val=&val|((&od)<<12.)
+	&val=&val|((&bs)<<14.)
+	&val=&val|(1<<15.)
+	D.S A:&addr %LE %LONG &val
+	WAIT 1ms
+	RETURN
+
+activate_pll:
+	LOCAL &addr &val
+	ENTRY &addr
+
+	; clear power down
+	per.set.field a:&addr %long 0x00008000 0x0
+
+	RETURN
+
+wait_pll:
+	LOCAL &addr &name &val
+	ENTRY &addr &name
+
+	; wait for PLL to lock
+	wait 50ms
+
+	&val=data.long(A:&addr)&0x40000
+	if &val==0x0
+	(
+		DIALOG.MESSAGE &name " not locked after 50ms!"
+		ENDDO
+	)
+	&val=data.long(A:&addr)&0x20000
+	if &val==0x20000
+	(
+		DIALOG.MESSAGE &name " error!"
+		ENDDO
+	)
+
+	RETURN
+
+denali_set_field:
+	LOCAL &bits &reg &offset &val &tmp &addr
+	ENTRY &bits &reg &offset &val
+
+	&addr=0x00100000+(&reg*4)
+	&tmp=DATA.LONG(A:&addr)&~(((1<<&bits)-1)<<&offset)
+	&tmp=&tmp|(&val<<&offset)
+	D.S A:&addr %LE %LONG &tmp
+
+	RETURN
+
+;Ask the user what type of external memory is assembled on the board
+get_ddr_type:
+	LOCAL &ddr_type
+	&ddr_type="DMW96_DDR_TYPE_DDR2"
+
+	dialog
+	(
+		header "DDR type"
+		pos 2. 1. 34. 1.
+		text "Which DDR type is assembled on your board?"
+		pos 2. 3. 6. 2.
+		defbutton "DDR2" "continue"
+		pos 25. 3. 8. 2.
+		button "LPDDR2"
+		(
+			entry &ddr_type
+			&ddr_type="DMW96_DDR_TYPE_LPDDR2"
+			continue
+		)
+	)
+	stop
+	dialog.end
+
+	RETURN &ddr_type
+

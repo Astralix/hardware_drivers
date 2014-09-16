@@ -1,0 +1,121 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+#
+# Linux build file for libEGL library.
+#
+
+################################################################################
+# Include common definitions.
+
+include ../makefile.linux.def
+
+################################################################################
+# Define shared library output name.
+ifeq ($(gcdSTATIC_LINK), 1)
+STATIC = 1
+else
+DYNAMIC = 1
+endif
+
+ifeq ($(STATIC), 1)
+  ifneq ($(QNX), 1)
+    TARGET_NAME = libEGL.a
+  else
+    TARGET_NAME = libEGL_viv.a
+  endif
+else
+  ifneq ($(QNX), 1)
+    TARGET_NAME = libEGL.so
+  else
+    TARGET_NAME = libEGL_viv.so
+  endif
+endif
+
+TARGET_OUTPUT = $(OBJ_DIR)/$(TARGET_NAME)
+
+################################################################################
+# Add extra flags for object files.
+
+ifneq ($(USE_ARMCC), 1)
+  CFLAGS += -fPIC
+  ifeq (,$(EGL_APPENDIX))
+    LFLAGS += -Wl,--version-script=libEGL.map
+  endif
+endif
+
+ifeq ($(VIVANTE_NO_3D),1)
+  CFLAGS += -DVIVANTE_NO_3D
+endif
+
+ifeq ($(VIVANTE_NO_VG),1)
+  CFLAGS += -DVIVANTE_NO_VG
+endif
+
+ifeq ($(gcdDUMP_FRAME_TGA),1)
+  CFLAGS += -DgcdDUMP_FRAME_TGA=1
+endif
+################################################################################
+# Supply necessary libraries.
+
+# Specify Vivante library paths.
+LIBS += -L $(AQROOT)/driver/openGL/egl/api/$(OBJ_DIR) -l eglapi
+
+# Specify dependent libraries.
+LIBS += -L $(SDK_DIR)/drivers -l GAL
+
+
+################################################################################
+# Describe object files.
+
+OBJECTS = $(OBJ_DIR)/gc_egl_query.o \
+          $(OBJ_DIR)/gc_egl_config.o \
+          $(OBJ_DIR)/gc_egl_context.o \
+          $(OBJ_DIR)/gc_egl_init.o \
+          $(OBJ_DIR)/gc_egl_render_thread.o \
+          $(OBJ_DIR)/gc_egl_surface.o \
+          $(OBJ_DIR)/gc_egl_swap.o \
+          $(OBJ_DIR)/gc_egl_sync.o \
+          $(OBJ_DIR)/gc_egl_image.o \
+          $(OBJ_DIR)/gc_egl.o
+
+ifneq ($(VIVANTE_NO_3D), 1)
+OBJECTS += \
+          $(OBJ_DIR)/gc_egl_composition.o
+endif
+
+$(TARGET_OUTPUT): \
+	$(AQROOT)/driver/openGL/egl/api/$(OBJ_DIR)/libeglapi.a
+
+################################################################################
+# Installation directory.
+
+INSTALL_DIR = $(SDK_DIR)/drivers
+
+################################################################################
+# Include common makefile.
+
+include $(AQROOT)/common.target
+
+################################################################################
+# Extra installation.
+
+install: extra_install
+
+.PHONY: extra_install
+extra_install:
+	@mkdir -p $(SDK_DIR)/drivers
+	@mkdir -p $(SDK_DIR)/include/EGL
+	@cp -f $(AQROOT)/sdk/inc/EGL/*.h $(SDK_DIR)/include/EGL
+	@mkdir -p $(SDK_DIR)/include/KHR
+	@cp -f $(AQROOT)/sdk/inc/KHR/*.h $(SDK_DIR)/include/KHR

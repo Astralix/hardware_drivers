@@ -1,0 +1,105 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+#
+# This file is a part of Vivante software stack build environment for Linux.
+# It defines the rules necessary to build Vivante SDK.
+#
+
+################################################################################
+# Include the global definitions.
+
+include $(AQROOT)/makefile.linux.def
+
+################################################################################
+# Supply additional include directories.
+
+INCLUDE += -I$(AQROOT)/sdk/inc
+INCLUDE += -I$(AQROOT)/hal/inc
+
+ifeq ($(QNX), 1)
+    INCLUDE += -I$(QNX_TARGET)/usr/include
+else
+    INCLUDE += -I$(AQROOT)/hal/os/linux/user
+    ifeq ($(EGL_API_FB), 0)
+        INCLUDE += -I$(X11_ARM_DIR)/include
+    endif
+endif
+
+################################################################################
+# Supply necessary libraries.
+
+ifeq ($(gcdSTATIC_LINK), 0)
+    ifeq ($(QNX), 1)
+	    # In QNX, for now GLESv1 depends on EGL.
+        # So if an application links to VDK, it should depend on EGL.
+        # This will get fixed in later versions of QNX. PR NUMBER: 75211.
+        #LIBS += -lEGL
+        #LIBS += -lm -lgf -liow -lkhronos
+        LIBS += -lm -lkhronos
+    else
+        ifeq ($(EGL_API_FB), 0)
+            LIBS += -L$(X11_ARM_DIR)/lib -lX11 -lXau -lXdmcp
+        endif
+        LIBS += -lm -lpthread -ldl
+    endif
+endif
+
+################################################################################
+# Supply additional include directories.
+
+ifneq ($(USE_ARMCC), 1)
+CFLAGS += -fPIC -Werror -ansi
+LFLAGS += -Wl,--version-script=libVDK.map
+endif
+
+CFLAGS += $(INCLUDE) -D__VDK_EXPORT
+
+################################################################################
+# Describe object files.
+OBJECTS += $(OBJ_DIR)/gc_vdk_gal.o
+OBJECTS += $(OBJ_DIR)/gc_vdk_egl.o
+OBJECTS += $(OBJ_DIR)/gc_vdk_gl.o
+
+################################################################################
+# Define a shortcut for the main target.
+
+ifeq ($(gcdSTATIC_LINK), 1)
+STATIC      := 1
+TARGET_NAME := libVDK.a
+else
+DYNAMIC     := 1
+TARGET_NAME	:= libVDK.so
+endif
+
+################################################################################
+# Installation directory.
+
+INSTALL_DIR := $(SDK_DIR)/drivers
+
+################################################################################
+# Include the common makefile.
+
+include $(AQROOT)/common.target
+
+################################################################################
+# Extra installation.
+
+install: extra_install
+
+.PHONY: extra_install
+extra_install:
+	@mkdir -p $(SDK_DIR)/include
+	@cp ../inc/gc_vdk.h $(SDK_DIR)/include
+	@cp ../inc/gc_vdk_types.h $(SDK_DIR)/include
+	@cd $(SDK_DIR)/include; echo "#include \"gc_vdk.h\"" >vdk.h; cd -

@@ -1,0 +1,159 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+
+# Default appendix for GL name collision.
+GL_11_APPENDIX ?= _es11
+GL_2_APPENDIX  ?= _es2
+ifneq ($(QNX), 1)
+	OS_DIR=linux
+else
+	OS_DIR=qnx
+endif
+
+# Include common makefile.
+include $(AQROOT)/makefile.linux.def
+
+# Define target to build.
+ifeq ($(gcdSTATIC_LINK),1)
+	STATIC = 1
+else
+	DYNAMIC = 1
+endif
+
+ifeq ($(STATIC), 1)
+	TARGET_NAME = libVIVANTE.a
+else
+	TARGET_NAME = libVIVANTE.so
+endif
+
+# Set installation directory.
+INSTALL_DIR = $(SDK_DIR)/drivers
+
+# Set source directories.
+vpath %.c $(AQROOT)/hal/user
+vpath %.c $(AQROOT)/hal/optimizer
+vpath %.c $(AQARCH)/hal/user
+vpath %.c $(AQROOT)/hal/os/$(OS_DIR)/user
+ifeq ($(VIVANTE_NO_3D),0)
+vpath %.c $(AQROOT)/sdk/vdk
+vpath %.c $(AQROOT)/driver/openGL/egl/source
+vpath %.c $(AQROOT)/driver/openGL/egl/api
+vpath %.c $(AQROOT)/driver/openGL/egl/os
+vpath %.c $(AQROOT)/driver/openGL/libGLESv11
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/driver
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/common
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/compiler
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/preprocessor
+vpath %.c $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/entry
+ifneq ($(VIVANTE_NO_VG), 1)
+vpath %.c $(AQROOT)/driver/openVG/vg11/driver
+endif # VIVANTE_NO_VG
+endif
+
+# Set include directories.
+INC_DIR = \
+	$(AQROOT)/hal/inc \
+	$(AQROOT)/hal/user \
+	$(AQROOT)/hal/os/$(OS_DIR)/user \
+	$(AQARCH)/cmodel/inc \
+	$(AQROOT)/sdk/inc \
+	$(AQROOT)/hal/optimizer \
+	$(AQVGARCH)/hal/user \
+
+ifeq ($(VIVANTE_NO_3D),0)
+INC_DIR += \
+	$(AQROOT)/driver/openGL/egl/os \
+	$(AQROOT)/driver/openGL/egl/source \
+	$(AQROOT)/driver/openGL/egl/inc \
+	$(AQROOT)/driver/openGL/egl/api \
+	$(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/inc
+endif
+
+CFLAGS += $(addprefix -I,$(INC_DIR))
+
+ifeq ($(EGL_API_FB), 0)
+    CFLAGS += -I$(X11_ARM_DIR)/include
+endif
+
+ifeq ($(VIVANTE_NO_VG), 1)
+	CFLAGS += -DVIVANTE_NO_VG
+endif
+
+ifneq ($(USE_ARMCC), 1)
+	CFLAGS += -fPIC -Werror -MD -ansi
+endif
+
+# libGAL
+libGAL_SOURCE = $(wildcard \
+					$(AQROOT)/hal/user/*.c \
+					$(AQROOT)/hal/optimizer/*.c \
+					$(AQARCH)/hal/user/*.c \
+					$(AQROOT)/hal/os/$(OS_DIR)/user/*.c \
+					)
+OBJECTS += \
+	$(addprefix $(OBJ_DIR)/,$(notdir $(patsubst %.c,%.o,$(libGAL_SOURCE))))
+
+ifeq ($(VIVANTE_NO_3D), 0)
+# libVDK
+libVDK_SOURCE = $(wildcard \
+					$(AQROOT)/sdk/vdk/*_egl.c \
+					$(AQROOT)/sdk/vdk/*_gl.c \
+					)
+
+ifeq ($(USE_VDK),1)
+    libVDK_SOURCE += $(wildcard $(AQROOT)/sdk/vdk/*_gal.c)
+	OBJECTS += \
+		$(addprefix $(OBJ_DIR)/,$(notdir $(patsubst %.c,%.o,$(libVDK_SOURCE))))
+endif
+
+# libEGL
+libEGL_SOURCE = $(wildcard \
+					$(AQROOT)/driver/openGL/egl/source/*.c \
+					$(AQROOT)/driver/openGL/egl/os/*_$(OS_DIR).c \
+					)
+ifeq ($(USE_VDK), 0)
+libEGL_SOURCE += $(wildcard $(AQROOT)/driver/openGL/egl/api/*_platform.c)
+endif
+OBJECTS += \
+	$(addprefix $(OBJ_DIR)/,$(notdir $(patsubst %.c,%.o,$(libEGL_SOURCE))))
+
+# libGLES_CM
+libGLES_CM_SOURCE = $(wildcard $(AQROOT)/driver/openGL/libGLESv11/*.c)
+OBJECTS += \
+	$(addprefix $(OBJ_DIR)/,$(notdir $(patsubst %.c,%.o,$(libGLES_CM_SOURCE))))
+
+# libGLESv2
+libGLESv2_SOURCE = $(wildcard $(AQROOT)/driver/openGL/libGLESv2x/driver/*.c)
+OBJECTS += \
+	$(addprefix $(OBJ_DIR)/,$(notdir $(patsubst %.c,%.o,$(libGLESv2_SOURCE))))
+
+# libGLESv2SC
+libGLESv2SC_SOURCE = \
+	$(wildcard $(AQROOT)/driver/openGL/libGLESv2x/compiler/libGLESv2SC/*/*.c)
+OBJECTS += \
+	$(addprefix $(OBJ_DIR)/,$(notdir $(patsubst %.c,%.o,$(libGLESv2SC_SOURCE))))
+
+ifneq ($(VIVANTE_NO_VG), 1)
+# libOpenVG
+libOpenVG_SOURCE = $(wildcard $(AQROOT)/driver/openVG/vg11/driver/*.c)
+OBJECTS += \
+	$(addprefix $(OBJ_DIR)/,$(notdir $(patsubst %.c,%.o,$(libOpenVG_SOURCE))))
+endif # VIVANTE_NO_VG
+endif # VIVANTE_NO_3D
+
+include $(AQROOT)/common.target
+
+ifneq ($(wildcard $(OBJ_DIR)/*.d),)
+include $(wildcard $(OBJ_DIR)/*.d)
+endif

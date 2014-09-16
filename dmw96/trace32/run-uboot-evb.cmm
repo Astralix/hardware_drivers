@@ -1,0 +1,48 @@
+sys.up
+
+do bootastic.cmm
+
+;data.load.elf lpddr2_init.axf
+;go
+;wait 2s
+;b
+
+data.load.elf ../u-boot/u-boot /strippart 6
+
+; let's see if u-boot has the relocation stuff
+IF !Y.EXIST(relocate_code)
+	GOTO noreloc
+
+; set the gd_t pointer to NULL to know when its valid
+r.s r8 0
+GLOBAL &reloc
+&reloc=0
+
+ON PBREAK GOSUB
+(
+	LOCAL &gd &off
+	&gd=Register(R8)
+	IF &gd!=0
+	(
+		&off=v.value((*((gd_t *)(&gd))).reloc_off)
+		IF (&off!=&reloc)
+		(
+			Y.RELOC.shift &off-&reloc
+			&reloc=&off
+		)
+	)
+	RETURN
+)
+
+ON SYSDOWN GOSUB
+(
+	ON PBREAK
+	ON SYSDOWN
+	ENDDO
+	RETURN
+)
+
+; stop execution here to leave the PBREAK handler on the stack
+STOP
+
+noreloc:

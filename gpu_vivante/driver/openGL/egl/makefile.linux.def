@@ -1,0 +1,48 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+#
+# Common definitions for EGL library.
+#
+#
+
+################################################################################
+# Include common definitions.
+
+include $(AQROOT)/makefile.linux.def
+
+################################################################################
+# Define the include directories.
+
+INCLUDE += -I$(AQROOT)/hal/inc
+ifeq ($(QNX), 1)
+INCLUDE += -I$(AQROOT)/hal/os/qnx/user
+INCLUDE += -I$(AQROOT)/hal/user/
+else
+INCLUDE += -I$(AQROOT)/hal/os/linux/user
+endif
+INCLUDE += -I$(AQROOT)/sdk/inc
+INCLUDE += -I$(AQROOT)/driver/openGL/egl/os
+INCLUDE += -I$(AQROOT)/driver/openGL/egl/source
+INCLUDE += -I$(AQROOT)/driver/openGL/egl/api
+INCLUDE += -I$(AQROOT)/driver/openGL/egl/inc
+
+ifeq ($(EGL_API_FB), 0)
+    INCLUDE += -I$(X11_ARM_DIR)/include
+endif
+
+ifneq ($(USE_ARMCC), 1)
+CFLAGS	+= -Werror -ansi
+endif
+
+CFLAGS  += $(INCLUDE)

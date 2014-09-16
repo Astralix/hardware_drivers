@@ -1,0 +1,9 @@
+sys.up
+do bootastic.cmm
+
+data.load.elf ../bin/u-boot.evb96
+data.load.binary ../bin/nand.image.evb96 0x42000000
+data.load.binary ../bin/rootfs-basic.ubifs 0x43000000
+
+ENDDO
+

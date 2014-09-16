@@ -1,0 +1,43 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+######################################################
+# Include global difinitions.
+
+include ./makefile.linux.def
+
+######################################################
+# Components of the project.
+
+SC2X_COMMON			:= common
+SC2X_COMPILER		:= compiler
+SC2X_PREPROCESSOR	:= preprocessor
+SC2X_ENTRY			:= entry
+
+LIB_SC2X	:= $(SC2X_COMMON) $(SC2X_COMPILER) $(SC2X_PREPROCESSOR) $(SC2X_ENTRY)
+
+######################################################
+# Define the macros used in the common file.
+
+MODULES		:= $(LIB_SC2X)
+MAIN_MODULE	:= $(SC2X_ENTRY)
+
+######################################################
+# Include the common makefile.
+
+include $(AQROOT)/common.node
+
+######################################################
+# Define the denpendencies.
+
+$(SC2X_ENTRY): $(SC2X_COMMON) $(SC2X_COMPILER) $(SC2X_PREPROCESSOR)

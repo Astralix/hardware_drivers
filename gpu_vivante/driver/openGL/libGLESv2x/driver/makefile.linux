@@ -1,0 +1,117 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+#
+# Driver part of GLES 2.x.
+#
+
+#############################################################################
+# Include common definitions.
+
+include ../makefile.linux.def
+
+#############################################################################
+# Macros.
+
+ifeq ($(gcdSTATIC_LINK), 1)
+STATIC = 1
+else
+DYNAMIC = 1
+endif
+
+ifeq ($(STATIC), 1)
+  TARGET_NAME = libGLESv2.a
+else
+  ifeq ($(QNX), 1)
+    TARGET_NAME = libGLESv2_viv.so
+  else
+    TARGET_NAME = libGLESv2.so
+  endif
+endif
+
+#############################################################################
+# Objects.
+
+OBJECTS = $(OBJ_DIR)/gc_glsh_egl.o \
+          $(OBJ_DIR)/gc_glsh_buffer.o \
+          $(OBJ_DIR)/gc_glsh.o \
+          $(OBJ_DIR)/gc_glsh_clear.o \
+          $(OBJ_DIR)/gc_glsh_compiler.o \
+	  $(OBJ_DIR)/gc_glsh_database.o \
+          $(OBJ_DIR)/gc_glsh_debug.o \
+          $(OBJ_DIR)/gc_glsh_draw.o \
+          $(OBJ_DIR)/gc_glsh_flush.o \
+          $(OBJ_DIR)/gc_glsh_framebuffer.o \
+          $(OBJ_DIR)/gc_glsh_object.o \
+          $(OBJ_DIR)/gc_glsh_renderbuffer.o \
+          $(OBJ_DIR)/gc_glsh_pixels.o \
+          $(OBJ_DIR)/gc_glsh_query.o \
+          $(OBJ_DIR)/gc_glsh_shader.o \
+          $(OBJ_DIR)/gc_glsh_state.o \
+          $(OBJ_DIR)/gc_glsh_texture.o \
+          $(OBJ_DIR)/gc_glsh_vertex.o
+
+ifeq ($(USE_PROFILER),1)
+  OBJECTS += $(OBJ_DIR)/gc_glsh_profiler.o
+endif
+
+################################################################################
+# Add extra flags for object files.
+
+ifneq ($(USE_ARMCC), 1)
+  CFLAGS += -fPIC
+  ifeq (,$(GL_2_APPENDIX))
+    LFLAGS += -Wl,--version-script=libGLESv2.map
+  endif
+endif
+
+################################################################################
+# Add extra library path.
+
+ifeq ($(QNX), 1)
+  LIBS += -L $(SDK_DIR)/drivers -l GAL -l EGL_viv
+endif
+
+################################################################################
+# Add extra include path.
+
+CFLAGS += -I$(AQROOT)/driver/openGL/egl/inc
+CFLAGS += -I$(AQROOT)/hal/optimizer
+CFLAGS += -I$(AQROOT)/hal/user
+
+################################################################################
+# Define the macros used in common makefile.
+
+# installation directory
+INSTALL_DIR := $(SDK_DIR)/drivers
+
+################################################################################
+# Include the common makefile.
+
+include $(AQROOT)/common.target
+
+################################################################################
+# Extra installation.
+
+install: extra_install
+
+.PHONY: extra_install
+extra_install:
+	@mkdir -p $(SDK_DIR)/drivers
+	@mkdir -p $(SDK_DIR)/include/GLES2
+	@-cp -f $(AQROOT)/sdk/inc/GLES2/*.h $(SDK_DIR)/include/GLES2
+
+################################################################################
+# Dependencies.
+
+$(wildcard *.c) : gc_glsh_precomp.h gc_glsh.h

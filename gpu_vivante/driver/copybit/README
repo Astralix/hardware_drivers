@@ -1,0 +1,37 @@
+Vivante Copybit Engine for Android
+
+Overview
+========
+ This is the Vivante copybit module for Android. It depends on Vivante's Gralloc module,
+ and Vivante Graphics Access Layer (libGAL.so). Copybit can be used to accelerate the
+ SurfaceFlinger compositor.
+
+Build
+=====
+ The copybit module is built as part of the Vivante driver build. Make sure USE_2D_COMPOSITION
+ is set to 1 in Android.mk.def.
+
+ Copybit also requires surfaceflinger and libagl modules to be patched. The patch file,
+
+ 0001-copybit-support-wrt-gingerbread-4d53cb02168fe35104d7.patch
+
+ generated against the standard gingerbread release from Google, should be provided in the
+ release package.
+
+Usage
+=====
+ Make sure that you have the following entry in /system/build.prop on your target device.
+ This enables SurfaceFlinger to use the copybit path.
+
+ debug.sf.hw=0
+
+ Also make sure the file /system/lib/egl/egl.cfg has the following entries. This makes sure
+ SurfaceFlinger can find the s/w implementation of the OpenGL|ES 1.1 driver while other
+ applications use the GPU accelerated version.
+
+ 0 0 android
+ 0 1 VIVANTE
+
+Known issues
+============
+ - Only validated against Gingerbread framework.

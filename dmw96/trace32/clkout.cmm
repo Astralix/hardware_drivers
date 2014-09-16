@@ -1,0 +1,9 @@
+per.set       a:0x05000020 %long 0x02000000       ; disable agpio25
+per.set.field a:0x05200058 %long 0x00000010 0x1   ; enable clkout pad
+per.set.field a:0x05300030 %long 0x000ff000 99.   ; set clkout divider to 100
+
+&val=data.long(a:0x0530005c)|0x00000800
+per.set       a:0x0530004c %long 0x90             ; write protect off
+per.set       a:0x0530005c %long &val             ; clkout enable
+
+print "clkout at agpio25"

@@ -1,0 +1,21 @@
+;Environment Variables
+OS=
+ID=CTX
+
+;T32 API Access
+RCL=NETASSIST
+PORT=20000
+PACKLEN=1024
+
+;Connection to Host
+PBI=
+USB
+CORE=1
+
+;Screen Settings:
+SCREEN=
+FONT=SMALL
+HEADER=TRACE32 CortexA8
+
+;Printer Settings:
+PRINTER=WINDOWS

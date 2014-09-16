@@ -1,0 +1,46 @@
+CECInfo
+(
+	Name ( "GCHAL" )
+	CECVersion ( 5.00 )
+	Description ( "GCHAL Catalog Items" )
+	GUID ( {D563C00F-CDB8-4816-BF62-9772F5BE2CAF} )
+	Vendor ( "Vivante Corp" )
+)
+ComponentType
+(
+	Name ( "Display" )
+	GUID ( {37FFB49E-03F5-4D64-84F7-FC5CA71C6008} )
+	Description ( "Display" )
+	Group ( "\Device Drivers" )
+	Vendor ( "Vivante Corp" )
+	MaxResolvedImpsAllowed( 999 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "GC500" )
+			GUID ( {CF5E7B05-7434-4910-A77E-035ACBAF4F2A} )
+			Description ( "GC500 HAL layer" )
+			Version ( "1.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "Vivante Corp" )
+			Date ( "7/30/2007" )
+			FeatureVariable( "SYSGEN_GCHAL", "1" )
+			Variable( "GC500", "1" )
+			Variable( "USE_VDK", "1" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {8DAFDB09-AA0B-4FDE-8ECE-43D5BE67D0BA} )
+					Step ( CESYSGEN )
+					CPU ( "ARMV4I" )
+					CPU ( "Emulator" )
+					CPU ( "x86" )
+					Action ( '#SRCCODE( USER_PROJECT, "$(_PUBLICROOT)\GCHAL\gchal.pbpxml" )' )
+				)
+			)
+		)
+	)
+)

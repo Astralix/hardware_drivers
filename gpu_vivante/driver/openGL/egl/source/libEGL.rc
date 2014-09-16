@@ -1,0 +1,12 @@
+
+
+
+
+#include <Windows.h>
+#include <NtVerP.h>
+
+#include "gc_egl_version.h"
+#define VER_FILEDESCRIPTION_STR		"Vivante OpenEGL Driver"
+#define VER_INTERNALNAME_STR		"libEGL.dll"
+
+#include <Common.ver>

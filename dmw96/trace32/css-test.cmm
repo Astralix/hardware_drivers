@@ -1,0 +1,69 @@
+&DMW96_SYSCFG_GCR1=0x05200004
+&DMW96_CMU_WRPR=0x0530004c
+&DMW96_CMU_SWCHWRST1=0x05300050
+&DMW96_CMU_SWCLKENR1=0x05300058
+&DMW96_CMU_CSSCLK=0x05300018
+&DMW96_CMU_PLL4=0x0530000c
+
+GOSUB activate_pll &DMW96_CMU_PLL4
+
+; take CSS out of reset
+&val=DATA.LONG(A:&DMW96_CMU_SWCHWRST1)
+&val=&val&~(0xe0800000) ; /* CSS_RST, CSS_ARM926_RST */
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x6
+D.S A:&DMW96_CMU_SWCHWRST1 %LE %LONG &val
+
+wait 2ms
+
+; enable clocks for CSS
+&val=DATA.LONG(A:&DMW96_CMU_SWCLKENR1)
+&val=&val|0x80800000 ; /* CSS_CLK */
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x90
+D.S A:&DMW96_CMU_SWCLKENR1 %LE %LONG &val
+
+wait 1ms
+
+D.S A:0x08000000 %LE %LONG 0xeafffffe
+;D.S ZSD:0x08000004 %LE %LONG 0xeafffffe
+;D.S ZSD:0x08000008 %LE %LONG 0xeafffffe
+;D.S ZSD:0x0800000C %LE %LONG 0xeafffffe
+;D.S ZSD:0x08000010 %LE %LONG 0xeafffffe
+;D.S ZSD:0x08000014 %LE %LONG 0xeafffffe
+;D.S ZSD:0x08000018 %LE %LONG 0xeafffffe
+;D.S ZSD:0x0800001C %LE %LONG 0xeafffffe
+
+; CSS_INIT_RAM: CSS CPU starts from ITCM
+&val=DATA.LONG(A:&DMW96_SYSCFG_GCR1)
+&val=&val|0x00000002
+D.S A:&DMW96_SYSCFG_GCR1 %LE %LONG &val
+
+wait 1ms
+
+; take ARM9 out of reset
+&val=DATA.LONG(A:&DMW96_CMU_SWCHWRST1)
+&val=&val&~(0x00000002) ; /* CSS_RST */
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x6
+D.S A:&DMW96_CMU_SWCHWRST1 %LE %LONG &val
+
+wait 2ms
+
+; enable clocks for ARM9
+&val=DATA.LONG(A:&DMW96_CMU_SWCLKENR1)
+&val=&val|0x00000002 ; /* CSS_ARM926_CLK */
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x90
+D.S A:&DMW96_CMU_SWCLKENR1 %LE %LONG &val
+
+PRINT "CSS up and running!"
+
+ENDDO
+
+activate_pll:
+	LOCAL &addr &val
+	ENTRY &addr
+
+	; clear power down
+	&val=DATA.LONG(A:&addr)
+	&val=&val&~(1<<15.)
+	D.S A:&addr %LE %LONG &val
+
+	RETURN

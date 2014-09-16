@@ -1,0 +1,544 @@
+EncVideoObject.o: ../source/mpeg4/EncVideoObject.c ../inc/enccommon.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncVideoObject.h ../inc/basetype.h \
+  ../source/mpeg4/encputbits.h ../source/mpeg4/EncStartCode.h
+EncCoder.o: ../source/mpeg4/EncCoder.c ../source/mpeg4/EncCoder.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h \
+  ../source/mpeg4/EncMbHeader.h ../source/mpeg4/EncVideoObjectPlane.h \
+  ../source/mpeg4/encputbits.h ../source/mpeg4/EncPrediction.h \
+  ../source/mpeg4/EncVlc.h
+EncProfile.o: ../source/mpeg4/EncProfile.c ../source/mpeg4/EncProfile.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h
+EncVideoObjectLayer.o: ../source/mpeg4/EncVideoObjectLayer.c \
+  ../inc/enccommon.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncVideoObjectLayer.h ../inc/basetype.h \
+  ../source/mpeg4/EncUserData.h ../source/mpeg4/encputbits.h \
+  ../source/mpeg4/EncStartCode.h
+EncCodeVop.o: ../source/mpeg4/EncCodeVop.c ../source/mpeg4/EncCodeVop.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h \
+  ../source/mpeg4/EncInstance.h ../source/mpeg4/EncVisualObjectSequence.h \
+  ../source/mpeg4/encputbits.h ../source/mpeg4/EncUserData.h \
+  ../source/mpeg4/EncVisualObject.h ../source/mpeg4/EncVideoObject.h \
+  ../source/mpeg4/EncVideoObjectLayer.h \
+  ../source/mpeg4/EncGroupOfVideoObjectPlane.h \
+  ../source/mpeg4/EncVideoObjectPlane.h \
+  ../source/mpeg4/EncShortVideoHeader.h ../source/mpeg4/EncRateControl.h \
+  ../source/mpeg4/EncMbHeader.h ../source/mpeg4/EncCoder.h \
+  ../source/mpeg4/EncTimeCode.h ../source/mpeg4/EncProfile.h \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../source/common/encasiccontroller.h \
+  ../source/common/encbuffering.h ../inc/enccommon.h ../inc/ewl.h
+EncCodeVop_v2.o: ../source/mpeg4/EncCodeVop_v2.c \
+  ../source/mpeg4/EncCodeVop.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h \
+  ../source/mpeg4/EncInstance.h ../source/mpeg4/EncVisualObjectSequence.h \
+  ../source/mpeg4/encputbits.h ../source/mpeg4/EncUserData.h \
+  ../source/mpeg4/EncVisualObject.h ../source/mpeg4/EncVideoObject.h \
+  ../source/mpeg4/EncVideoObjectLayer.h \
+  ../source/mpeg4/EncGroupOfVideoObjectPlane.h \
+  ../source/mpeg4/EncVideoObjectPlane.h \
+  ../source/mpeg4/EncShortVideoHeader.h ../source/mpeg4/EncRateControl.h \
+  ../source/mpeg4/EncMbHeader.h ../source/mpeg4/EncCoder.h \
+  ../source/mpeg4/EncTimeCode.h ../source/mpeg4/EncProfile.h \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../source/common/encasiccontroller.h \
+  ../source/common/encbuffering.h ../inc/enccommon.h ../inc/ewl.h
+EncVideoObjectPlane.o: ../source/mpeg4/EncVideoObjectPlane.c \
+  ../inc/enccommon.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncVideoObjectPlane.h ../inc/basetype.h \
+  ../source/mpeg4/encputbits.h ../source/mpeg4/EncStartCode.h
+EncDifferentialMvCoding.o: ../source/mpeg4/EncDifferentialMvCoding.c \
+  ../inc/enccommon.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncDifferentialMvCoding.h \
+  ../inc/basetype.h ../source/mpeg4/EncMbHeader.h \
+  ../source/mpeg4/EncVideoObjectPlane.h ../source/mpeg4/encputbits.h
+EncRateControl.o: ../source/mpeg4/EncRateControl.c \
+  ../source/mpeg4/EncRateControl.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h \
+  ../source/mpeg4/EncVideoObjectPlane.h ../source/mpeg4/encputbits.h \
+  ../source/mpeg4/EncMbHeader.h
+EncVisualObject.o: ../source/mpeg4/EncVisualObject.c ../inc/enccommon.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncVisualObject.h ../inc/basetype.h \
+  ../source/mpeg4/EncUserData.h ../source/mpeg4/encputbits.h \
+  ../source/mpeg4/EncStartCode.h
+EncGroupOfVideoObjectPlane.o:  \
+ ../source/mpeg4/EncGroupOfVideoObjectPlane.c ../inc/enccommon.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncStartCode.h \
+  ../source/mpeg4/EncGroupOfVideoObjectPlane.h ../inc/basetype.h \
+  ../source/mpeg4/EncUserData.h ../source/mpeg4/encputbits.h
+EncVisualObjectSequence.o: ../source/mpeg4/EncVisualObjectSequence.c \
+  ../inc/enccommon.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncVisualObjectSequence.h \
+  ../inc/basetype.h ../source/mpeg4/encputbits.h \
+  ../source/mpeg4/EncUserData.h ../source/mpeg4/EncStartCode.h
+EncInit.o: ../source/mpeg4/EncInit.c ../source/mpeg4/EncInit.h \
+  ../source/mpeg4/EncInstance.h ../source/mpeg4/EncVisualObjectSequence.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h \
+  ../source/mpeg4/encputbits.h ../source/mpeg4/EncUserData.h \
+  ../source/mpeg4/EncVisualObject.h ../source/mpeg4/EncVideoObject.h \
+  ../source/mpeg4/EncVideoObjectLayer.h \
+  ../source/mpeg4/EncGroupOfVideoObjectPlane.h \
+  ../source/mpeg4/EncVideoObjectPlane.h \
+  ../source/mpeg4/EncShortVideoHeader.h ../source/mpeg4/EncRateControl.h \
+  ../source/mpeg4/EncMbHeader.h ../source/mpeg4/EncCoder.h \
+  ../source/mpeg4/EncTimeCode.h ../source/mpeg4/EncProfile.h \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../source/common/encasiccontroller.h ../inc/mp4encapi.h \
+  ../inc/ewl.h
+EncShortVideoHeader.o: ../source/mpeg4/EncShortVideoHeader.c \
+  ../inc/enccommon.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncShortVideoHeader.h ../inc/basetype.h \
+  ../source/mpeg4/EncVideoObjectPlane.h ../source/mpeg4/encputbits.h \
+  ../source/mpeg4/EncStartCode.h
+EncVlc.o: ../source/mpeg4/EncVlc.c ../source/mpeg4/EncVlc.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/mpeg4/encputbits.h ../inc/enccommon.h ../inc/basetype.h \
+  ../inc/ewl.h ../source/mpeg4/EncMbHeader.h \
+  ../source/mpeg4/EncVideoObjectPlane.h ../source/mpeg4/EncVlcTable.h \
+  ../source/common/encasiccontroller.h ../inc/basetype.h \
+  ../source/common/enccfg.h ../inc/ewl.h
+EncMbHeader.o: ../source/mpeg4/EncMbHeader.c ../inc/enccommon.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncMbHeader.h ../inc/basetype.h \
+  ../source/mpeg4/EncVideoObjectPlane.h ../source/mpeg4/encputbits.h \
+  ../source/mpeg4/EncDifferentialMvCoding.h ../source/mpeg4/EncVlc.h \
+  ../inc/ewl.h
+EncTimeCode.o: ../source/mpeg4/EncTimeCode.c ../inc/enccommon.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/mpeg4/EncTimeCode.h ../inc/basetype.h \
+  ../source/mpeg4/EncGroupOfVideoObjectPlane.h \
+  ../source/mpeg4/EncUserData.h ../source/mpeg4/encputbits.h
+EncPrediction.o: ../source/mpeg4/EncPrediction.c \
+  ../source/mpeg4/EncPrediction.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h \
+  ../source/mpeg4/EncMbHeader.h ../source/mpeg4/EncVideoObjectPlane.h \
+  ../source/mpeg4/encputbits.h
+EncUserData.o: ../source/mpeg4/EncUserData.c \
+  ../source/mpeg4/EncUserData.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h \
+  ../source/mpeg4/encputbits.h ../source/mpeg4/EncStartCode.h \
+  ../inc/ewl.h
+MP4EncApi.o: ../source/mpeg4/MP4EncApi.c ../inc/mp4encapi.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/mpeg4/EncInit.h ../source/mpeg4/EncInstance.h \
+  ../source/mpeg4/EncVisualObjectSequence.h ../inc/basetype.h \
+  ../inc/enccommon.h ../inc/ewl.h ../source/mpeg4/encputbits.h \
+  ../source/mpeg4/EncUserData.h ../source/mpeg4/EncVisualObject.h \
+  ../source/mpeg4/EncVideoObject.h ../source/mpeg4/EncVideoObjectLayer.h \
+  ../source/mpeg4/EncGroupOfVideoObjectPlane.h \
+  ../source/mpeg4/EncVideoObjectPlane.h \
+  ../source/mpeg4/EncShortVideoHeader.h ../source/mpeg4/EncRateControl.h \
+  ../source/mpeg4/EncMbHeader.h ../source/mpeg4/EncCoder.h \
+  ../source/mpeg4/EncTimeCode.h ../source/mpeg4/EncProfile.h \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../source/common/encasiccontroller.h \
+  ../source/mpeg4/EncCodeVop.h ../source/mpeg4/EncTestId.h
+encputbits.o: ../source/mpeg4/encputbits.c ../source/mpeg4/encputbits.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h
+encbuffering.o: ../source/common/encbuffering.c \
+  ../source/common/encbuffering.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../inc/basetype.h ../source/common/encasiccontroller.h \
+  ../source/common/enccfg.h ../inc/enccommon.h ../inc/ewl.h
+vidstabcommon.o: ../source/camstab/vidstabcommon.c ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/camstab/vidstabcommon.h
+vidstabalg.o: ../source/camstab/vidstabalg.c ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/camstab/vidstabcommon.h
+vidstabapi.o: ../source/camstab/vidstabapi.c ../inc/vidstbapi.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/camstab/vidstabinternal.h ../inc/basetype.h \
+  ../source/camstab/vidstabcommon.h ../inc/ewl.h
+vidstabinternal.o: ../source/camstab/vidstabinternal.c ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/camstab/vidstabcommon.h ../source/camstab/vidstabinternal.h \
+  ../inc/vidstbapi.h ../inc/basetype.h ../inc/ewl.h \
+  ../source/camstab/vidstabcfg.h
+EncTestId.o: ../source/mpeg4/EncTestId.c ../source/mpeg4/EncTestId.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/mpeg4/EncInstance.h ../source/mpeg4/EncVisualObjectSequence.h \
+  ../inc/enccommon.h ../inc/basetype.h ../inc/ewl.h \
+  ../source/mpeg4/encputbits.h ../source/mpeg4/EncUserData.h \
+  ../source/mpeg4/EncVisualObject.h ../source/mpeg4/EncVideoObject.h \
+  ../source/mpeg4/EncVideoObjectLayer.h \
+  ../source/mpeg4/EncGroupOfVideoObjectPlane.h \
+  ../source/mpeg4/EncVideoObjectPlane.h \
+  ../source/mpeg4/EncShortVideoHeader.h ../source/mpeg4/EncRateControl.h \
+  ../source/mpeg4/EncMbHeader.h ../source/mpeg4/EncCoder.h \
+  ../source/mpeg4/EncTimeCode.h ../source/mpeg4/EncProfile.h \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../source/common/encasiccontroller.h \
+  ../source/common/encbuffering.h ../inc/enccommon.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/features.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/predefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/cdefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wordsize.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gnu/stubs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/typesizes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/libio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/_G_config.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gconv.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stdarg.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/stdio_lim.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sys_errlist.h
+H264TestId.o: ../source/h264/H264TestId.c ../source/h264/H264TestId.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/h264/H264Instance.h ../inc/enccommon.h ../inc/basetype.h \
+  ../inc/ewl.h ../source/common/encpreprocess.h ../inc/basetype.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../source/common/encasiccontroller.h \
+  ../source/h264/H264SequenceParameterSet.h ../source/h264/H264PutBits.h \
+  ../source/h264/H264Slice.h ../source/h264/H264NalUnit.h \
+  ../source/h264/H264PictureParameterSet.h \
+  ../source/h264/H264RateControl.h ../source/h264/H264Sei.h \
+  ../inc/h264encapi.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/features.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/predefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/cdefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wordsize.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gnu/stubs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/typesizes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/libio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/_G_config.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gconv.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stdarg.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/stdio_lim.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sys_errlist.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdlib.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/time.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/endian.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/endian.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/select.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/select.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigset.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/time.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/sysmacros.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/pthreadtypes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/alloca.h
+h264encapi_ext.o: ../source/h264/h264encapi_ext.c ../inc/h264encapi.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/h264encapi_ext.h ../inc/h264encapi.h \
+  ../source/h264/H264Instance.h ../inc/enccommon.h ../inc/ewl.h \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../source/common/encasiccontroller.h \
+  ../source/h264/H264SequenceParameterSet.h ../inc/basetype.h \
+  ../source/h264/H264PutBits.h ../source/h264/H264Slice.h \
+  ../source/h264/H264NalUnit.h ../source/h264/H264PictureParameterSet.h \
+  ../source/h264/H264RateControl.h ../source/h264/H264Sei.h
+mp4encapi_ext.o: ../source/mpeg4/mp4encapi_ext.c ../inc/mp4encapi.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/mp4encapi_ext.h ../inc/mp4encapi.h ../source/mpeg4/EncInstance.h \
+  ../source/mpeg4/EncVisualObjectSequence.h ../inc/basetype.h \
+  ../inc/enccommon.h ../inc/ewl.h ../source/mpeg4/encputbits.h \
+  ../source/mpeg4/EncUserData.h ../source/mpeg4/EncVisualObject.h \
+  ../source/mpeg4/EncVideoObject.h ../source/mpeg4/EncVideoObjectLayer.h \
+  ../source/mpeg4/EncGroupOfVideoObjectPlane.h \
+  ../source/mpeg4/EncVideoObjectPlane.h \
+  ../source/mpeg4/EncShortVideoHeader.h ../source/mpeg4/EncRateControl.h \
+  ../source/mpeg4/EncMbHeader.h ../source/mpeg4/EncCoder.h \
+  ../source/mpeg4/EncTimeCode.h ../source/mpeg4/EncProfile.h \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../source/common/encasiccontroller.h
+encasiccontroller_v2.o: ../source/common/encasiccontroller_v2.c \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../inc/basetype.h ../inc/enccommon.h ../inc/ewl.h
+encasiccontroller.o: ../source/common/encasiccontroller.c \
+  ../inc/enccommon.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../source/common/encasiccontroller.h ../inc/basetype.h \
+  ../source/common/enccfg.h ../inc/ewl.h ../source/common/encpreprocess.h
+encpreprocess.o: ../source/common/encpreprocess.c \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../inc/basetype.h ../inc/enccommon.h ../inc/ewl.h
+enctrace.o: debug_trace/enctrace.c \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/features.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/predefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/cdefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wordsize.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gnu/stubs.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/typesizes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/libio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/_G_config.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gconv.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stdarg.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/stdio_lim.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sys_errlist.h \
+  debug_trace/enctrace.h ../inc/basetype.h \
+  ../source/common/encpreprocess.h ../inc/basetype.h \
+  ../source/common/encasiccontroller.h ../source/common/enccfg.h \
+  ../inc/ewl.h ../inc/basetype.h ../source/common/encasiccontroller.h
+enctracestream.o: debug_trace/enctracestream.c \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/string.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/features.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/predefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/cdefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wordsize.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gnu/stubs.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  debug_trace/enctracestream.h ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/typesizes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/libio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/_G_config.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gconv.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stdarg.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/stdio_lim.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sys_errlist.h
+EncMpeg4Trace.o: debug_trace/EncMpeg4Trace.c debug_trace/EncMpeg4Trace.h \
+  ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../source/mpeg4/EncMbHeader.h ../inc/basetype.h ../inc/enccommon.h \
+  ../inc/basetype.h ../inc/ewl.h ../source/mpeg4/EncVideoObjectPlane.h \
+  ../source/mpeg4/encputbits.h ../source/mpeg4/EncRateControl.h \
+  ../source/mpeg4/EncMbHeader.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/features.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/predefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/cdefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wordsize.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gnu/stubs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/typesizes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/libio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/_G_config.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gconv.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stdarg.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/stdio_lim.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sys_errlist.h
+ewl_x280_common.o: ewl/ewl_x280_common.c ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../inc/basetype.h ewl/ewl_linux_lock.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/features.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/predefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/cdefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wordsize.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gnu/stubs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/typesizes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/time.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/endian.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/endian.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/select.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/select.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigset.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/time.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/sysmacros.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/pthreadtypes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/ipc.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/ipctypes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/ipc.h \
+  ewl/ewl_x280_common.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/signal.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/signum.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/siginfo.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigaction.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigcontext.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm/sigcontext.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigstack.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigthread.h \
+  kernel_module/hx280enc.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/linux/ioctl.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm/ioctl.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm-generic/ioctl.h \
+  memalloc/memalloc.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/stat.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/stat.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/mman.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/mman.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/ioctl.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/ioctls.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm/ioctls.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/ioctl-types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/ttydefaults.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/fcntl.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/fcntl.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/unistd.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/posix_opt.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/confname.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/getopt.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/linux/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm-generic/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm-generic/errno-base.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/libio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/_G_config.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gconv.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stdarg.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/stdio_lim.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sys_errlist.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdlib.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/alloca.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/string.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/assert.h
+ewl_linux_lock.o: ewl/ewl_linux_lock.c \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/features.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/predefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/cdefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wordsize.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gnu/stubs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/types.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/typesizes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/time.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/endian.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/endian.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/select.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/select.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigset.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/time.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/sysmacros.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/pthreadtypes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/ipc.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/ipctypes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/ipc.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/sem.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sem.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/linux/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm-generic/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm-generic/errno-base.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/unistd.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/posix_opt.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/confname.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/getopt.h \
+  ewl/ewl_linux_lock.h
+ewl_x280_irq.o: ewl/ewl_x280_irq.c ../inc/basetype.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stddef.h \
+  ../inc/ewl.h ../inc/basetype.h kernel_module/hx280enc.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/linux/ioctl.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm/ioctl.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm-generic/ioctl.h \
+  ewl/ewl_x280_common.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/signal.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/features.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/predefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/cdefs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wordsize.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gnu/stubs.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigset.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/typesizes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/signum.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/time.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/siginfo.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigaction.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigcontext.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm/sigcontext.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigstack.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/pthreadtypes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sigthread.h \
+  ewl/ewl_linux_lock.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/types.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/endian.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/endian.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/select.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/select.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/time.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/sysmacros.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sys/ipc.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/ipctypes.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/ipc.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/unistd.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/posix_opt.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/confname.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/getopt.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/fcntl.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/fcntl.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/linux/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm-generic/errno.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/asm-generic/errno-base.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/pthread.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/sched.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sched.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/setjmp.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/semaphore.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/semaphore.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/assert.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/libio.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/_G_config.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/wchar.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/gconv.h \
+  /home/vlads/general/arm2007q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.2.0/include/stdarg.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/stdio_lim.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/bits/sys_errlist.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/stdlib.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/alloca.h \
+  /home/vlads/general/arm2007q1/bin/../arm-none-linux-gnueabi/libc/usr/include/string.h

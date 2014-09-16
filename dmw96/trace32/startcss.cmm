@@ -1,0 +1,11 @@
+sys.up
+
+;do bootastic.cmm
+data.load.elf lpddr2_init.axf
+go
+wait 2s
+b
+
+do css-test.cmm
+
+enddo

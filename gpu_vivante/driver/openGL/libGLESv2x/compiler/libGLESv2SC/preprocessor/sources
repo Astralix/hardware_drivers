@@ -1,0 +1,38 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+DOSYSGEN=1
+SYNCHRONIZE_DRAIN=1
+TARGETNAME=libGLSLC.preprocessor
+TARGETTYPE=LIBRARY
+
+
+SOURCES= \
+    gc_glsl_api.c \
+    gc_glsl_base.c \
+    gc_glsl_expression.c \
+    gc_glsl_hide_set.c \
+    gc_glsl_input_stream.c \
+    gc_glsl_macro_expand.c \
+    gc_glsl_macro_manager.c \
+    gc_glsl_preprocessor.c \
+    gc_glsl_syntax.c \
+    gc_glsl_syntax_util.c \
+    gc_glsl_token.c \
+
+INCLUDES= \
+    $(INCLUDES); \
+    $(AQROOT)\hal\inc; \
+    $(AQROOT)\hal\user; \
+    $(AQROOT)\hal\os\ce\user; \
+    $(AQROOT)\driver\openGL\libGLESv2x\compiler\libGLESv2SC\inc; \

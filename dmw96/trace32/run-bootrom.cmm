@@ -1,0 +1,331 @@
+sys.up
+
+TRONCHIP.set RESET ON
+TRONCHIP.set DABORT ON
+TRONCHIP.set PABORT ON
+TRONCHIP.set UNDEF ON
+TRONCHIP.set FIQ ON
+TRONCHIP.set IRQ ON
+TRONCHIP.set SWI ON
+
+B.SEL.Program Onchip
+
+do regs.cmm
+
+&DMW96_SYSCFG_GCR1=0x05200004
+&DMW96_SYSCFG_DRAMCTL1=0x05200134
+&DMW96_SYSCFG_DRAMCTL2=0x05200138
+&DMW96_CMU_PLL3=0x05300008
+&DMW96_CMU_CLKSWCTL=0x0530001c
+&DMW96_CMU_WRPR=0x0530004c
+&DMW96_CMU_SWCHWRST2=0x05300054
+&DMW96_CMU_SWCLKENR2=0x0530005c
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; setup only DRAM
+
+; before we switch to fast clocks, we have to assure that the bootrom
+; is not accessed faster than 80 mhz. we do this by inserting wait
+; states.
+per.set.field a:&DMW96_SYSCFG_GCR1 %long 0x00000003 0x1
+
+; DRAM clock setup (99.0MHz)
+; pre-dev: 1; multiplicator: 33; output-div: 4; band: 300-600MHz;
+GOSUB set_pll &DMW96_CMU_PLL3 0. 32. 2. 0
+GOSUB activate_pll &DMW96_CMU_PLL3
+GOSUB wait_pll &DMW96_CMU_PLL3 "PLL3"
+
+; swdramsrc: pll3
+per.set.field a:&DMW96_CMU_CLKSWCTL %long 0x00000001 0x1
+
+; Denali/DDR2 initialization
+
+; dram signal configuration
+per.set.field a:&DMW96_SYSCFG_DRAMCTL1 %long 0x00000800 0x1 ; pin_group4_sus
+per.set.field a:&DMW96_SYSCFG_DRAMCTL1 %long 0x00100000 0x1 ; pin_group5_sus
+per.set.field a:&DMW96_SYSCFG_DRAMCTL2 %long 0x00000004 0x1 ; pin_group6_sus
+per.set.field a:&DMW96_SYSCFG_DRAMCTL2 %long 0x00000800 0x1 ; pin_group7_sus
+
+; reset release
+&val=DATA.LONG(A:&DMW96_CMU_SWCHWRST2)
+&val=&val&~0x1000
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x6
+D.S A:&DMW96_CMU_SWCHWRST2 %LE %LONG &val
+
+; clk enable
+&val=DATA.LONG(A:&DMW96_CMU_SWCLKENR2)
+&val=&val|0x1000
+D.S A:&DMW96_CMU_WRPR %LE %LONG 0x90
+D.S A:&DMW96_CMU_SWCLKENR2 %LE %LONG &val
+
+D.S A:0x00100000 %LE %LONG 0x00000500
+D.S A:0x00100004 %LE %LONG 0x00000000
+D.S A:0x00100008 %LE %LONG 0x0000000a
+D.S A:0x0010000c %LE %LONG 0x00004e20
+D.S A:0x00100010 %LE %LONG 0x00000064
+D.S A:0x00100014 %LE %LONG 0x000003e8
+D.S A:0x00100018 %LE %LONG 0x02020800
+D.S A:0x0010001c %LE %LONG 0x05070102
+D.S A:0x00100020 %LE %LONG 0x03010302
+D.S A:0x00100024 %LE %LONG 0x031b5803
+D.S A:0x00100028 %LE %LONG 0x00000002
+D.S A:0x0010002c %LE %LONG 0x05030201
+D.S A:0x00100030 %LE %LONG 0x02000000
+D.S A:0x00100034 %LE %LONG 0x00000502
+D.S A:0x00100038 %LE %LONG 0x00000303
+D.S A:0x0010003c %LE %LONG 0x000d0100
+D.S A:0x00100040 %LE %LONG 0x0005017e
+D.S A:0x00100044 %LE %LONG 0x00000300
+D.S A:0x00100048 %LE %LONG 0x000f000f
+D.S A:0x0010004c %LE %LONG 0x01000000
+D.S A:0x00100050 %LE %LONG 0x00000200
+D.S A:0x00100054 %LE %LONG 0x00000001
+D.S A:0x00100058 %LE %LONG 0x00000000
+D.S A:0x0010005c %LE %LONG 0x00000202
+D.S A:0x00100060 %LE %LONG 0x00000000
+D.S A:0x00100064 %LE %LONG 0x00000000
+D.S A:0x00100068 %LE %LONG 0x02000000
+D.S A:0x0010006c %LE %LONG 0x00320000
+D.S A:0x00100070 %LE %LONG 0x00000002
+D.S A:0x00100074 %LE %LONG 0x00000003
+D.S A:0x00100078 %LE %LONG 0x00000000
+D.S A:0x0010007c %LE %LONG 0x00020032
+D.S A:0x00100080 %LE %LONG 0x00030000
+D.S A:0x00100084 %LE %LONG 0x00000000
+D.S A:0x00100088 %LE %LONG 0x00240064
+D.S A:0x0010008c %LE %LONG 0x40000030
+D.S A:0x00100090 %LE %LONG 0x00050002
+D.S A:0x00100094 %LE %LONG 0x01010100
+D.S A:0x00100098 %LE %LONG 0x03030101
+D.S A:0x0010009c %LE %LONG 0x00000a0a
+D.S A:0x001000a0 %LE %LONG 0x07ff0800
+D.S A:0x001000a4 %LE %LONG 0x7f0007ff
+D.S A:0x001000a8 %LE %LONG 0x0101017f
+D.S A:0x001000ac %LE %LONG 0x01010101
+D.S A:0x001000b0 %LE %LONG 0x01000300
+D.S A:0x001000b4 %LE %LONG 0x01000000
+D.S A:0x001000b8 %LE %LONG 0x00000000
+D.S A:0x001000bc %LE %LONG 0x00000000
+D.S A:0x001000c0 %LE %LONG 0x00000000
+D.S A:0x001000c4 %LE %LONG 0x00000000
+D.S A:0x001000c8 %LE %LONG 0x00000000
+D.S A:0x001000cc %LE %LONG 0x00000000
+D.S A:0x001000d0 %LE %LONG 0x02010100
+D.S A:0x001000d4 %LE %LONG 0x00000402
+D.S A:0x001000d8 %LE %LONG 0x02030202
+D.S A:0x001000dc %LE %LONG 0x00020001
+D.S A:0x001000e0 %LE %LONG 0x00010100
+D.S A:0x001000e4 %LE %LONG 0x0f0f0f00
+D.S A:0x001000e8 %LE %LONG 0x0f0f0f0f
+D.S A:0x001000ec %LE %LONG 0x04ffff0f
+D.S A:0x001000f0 %LE %LONG 0x04ffff04
+D.S A:0x001000f4 %LE %LONG 0x04ffff04
+D.S A:0x001000f8 %LE %LONG 0x04ffff04
+D.S A:0x001000fc %LE %LONG 0x04000104
+D.S A:0x00100100 %LE %LONG 0x04000104
+D.S A:0x00100104 %LE %LONG 0x04000104
+D.S A:0x00100108 %LE %LONG 0x04000104
+D.S A:0x0010010c %LE %LONG 0x00000004
+D.S A:0x00100110 %LE %LONG 0x00000000
+D.S A:0x00100114 %LE %LONG 0x00000000
+D.S A:0x00100118 %LE %LONG 0x00000000
+D.S A:0x0010011c %LE %LONG 0x00000000
+D.S A:0x00100120 %LE %LONG 0x00000000
+D.S A:0x00100124 %LE %LONG 0x00000000
+D.S A:0x00100128 %LE %LONG 0x00000000
+D.S A:0x0010012c %LE %LONG 0x00000000
+D.S A:0x00100130 %LE %LONG 0x00000000
+D.S A:0x00100134 %LE %LONG 0x07000000
+D.S A:0x00100138 %LE %LONG 0x19000119
+D.S A:0x0010013c %LE %LONG 0x01190001
+D.S A:0x00100140 %LE %LONG 0x00011900
+D.S A:0x00100144 %LE %LONG 0x19000119
+D.S A:0x00100148 %LE %LONG 0x01190001
+D.S A:0x0010014c %LE %LONG 0x00011900
+D.S A:0x00100150 %LE %LONG 0x00000001
+D.S A:0x00100154 %LE %LONG 0x08020000
+D.S A:0x00100158 %LE %LONG 0x00000200
+D.S A:0x0010015c %LE %LONG 0x017e017e
+D.S A:0x00100160 %LE %LONG 0x017e017e
+D.S A:0x00100164 %LE %LONG 0x017e017e
+D.S A:0x00100168 %LE %LONG 0x00020204
+D.S A:0x0010016c %LE %LONG 0x00000101
+
+; Denali PHY
+D.S A:0x00100200 %LE %LONG 0x00000000
+D.S A:0x00100204 %LE %LONG 0x000c0100
+D.S A:0x00100208 %LE %LONG 0xd3003a27
+D.S A:0x0010020c %LE %LONG 0x074008e0
+D.S A:0x00100210 %LE %LONG 0xd3003a27
+D.S A:0x00100214 %LE %LONG 0x074008e0
+D.S A:0x00100218 %LE %LONG 0xd3003a27
+D.S A:0x0010021c %LE %LONG 0x074008e0
+D.S A:0x00100220 %LE %LONG 0xd3003a27
+D.S A:0x00100224 %LE %LONG 0x074008e0
+D.S A:0x00100228 %LE %LONG 0xf5003a27
+D.S A:0x0010022c %LE %LONG 0x074002e0
+D.S A:0x00100230 %LE %LONG 0x00000000
+D.S A:0x00100234 %LE %LONG 0x00810004
+D.S A:0x00100238 %LE %LONG 0x902032a5
+D.S A:0x0010023c %LE %LONG 0x00141f04
+D.S A:0x00100240 %LE %LONG 0x902032a5
+D.S A:0x00100244 %LE %LONG 0x00141f04
+D.S A:0x00100248 %LE %LONG 0x902032a5
+D.S A:0x0010024c %LE %LONG 0x00141f04
+D.S A:0x00100250 %LE %LONG 0x902032a5
+D.S A:0x00100254 %LE %LONG 0x00141f04
+D.S A:0x00100258 %LE %LONG 0x902038a5
+D.S A:0x0010025c %LE %LONG 0x00141f04
+D.S A:0x00100260 %LE %LONG 0x00000000
+D.S A:0x00100264 %LE %LONG 0x00000000
+D.S A:0x00100268 %LE %LONG 0x00000000
+D.S A:0x0010026c %LE %LONG 0x00000000
+D.S A:0x00100270 %LE %LONG 0x00000000
+D.S A:0x00100274 %LE %LONG 0x00000000
+D.S A:0x00100278 %LE %LONG 0x00000000
+D.S A:0x0010027c %LE %LONG 0x00000000
+D.S A:0x00100280 %LE %LONG 0x00000000
+D.S A:0x00100284 %LE %LONG 0x00000000
+D.S A:0x00100288 %LE %LONG 0x00000000
+D.S A:0x0010028c %LE %LONG 0x00000000
+D.S A:0x00100290 %LE %LONG 0x00000000
+D.S A:0x00100294 %LE %LONG 0x00000000
+D.S A:0x00100298 %LE %LONG 0x00000000
+
+GOSUB denali_set_field &lowpower_control 0.
+wait 10ms
+GOSUB denali_set_field &start 1.
+
+; wait for Denali init complete
+wait 500ms
+
+&val=data.long(A:0x001000b8)&0x4010
+if &val!=0x4010
+(
+	DIALOG.MESSAGE "Denali init not complete after 500ms!"
+	ENDDO
+)
+
+D.S A:0x001000b8 %LE %LONG 0x00100000 ; clear Denali init complete
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Setup MMU
+
+; Clear MMU table
+data.set 0x40000000++0x3fff %LONG 0
+
+; set Translation Table Base
+PER.S.F C15:0x2 %L 0xFFFFC000 0x4000 0x40000000
+
+; Enable access to domain 0
+PER.S C15:0x3 %LONG 0x3
+
+; MMU map
+GOSUB map_section_nor 0x00000000 0x43000000	; BootROM
+GOSUB map_section_nor 0x00200000 0x00200000	; On Chip RAM
+GOSUB map_section_dev 0x00900000 0x00900000	; SD/MMC
+GOSUB map_section_dev 0x05000000 0x05000000	; GPIO
+GOSUB map_section_dev 0x05200000 0x05200000	; System Configuration
+GOSUB map_section_dev 0x05300000 0x05300000	; CMU
+GOSUB map_section_dev 0x05400000 0x05400000	; NAND
+GOSUB map_section_dev 0x05800000 0x05800000	; Timer0/1
+GOSUB map_section_dev 0x05A00000 0x05A00000	; UART1
+GOSUB map_section_dev 0x05B00000 0x05B00000	; UART1
+
+; MMU mapptings needed additionally by bootastic and u-boot
+GOSUB map_section_dev 0x00100000 0x00100000	; Denali controller
+GOSUB map_section_dev 0x05100000 0x05100000	; PLICU
+GOSUB map_section_nor 0x41000000 0x41000000	; DDR
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Load BootROM
+
+DATA.LOAD.BINARY ../bootrom/bootrom.bin 0x43000000
+DATA.LOAD.ELF ../bootrom/bootrom /nocode /gnu /strippart 6
+data.load.elf ../bootastic/bootastic.elf /nocode /noclear
+
+; patch out MMU disabling
+D.A ZSR:0x4300010C BIC r0,r0,#0x06
+
+; enable MMU
+PER.S.F C15:0x01 %L 0x01 0x01
+R.S PC 0
+
+; done
+ENDDO
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Local subs
+
+map_section_dev:
+	LOCAL &virt &phys &addr &pte
+	ENTRY &virt &phys
+	&addr=0x40000000+((&virt)>>18.)
+	&pte=((&phys)&0xFFF00000)|0xC02
+	D.S A:&addr %LE %LONG &pte
+	RETURN
+
+map_section_nor:
+	LOCAL &virt &phys &addr &pte
+	ENTRY &virt &phys
+	&addr=0x40000000+((&virt)>>18.)
+	&pte=((&phys)&0xFFF00000)|0x7C0E
+	D.S A:&addr %LE %LONG &pte
+	RETURN
+
+set_pll:
+	LOCAL &addr &r &f &od &bs &val
+	ENTRY &addr &r &f &od &bs
+	&val=DATA.LONG(A:&addr)
+	&val=&val&~0x1ffff
+	&val=&val|((&r)<<0.)
+	&val=&val|((&f)<<5.)
+	&val=&val|((&od)<<12.)
+	&val=&val|((&bs)<<14.)
+	&val=&val|(1<<15.)
+	D.S A:&addr %LE %LONG &val
+	WAIT 1ms
+	RETURN
+
+activate_pll:
+	LOCAL &addr &val
+	ENTRY &addr
+
+	; clear power down
+	per.set.field a:&addr %long 0x00008000 0x0
+
+	RETURN
+
+wait_pll:
+	LOCAL &addr &name &val
+	ENTRY &addr &name
+
+	; wait for PLL to lock
+	wait 50ms
+
+	&val=data.long(A:&addr)&0x40000
+	if &val==0x0
+	(
+		DIALOG.MESSAGE &name " not locked after 50ms!"
+		ENDDO
+	)
+	&val=data.long(A:&addr)&0x20000
+	if &val==0x20000
+	(
+		DIALOG.MESSAGE &name " error!"
+		ENDDO
+	)
+
+	RETURN
+
+denali_set_field:
+	LOCAL &bits &reg &offset &val &tmp &addr
+	ENTRY &bits &reg &offset &val
+
+	&addr=0x00100000+(&reg*4)
+	&tmp=DATA.LONG(A:&addr)&~(((1<<&bits)-1)<<&offset)
+	&tmp=&tmp|(&val<<&offset)
+	D.S A:&addr %LE %LONG &tmp
+
+	RETURN
+

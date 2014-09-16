@@ -1,0 +1,91 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+
+#
+# Linux build file for OES2.0 compiler.
+#
+
+################################################################################
+# Include common definitions.
+
+include $(AQROOT)/makefile.linux.def
+include $(GLES2X_DIR)/makefile.linux.def
+
+################################################################################
+# Supply additional include directories.
+
+CFLAGS  +=  $(INCLUDE)
+
+################################################################################
+# Supply additional definitions.
+
+CFLAGS  +=  $(CDEFS)
+
+################################################################################
+# Describe object files.
+
+OBJECTS :=  gc_glsl_stand_alone.o
+
+OBJS    :=  $(addprefix $(OBJ_DIR)/,$(OBJECTS))
+OBJECTS :=  $(OBJS)
+
+################################################################################
+# Supply additional libraries.
+
+ifeq ($(gcdSTATIC_LINK), 1)
+LIBS    +=  $(GLES2X_DIR)/compiler/libGLESv2SC/entry/$(OBJ_DIR)/libGLSLC.a
+LIBS    +=  $(GLES2X_DIR)/compiler/libGLESv2SC/compiler/$(OBJ_DIR)/libglslCompiler.a
+LIBS    +=  $(GLES2X_DIR)/compiler/libGLESv2SC/preprocessor/$(OBJ_DIR)/libglslPreprocessor.a
+LIBS    +=  $(GLES2X_DIR)/compiler/libGLESv2SC/common/$(OBJ_DIR)/libglslCommon.a
+LIBS    +=  $(GAL_DIR)/user/$(OBJ_DIR)/libGAL.a
+LIBS    +=  $(AQARCH)/hal/user/$(OBJ_DIR)/libhalarchuser.a
+LIBS    +=  $(AQROOT)/hal/os/linux/user/$(OBJ_DIR)/libhalosuser.a
+LIBS    +=  $(GAL_DIR)/user/$(OBJ_DIR)/libGAL.a
+LIBS    +=  $(LIB_DIR)/libm.a
+LIBS    +=  $(LIB_DIR)/librt.a
+LIBS    +=  $(LIB_DIR)/libpthread.a
+LIBS    +=  $(LIB_DIR)/libc.a
+LIBS    +=  $(LIB_DIR)/libdl.a
+else
+LIBS    +=  -L$(GLES2X_DIR)/compiler/libGLESv2SC/entry/$(OBJ_DIR) -lGLSLC
+LIBS    +=  -L$(GAL_DIR)/user/$(OBJ_DIR) -lGAL
+ifeq ($(QNX), 1)
+LIBS    +=  -L$(QNX_TARGET)/lib -lkhronos
+else
+        ifeq ($(EGL_API_FB), 0)
+            LIBS += -L$(X11_ARM_DIR)/lib -lX11 -lXau -lXdmcp
+        endif
+LIBS    +=  -ldl -lpthread -lrt
+endif
+LIBS    +=  -lm
+endif
+
+################################################################################
+# Define a shortcut for the main target.
+
+PROGRAM     :=  1
+TARGET_NAME :=  vglslc
+
+################################################################################
+# Define the macros used in common makefile.
+
+INSTALL_DIR := $(SDK_DIR)/samples/es20
+
+################################################################################
+# Include the common makefile.
+
+include $(AQROOT)/common.target
+
+################################################################################
+# Extra source code.

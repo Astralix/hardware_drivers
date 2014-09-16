@@ -1,0 +1,68 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+#
+# Linux build file for user HAL layer.
+#
+
+################################################################################
+# Include common definitions.
+
+include $(AQROOT)/makefile.linux.def
+
+################################################################################
+# Define a shortcut for the main target.
+
+STATIC = 1
+TARGET_NAME = libhalosuser.a
+
+################################################################################
+# Supply additional include directories.
+
+INCLUDE += -I$(AQROOT)/hal/inc
+INCLUDE += -I$(AQROOT)/hal/user
+
+ifeq ($(QNX), 1)
+    INCLUDE += -I$(AQROOT)/hal/os/qnx/user
+else
+    ifeq ($(EGL_API_FB), 0)
+        INCLUDE += -I$(X11_ARM_DIR)/include
+		LIBS += -L$(X11_ARM_DIR)/lib -lX11 -lXau -lXdmcp
+    endif
+endif
+
+CFLAGS += $(INCLUDE)
+CFLAGS += -fPIC -Werror
+
+################################################################################
+# Describe object files.
+
+OBJECTS = $(OBJ_DIR)/gc_hal_user_debug.o \
+          $(OBJ_DIR)/gc_hal_user_os.o \
+          $(OBJ_DIR)/gc_hal_user_math.o
+
+ifeq ($(QNX), 1)
+    OBJECTS += $(AQROOT)/hal/os/qnx/user/gc_hal_user_qnx.o
+else
+    ifeq ($(EGL_API_FB), 0)
+        OBJECTS += $(AQROOT)/hal/os/linux/user/FBDEV/gc_hal_user_x.o
+    endif
+endif
+
+################################################################################
+# Installation directory
+ifeq ($(gcdSTATIC_LINK), 1)
+INSTALL_DIR := $(SDK_DIR)/drivers
+endif
+
+include $(AQROOT)/common.target

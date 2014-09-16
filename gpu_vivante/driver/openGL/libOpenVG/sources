@@ -1,0 +1,70 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+DOSYSGEN=1
+SYNCHRONIZE_DRAIN=1
+TARGETNAME=libOpenVG
+TARGETTYPE=DYNLINK
+DLLENTRY=DllMain
+SOURCES= \
+	gc_vgu_library.c \
+    gc_vg_arc.c \
+    gc_vg_context.c \
+    gc_vg_debug.c \
+    gc_vg_filter.c \
+    gc_vg_format.c \
+    gc_vg_image.c \
+    gc_vg_main.c \
+    gc_vg_mask.c \
+    gc_vg_matrix.c \
+    gc_vg_memory_manager.c \
+    gc_vg_object.c \
+    gc_vg_paint.c \
+    gc_vg_path_append.c \
+    gc_vg_path.c \
+    gc_vg_path_coordinate.c \
+    gc_vg_path_import.c \
+    gc_vg_path_interpolate.c \
+    gc_vg_path_modify.c \
+    gc_vg_path_normalize.c \
+    gc_vg_path_point_along.c \
+    gc_vg_path_storage.c \
+    gc_vg_path_transform.c \
+    gc_vg_path_walker.c \
+    gc_vg_state.c \
+    gc_vg_stroke.c \
+    gc_vg_text.c \
+
+
+INCLUDES= \
+  $(INCLUDES); \
+  $(AQROOT)\driver\openGL\egl\inc; \
+  $(AQROOT)\sdk\inc; \
+
+CDEFINES=$(CDEFINES) -DOPENVG_DLL_EXPORTS
+
+TARGETLIBS= \
+  $(_SYSGENSDKROOT)\lib\$(_CPUINDPATH)\coredll.lib \
+  $(GCLIB_PATH)\libEGL.lib \
+  $(GCLIB_PATH)\libGAL.lib \
+
+LIBDEFINES=$(LIBDEFINES) -ignore:4197
+
+##########################################################
+# Install results
+
+EXTRA_COMMAND = \
+    xcopy /I /R /Y $(AQROOT)\sdk\inc\VG\* $(VIVANTE_SDK_INC)\VG\
+
+!INCLUDE $(BUILDROOT)\wince_install.inc
+

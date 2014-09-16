@@ -1,0 +1,61 @@
+##############################################################################
+#
+#    Copyright (c) 2005 - 2012 by Vivante Corp.  All rights reserved.
+#
+#    The material in this file is confidential and contains trade secrets
+#    of Vivante Corporation. This is proprietary information owned by
+#    Vivante Corporation. No part of this work may be disclosed,
+#    reproduced, copied, transmitted, or used in any way for any purpose,
+#    without the express written permission of Vivante Corporation.
+#
+##############################################################################
+
+
+DOSYSGEN=1
+SYNCHRONIZE_DRAIN=1
+TARGETNAME=libOpenVG
+TARGETTYPE=DYNLINK
+DLLENTRY=DllMain
+
+SOURCES= \
+    ../gc_vgsh_context.c \
+    ../gc_vgsh_dump.c \
+    ../gc_vgsh_egl.c \
+    ../gc_vgsh_font.c \
+    ../gc_vgsh_hardware.c \
+    ../gc_vgsh_image.c \
+    ../gc_vgsh_mask_layer.c \
+    ../gc_vgsh_math.c \
+    ../gc_vgsh_matrix.c \
+    ../gc_vgsh_object.c \
+    ../gc_vgsh_paint.c \
+    ../gc_vgsh_path.c \
+    ../gc_vgsh_profiler.c \
+    ../gc_vgsh_scanline.c \
+    ../gc_vgsh_scanline_tessellator.c \
+    ../gc_vgsh_shader.c \
+    ../gc_vgsh_tessellator.c \
+    ../gc_vgsh_vgu.c \
+
+INCLUDES= \
+    $(INCLUDES); \
+    $(AQROOT)\hal\user; \
+    $(AQROOT)\hal\os\ce\user; \
+    $(AQROOT)\driver\openGL\egl\inc; \
+    $(AQROOT)\sdk\inc; \
+
+CDEFINES=$(CDEFINES) -DNO_TESSELLATE
+
+TARGETLIBS= \
+    $(GCLIB_PATH)\libEGL.lib \
+    $(GCLIB_PATH)\libGAL.lib \
+    $(_SYSGENSDKROOT)\lib\$(_CPUINDPATH)\coredll.lib \
+
+LIBDEFINES=$(LIBDEFINES) -ignore:4197
+
+##########################################################
+# Install results
+
+EXTRA_COMMAND = xcopy /I /R /Y $(AQROOT)\sdk\inc\VG\*.h $(VIVANTE_SDK_INC)\VG
+
+!INCLUDE $(BUILDROOT)\wince_install.inc

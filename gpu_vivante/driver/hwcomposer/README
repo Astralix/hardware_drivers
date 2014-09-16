@@ -1,0 +1,50 @@
+Vivante HWComposer Module
+
+Vivante Corporation
+Dec, 2011
+
+
+Overview
+========
+
+  HWComposer is used by surfaceflinger to enhance composition from android
+honeycomb and later. Vivante HWComposer can not 2D blit, multi-source blit for
+that purpose.
+  Vivante HWComposer depends on EGL_ANDROID_get_render_buffer extension. To
+enable HWComposer, that extension is need to be there.
+  Vivante HWComposer can support plane alpha (global alpha) and dim layer.
+To enable plane alpha and dim, please patch hwcomposer.h.
+  Please reference 'README' file in hwcomposer_android_patch patckage for more
+information.
+
+
+Overlay Integration Guide
+=========================
+
+1. Some overlay devices can only display areas which are cleared as transparet
+   in framebuffer. If your device is like that, please make sure
+   'CLEAR_FB_FOR_OVERLAY' is set to '1' in 'gc_hwc.h'.
+
+2. Please add your own code in 'hwcOverlay' function (gc_hwc_overlay.cpp) to
+   do actual overlay functionalities.
+
+
+Prepare
+=======
+
+  1. Patch android system to support EGL_ANDROID_get_render_buffer extension.
+  2. Patch android system to support dim/plane alpha.
+  3. Please set proper optimization switch in 'gc_hwc.h' if needed.
+
+Build
+=====
+
+  Build HWComposer like a normal android project (type 'mm' to build).
+
+
+Known Issues
+============
+
+1) 2D PE 1.x is not supported.
+2) COVERAGE alpha blending is not exactly correct in alpha channel.
+
